@@ -932,7 +932,7 @@ export default function ToolbarPlugin({
               <div className="flex gap-1">
                 <DropdownColorPicker
                   disabled={!isEditable}
-                  buttonClassName="toolbar-item color-picker"
+                  buttonClassName="toolbar-item color-picker flex-1"
                   buttonAriaLabel="Formatting text color"
                   buttonIconClassName="icon font-color"
                   color={fontColor}
@@ -941,7 +941,7 @@ export default function ToolbarPlugin({
                 />
                 <DropdownColorPicker
                   disabled={!isEditable}
-                  buttonClassName="toolbar-item color-picker"
+                  buttonClassName="toolbar-item color-picker flex-1"
                   buttonAriaLabel="Formatting background color"
                   buttonIconClassName="icon bg-color"
                   color={bgColor}

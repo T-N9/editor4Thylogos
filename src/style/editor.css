@@ -48,17 +48,7 @@ header h1 {
 }
 
 .editor-shell {
-  margin:auto;
-  margin-top: 2rem;
-  border-radius: 2px;
-  max-width: 1300px;
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
-  color: #000;
-  position: relative;
-  line-height: 1.7;
-  font-weight: 400;
+
 }
 
 .editor-shell .editor-container {
@@ -97,6 +87,10 @@ header h1 {
   resize: vertical;
   z-index: -1;
   border: 2px dashed #85ccffa9 ;
+}
+
+.previewing .editor{
+  border: 2px solid transparent ;
 }
 
 .test-recorder-output {

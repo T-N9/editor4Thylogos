@@ -40,6 +40,7 @@ import {
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
+import PreviewToolBar from '../preview-toolbar';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
@@ -140,6 +141,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                         placeholder={<Placeholder />}
                         ErrorBoundary={LexicalErrorBoundary}
                     />
+
+                    <PreviewToolBar/>
                     <LinkPlugin />
                     <ListPlugin />
                     <CheckListPlugin />

@@ -14,7 +14,7 @@ const EditorPanel = () => {
   // console.log({ isPreviewMode, editorState })
 
   return (
-    <>
+    <main className={`editor-shell mx-auto mt-8 rounded-sm max-w-[1300px] w-[1300px] ${isPreviewMode ? 'inline-block previewing' : 'flex'} flex-row gap-2 text-black relative leading-7 font-normal justify-center`}>
       {
         !isPreviewMode &&
         <TextEditor editorState={editorState} setEditorState={setEditorState} setIsPreviewMode={setIsPreviewMode} />
@@ -25,7 +25,7 @@ const EditorPanel = () => {
         <TextPreview editorState={editorState} setIsPreviewMode={setIsPreviewMode} />
       }
 
-    </>
+    </main>
   )
 }
 

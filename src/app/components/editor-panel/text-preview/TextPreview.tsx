@@ -24,6 +24,7 @@ import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { EyeIcon } from "@heroicons/react/16/solid";
 import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
 import { scrollToTop } from "@/app/utils/scrollToTop";
+import PreviewToolBar from "../preview-toolbar";
 
 
 interface TextPreviewProps {
@@ -48,21 +49,12 @@ const TextPreview: React.FC<TextPreviewProps> = ({
   };
   // console.log({ editorState })
   return (
-    <main className="bg-white">
-      <section>
-        <div className="sticky top-0 z-10 bg-white shadow-md flex px-1 justify-between items-center py-1 ">
-          <p className="text-gray-600 font-bold ml-5">Preview</p>
-          <button onClick={() => {
-            scrollToTop();
-            setIsPreviewMode(false)
-          }
-          } className="toolbar-item">
-            <EyeIcon className="size-5" />
-          </button>
-        </div>
+    <main className="w-full inline-block">
+      <section className="">
+        <PreviewToolBar/>
 
         <LexicalComposer initialConfig={initialConfig}>
-          <div className={`editor-container`}>
+          <div className={`editor-container mx-auto`}>
             <RichTextPlugin
               contentEditable={
                 <div className="editor-scroller">

@@ -43,9 +43,10 @@ import {
   $findMatchingParent,
   $getNearestBlockElementAncestorOrThrow,
   $getNearestNodeOfType,
-
+  $isEditorIsNestedEditor,
   mergeRegister,
 } from '@lexical/utils';
+
 import {
   $getSelectionStyleValueForProperty,
   $isParentElementRTL,
@@ -273,6 +274,8 @@ export default function ToolbarPlugin({
   const [isSuperscript, setIsSuperscript] = useState(false);
   const [elementFormat, setElementFormat] = useState<ElementFormatType>('left');
   const [isRTL, setIsRTL] = useState(false);
+  const [isCode, setIsCode] = useState(false);
+  const [isImageCaption, setIsImageCaption] = useState(false);
 
   const blockTypeToBlockName = {
     bullet: 'Bulleted List',
@@ -467,6 +470,16 @@ export default function ToolbarPlugin({
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
+      if (activeEditor !== editor && $isEditorIsNestedEditor(activeEditor)) {
+        const rootElement = activeEditor.getRootElement();
+        setIsImageCaption(
+          !!rootElement?.parentElement?.classList.contains(
+            'image-caption-container',
+          ),
+        );
+      } else {
+        setIsImageCaption(false);
+      }
       const anchorNode = selection.anchor.getNode();
       let element =
         anchorNode.getKey() === 'root'
@@ -741,7 +754,7 @@ export default function ToolbarPlugin({
     }
   }, [activeEditor, isLink, setIsLinkEditMode]);
 
-
+  const canViewerSeeInsertCodeButton = !isImageCaption;
 
   return (
     <div className="toolbar flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
@@ -859,6 +872,19 @@ export default function ToolbarPlugin({
                 >
                   <i className="format underline" />
                 </button>
+                {canViewerSeeInsertCodeButton && (
+                  <button
+                    disabled={!isEditable}
+                    onClick={() => {
+                      activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+                    }}
+                    className={'toolbar-item spaced ' + (isCode ? 'active' : '')}
+                    title="Insert code block"
+                    type="button"
+                    aria-label="Insert code block">
+                    <i className="format code" />
+                  </button>
+                )}
                 <button
                   onClick={insertLink}
                   className={'toolbar-item spaced ' + (isLink ? 'active' : '')}

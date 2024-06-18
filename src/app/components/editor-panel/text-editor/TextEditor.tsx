@@ -10,23 +10,16 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-<<<<<<< HEAD
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
-=======
-import {ListPlugin} from '@lexical/react/LexicalListPlugin';
->>>>>>> 9b910c7 ([Editor] ul feature added)
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { EditorState, createEditor } from 'lexical';
 import ToolbarPlugin from '../plugins/ToolbarPlugin';
 import TreeViewPlugin from '../plugins/TreeViewPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
-<<<<<<< HEAD
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import DraggableBlockPlugin from '../plugins/DraggableBlockPlugin';
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
 import { CAN_USE_DOM } from '@/app/shared/canUseDOM';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
@@ -34,7 +27,6 @@ import { EyeIcon } from '@heroicons/react/16/solid';
 
 import { useEditorState } from '@/app/context/EditorStateContext';
 
-<<<<<<< HEAD
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
 import {
@@ -45,10 +37,6 @@ import {
 } from "@lexical/code";
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
-=======
-import { HeadingNode } from '@lexical/rich-text'
-import { ListNode, ListItemNode } from '@lexical/list'
->>>>>>> 9b910c7 ([Editor] ul feature added)
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
@@ -109,11 +97,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
     const onChange = (editorState: EditorState) => {
         const editorStateJSON = editorState.toJSON();
         setEditorState(JSON.stringify(editorStateJSON));
-<<<<<<< HEAD
         // console.log({ editorStateJSON });
-=======
-        console.log({editorStateJSON});
->>>>>>> 9b910c7 ([Editor] ul feature added)
     };
 
     const initialConfig = {
@@ -123,12 +107,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             HeadingNode,
             ListNode,
             ListItemNode,
-<<<<<<< HEAD
             QuoteNode,
             CodeNode,
             CodeHighlightNode,
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
         ],
         editorState: editorState,
         // Handling of errors during update
@@ -157,7 +138,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     />
                     <LinkPlugin />
                     <ListPlugin />
-<<<<<<< HEAD
                     <CheckListPlugin />
                     <CodeHighlightPlugin />
                     <HistoryPlugin />
@@ -168,13 +148,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                         <>
                             <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
                             <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
-=======
-                    <HistoryPlugin />
-                    <AutoFocusPlugin />
-                    <TreeViewPlugin />
-                    {floatingAnchorElem && !isSmallWidthViewport && (
-                        <>
->>>>>>> 9b910c7 ([Editor] ul feature added)
                             <FloatingLinkEditorPlugin
                                 anchorElem={floatingAnchorElem}
                                 isLinkEditMode={isLinkEditMode}

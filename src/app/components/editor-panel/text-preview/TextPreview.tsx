@@ -11,7 +11,6 @@ import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
-<<<<<<< HEAD
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
 import {
@@ -24,13 +23,6 @@ import {
 /* Icons */
 import { EyeIcon } from "@heroicons/react/16/solid";
 import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
-=======
-import { HeadingNode } from '@lexical/rich-text';
-import { ListNode, ListItemNode } from '@lexical/list'
-
-/* Icons */
-import { EyeIcon } from "@heroicons/react/16/solid";
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
 
 interface TextPreviewProps {
@@ -44,11 +36,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
 }) => {
   const initialConfig = {
     namespace: "Preview Board",
-<<<<<<< HEAD
     nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode],
-=======
-    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode],
->>>>>>> 9b910c7 ([Editor] ul feature added)
     onError(error: Error) {
       console.error(error);
       throw error;
@@ -81,10 +69,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
               placeholder={null}
               ErrorBoundary={LexicalErrorBoundary}
             />
-<<<<<<< HEAD
             <CodeHighlightPlugin />
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
           </div>
         </LexicalComposer>
       </section>

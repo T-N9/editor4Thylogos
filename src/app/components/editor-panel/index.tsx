@@ -11,11 +11,7 @@ const EditorPanel = () => {
 
   const { editorState, isPreviewMode, setEditorState, setIsPreviewMode } = useEditorState();
 
-<<<<<<< HEAD
   // console.log({ isPreviewMode, editorState })
-=======
-  console.log({ isPreviewMode, editorState })
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
   return (
     <>

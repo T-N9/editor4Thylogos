@@ -1,14 +1,7 @@
 import type { Metadata } from "next";
 import "../style/editor.css"
 import "./globals.css";
-<<<<<<< HEAD
 import "../style/editor-theme.css"
-=======
-import "../style/editor.css"
-import "../style/editor-theme.css"
-
-import { EditorStateProvider } from "./context/EditorStateContext";
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
 import { EditorStateProvider } from "./context/EditorStateContext";
 
@@ -24,11 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-<<<<<<< HEAD
       <body>
-=======
-      <body className={inter.className}>
->>>>>>> 9b910c7 ([Editor] ul feature added)
         <EditorStateProvider>
           {children}
         </EditorStateProvider>

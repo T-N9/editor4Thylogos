@@ -31,11 +31,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
-<<<<<<< HEAD
 import DropDown, { DropDownItem } from '../../ui/DropDown';
-=======
-import DropDown, {DropDownItem} from '../../ui/DropDown';
->>>>>>> 9b910c7 ([Editor] ul feature added)
 import {
   $createCodeNode,
   $isCodeNode,
@@ -72,10 +68,7 @@ import {
   $isQuoteNode,
   HeadingTagType,
 } from '@lexical/rich-text';
-<<<<<<< HEAD
 import { $isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
 import { useCallback, useEffect, useRef, useState, Dispatch } from "react";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 
@@ -85,12 +78,9 @@ import { sanitizeUrl } from "@/app/utils/url";
 
 /* Icons */
 import { EyeIcon } from "@heroicons/react/24/outline";
-<<<<<<< HEAD
 import FontSizeStepper from "../font-size-stepper/FontSizeStepper";
 import FontPicker from "../font-picker/FontPicker";
 import DropdownColorPicker from "../../ui/DropdownColorPicker";
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
 const LowPriority = 1;
 
@@ -98,7 +88,6 @@ function Divider() {
   return <div className="divider" />;
 }
 
-<<<<<<< HEAD
 const ELEMENT_FORMAT_OPTIONS: {
   [key in Exclude<ElementFormatType, ''>]: {
     icon: string;
@@ -246,8 +235,6 @@ function ElementFormatDropdown({
   );
 }
 
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
 export default function ToolbarPlugin({
   setIsLinkEditMode,
   setIsPreviewMode,
@@ -258,15 +245,9 @@ export default function ToolbarPlugin({
   const [editor] = useLexicalComposerContext();
   const [activeEditor, setActiveEditor] = useState(editor);
   const [blockType, setBlockType] =
-<<<<<<< HEAD
     useState<keyof typeof blockTypeToBlockName>('paragraph');
   const [rootType, setRootType] =
     useState<keyof typeof rootTypeToRootName>('root');
-=======
-  useState<keyof typeof blockTypeToBlockName>('paragraph');
-  const [rootType, setRootType] =
-  useState<keyof typeof rootTypeToRootName>('root');
->>>>>>> 9b910c7 ([Editor] ul feature added)
   const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
     null,
   );
@@ -280,7 +261,6 @@ export default function ToolbarPlugin({
   const [isLink, setIsLink] = useState(false);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [codeLanguage, setCodeLanguage] = useState<string>('');
-<<<<<<< HEAD
   const [fontSize, setFontSize] = useState<string>('15px');
   const [fontFamily, setFontFamily] = useState<string>('Arial');
   const [fontColor, setFontColor] = useState<string>('#000');
@@ -289,8 +269,6 @@ export default function ToolbarPlugin({
   const [isSuperscript, setIsSuperscript] = useState(false);
   const [elementFormat, setElementFormat] = useState<ElementFormatType>('left');
   const [isRTL, setIsRTL] = useState(false);
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
   const blockTypeToBlockName = {
     bullet: 'Bulleted List',
@@ -307,16 +285,6 @@ export default function ToolbarPlugin({
     quote: 'Quote',
   };
 
-<<<<<<< HEAD
-=======
-  function dropDownActiveClass(active: boolean) {
-    if (active) {
-      return 'active dropdown-item-active';
-    } else {
-      return '';
-    }
-  }
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
   function BlockFormatDropDown({
     editor,
@@ -329,11 +297,7 @@ export default function ToolbarPlugin({
     editor: LexicalEditor;
     disabled?: boolean;
   }): JSX.Element {
-<<<<<<< HEAD
     // console.log({ blockType, rootType, editor, activeEditor })
-=======
-    console.log({blockType, rootType, editor, activeEditor})
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatParagraph = () => {
       editor.update(() => {
         const selection = $getSelection();
@@ -342,11 +306,6 @@ export default function ToolbarPlugin({
         }
       });
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatHeading = (headingSize: HeadingTagType) => {
       if (blockType !== headingSize) {
         editor.update(() => {
@@ -355,11 +314,6 @@ export default function ToolbarPlugin({
         });
       }
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatBulletList = () => {
       if (blockType !== 'bullet') {
         editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
@@ -367,11 +321,6 @@ export default function ToolbarPlugin({
         formatParagraph();
       }
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatCheckList = () => {
       if (blockType !== 'check') {
         editor.dispatchCommand(INSERT_CHECK_LIST_COMMAND, undefined);
@@ -379,11 +328,6 @@ export default function ToolbarPlugin({
         formatParagraph();
       }
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatNumberedList = () => {
       if (blockType !== 'number') {
         editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
@@ -391,11 +335,6 @@ export default function ToolbarPlugin({
         formatParagraph();
       }
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatQuote = () => {
       if (blockType !== 'quote') {
         editor.update(() => {
@@ -404,20 +343,10 @@ export default function ToolbarPlugin({
         });
       }
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     const formatCode = () => {
       if (blockType !== 'code') {
         editor.update(() => {
           let selection = $getSelection();
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
           if (selection !== null) {
             if (selection.isCollapsed()) {
               $setBlocksType(selection, () => $createCodeNode());
@@ -434,11 +363,6 @@ export default function ToolbarPlugin({
         });
       }
     };
-<<<<<<< HEAD
-
-=======
-  
->>>>>>> 9b910c7 ([Editor] ul feature added)
     return (
       <DropDown
         disabled={disabled}
@@ -509,7 +433,6 @@ export default function ToolbarPlugin({
     table: 'Table',
   };
 
-<<<<<<< HEAD
   function getCodeLanguageOptions(): [string, string][] {
     const options: [string, string][] = [];
 
@@ -537,35 +460,21 @@ export default function ToolbarPlugin({
     },
     [activeEditor, selectedElementKey],
   );
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
       let element =
-<<<<<<< HEAD
         anchorNode.getKey() === 'root'
           ? anchorNode
           : $findMatchingParent(anchorNode, (e) => {
-=======
-      anchorNode.getKey() === 'root'
-        ? anchorNode
-        : $findMatchingParent(anchorNode, (e) => {
->>>>>>> 9b910c7 ([Editor] ul feature added)
             const parent = e.getParent();
             return parent !== null && $isRootOrShadowRoot(parent);
           });
 
-<<<<<<< HEAD
       if (element === null) {
         element = anchorNode.getTopLevelElementOrThrow();
       }
-=======
-    if (element === null) {
-      element = anchorNode.getTopLevelElementOrThrow();
-    }
->>>>>>> 9b910c7 ([Editor] ul feature added)
       const elementKey = element.getKey();
       const elementDOM = activeEditor.getElementByKey(elementKey);
       // Update text format
@@ -573,12 +482,9 @@ export default function ToolbarPlugin({
       setIsItalic(selection.hasFormat("italic"));
       setIsUnderline(selection.hasFormat("underline"));
       setIsStrikethrough(selection.hasFormat("strikethrough"));
-<<<<<<< HEAD
       setIsSubscript(selection.hasFormat('subscript'));
       setIsSuperscript(selection.hasFormat('superscript'));
       setIsRTL($isParentElementRTL(selection));
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
       // Update links
       const node = getSelectedNode(selection);
@@ -617,7 +523,6 @@ export default function ToolbarPlugin({
           }
         }
       }
-<<<<<<< HEAD
       setFontColor(
         $getSelectionStyleValueForProperty(selection, 'color', '#000'),
       );
@@ -742,11 +647,6 @@ export default function ToolbarPlugin({
     },
     [applyStyleText],
   );
-=======
-    }
-  }, []);
-
->>>>>>> 9b910c7 ([Editor] ul feature added)
   useEffect(() => {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
@@ -804,11 +704,7 @@ export default function ToolbarPlugin({
       KEY_MODIFIER_COMMAND,
       (payload) => {
         const event: KeyboardEvent = payload;
-<<<<<<< HEAD
         const { code, ctrlKey, metaKey } = event;
-=======
-        const {code, ctrlKey, metaKey} = event;
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
         if (code === 'KeyK' && (ctrlKey || metaKey)) {
           event.preventDefault();
@@ -868,7 +764,6 @@ export default function ToolbarPlugin({
         </button>
         <Divider />
         {blockType in blockTypeToBlockName && activeEditor === editor && (
-<<<<<<< HEAD
           <>
             <BlockFormatDropDown
               disabled={!isEditable}
@@ -916,18 +811,6 @@ export default function ToolbarPlugin({
               <Divider />
             </>
         }
-=======
-        <>
-          <BlockFormatDropDown
-            disabled={!isEditable}
-            blockType={blockType}
-            rootType={rootType}
-            editor={activeEditor}
-          />
-          <Divider />
-        </>
-      )}
->>>>>>> 9b910c7 ([Editor] ul feature added)
         <button
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
@@ -955,7 +838,6 @@ export default function ToolbarPlugin({
         >
           <i className="format underline" />
         </button>
-<<<<<<< HEAD
         <DropDown
           disabled={!isEditable}
           buttonClassName="toolbar-item spaced"
@@ -1015,54 +897,6 @@ export default function ToolbarPlugin({
           isRTL={isRTL}
         />
         {" "}
-=======
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
-          }}
-          className={"toolbar-item spaced " + (isStrikethrough ? "active" : "")}
-          aria-label="Format Strikethrough"
-        >
-          <i className="format strikethrough" />
-        </button>
-        <Divider />
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "left");
-          }}
-          className="toolbar-item spaced"
-          aria-label="Left Align"
-        >
-          <i className="format left-align" />
-        </button>
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-          }}
-          className="toolbar-item spaced"
-          aria-label="Center Align"
-        >
-          <i className="format center-align" />
-        </button>
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-          }}
-          className="toolbar-item spaced"
-          aria-label="Right Align"
-        >
-          <i className="format right-align" />
-        </button>
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
-          }}
-          className="toolbar-item"
-          aria-label="Justify Align"
-        >
-          <i className="format justify-align" />
-        </button>{" "}
->>>>>>> 9b910c7 ([Editor] ul feature added)
         <button
           onClick={insertLink}
           className={'toolbar-item spaced ' + (isLink ? 'active' : '')}
@@ -1072,7 +906,6 @@ export default function ToolbarPlugin({
         >
           <i className="format link" />
         </button>
-<<<<<<< HEAD
         <Divider />
         <DropdownColorPicker
           disabled={!isEditable}
@@ -1095,8 +928,6 @@ export default function ToolbarPlugin({
         <Divider />
 
 
-=======
->>>>>>> 9b910c7 ([Editor] ul feature added)
       </div>
       <div>
         <button onClick={() => setIsPreviewMode(true)} className="toolbar-item">

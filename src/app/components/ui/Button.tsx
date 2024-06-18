@@ -11,11 +11,7 @@ import './Button.css';
 import * as React from 'react';
 import {ReactNode} from 'react';
 
-<<<<<<< HEAD
 import joinClasses from '../../utils/joinClasses';
-=======
-import joinClasses from '../utils/joinClasses';
->>>>>>> 9b910c7 ([Editor] ul feature added)
 
 export default function Button({
   'data-test-id': dataTestId,

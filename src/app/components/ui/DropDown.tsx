@@ -208,11 +208,7 @@ export default function DropDown({
       };
     }
   }, [dropDownRef, buttonRef, showDropDown, stopCloseOnClickSelf]);
-<<<<<<< HEAD
   
-=======
-
->>>>>>> 9b910c7 ([Editor] ul feature added)
   useEffect(() => {
     const handleButtonPositionUpdate = () => {
       if (showDropDown) {

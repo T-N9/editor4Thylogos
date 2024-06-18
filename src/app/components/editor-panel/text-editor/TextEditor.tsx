@@ -20,10 +20,11 @@ import TreeViewPlugin from '../plugins/TreeViewPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import DraggableBlockPlugin from '../plugins/DraggableBlockPlugin';
-import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
+import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 
 import { CAN_USE_DOM } from '@/app/shared/canUseDOM';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
+import FloatingTextFormatToolbarPlugin from '../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
 import { EyeIcon } from '@heroicons/react/16/solid';
 
 import { useEditorState } from '@/app/context/EditorStateContext';
@@ -36,7 +37,7 @@ import {
     getCodeLanguages,
     registerCodeHighlighting,
 } from "@lexical/code";
-import {HorizontalRuleNode} from '@lexical/react/LexicalHorizontalRuleNode';
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
 function Placeholder() {
@@ -145,7 +146,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <CodeHighlightPlugin />
                     <HistoryPlugin />
                     <AutoFocusPlugin />
-                    <TabFocusPlugin/>
+                    <TabFocusPlugin />
                     <HorizontalRulePlugin />
                     <TreeViewPlugin />
                     {floatingAnchorElem && !isSmallWidthViewport && (
@@ -155,6 +156,10 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                             <FloatingLinkEditorPlugin
                                 anchorElem={floatingAnchorElem}
                                 isLinkEditMode={isLinkEditMode}
+                                setIsLinkEditMode={setIsLinkEditMode}
+                            />
+                            <FloatingTextFormatToolbarPlugin
+                                anchorElem={floatingAnchorElem}
                                 setIsLinkEditMode={setIsLinkEditMode}
                             />
                         </>

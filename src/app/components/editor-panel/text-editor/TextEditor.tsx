@@ -20,6 +20,7 @@ import TreeViewPlugin from '../plugins/TreeViewPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import DraggableBlockPlugin from '../plugins/DraggableBlockPlugin';
+import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
 
 import { CAN_USE_DOM } from '@/app/shared/canUseDOM';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
@@ -35,6 +36,7 @@ import {
     getCodeLanguages,
     registerCodeHighlighting,
 } from "@lexical/code";
+import {HorizontalRuleNode} from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
 function Placeholder() {
@@ -110,6 +112,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             QuoteNode,
             CodeNode,
             CodeHighlightNode,
+            HorizontalRuleNode
         ],
         editorState: editorState,
         // Handling of errors during update
@@ -126,7 +129,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             <LexicalComposer initialConfig={initialConfig}>
                 <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} setIsPreviewMode={setIsPreviewMode} />
                 <div
-                    className={`editor-container`}>
+                    className={`editor-container flex-[6]`}>
                     <RichTextPlugin
                         contentEditable={<div className="editor-scroller">
                             <div className="editor" ref={onRef}>
@@ -143,6 +146,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <HistoryPlugin />
                     <AutoFocusPlugin />
                     <TabFocusPlugin/>
+                    <HorizontalRulePlugin />
                     <TreeViewPlugin />
                     {floatingAnchorElem && !isSmallWidthViewport && (
                         <>

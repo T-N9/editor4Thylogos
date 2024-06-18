@@ -68,6 +68,7 @@ import {
   $isQuoteNode,
   HeadingTagType,
 } from '@lexical/rich-text';
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 import { $isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import { useCallback, useEffect, useRef, useState, Dispatch } from "react";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
@@ -82,11 +83,14 @@ import FontSizeStepper from "../font-size-stepper/FontSizeStepper";
 import FontPicker from "../font-picker/FontPicker";
 import DropdownColorPicker from "../../ui/DropdownColorPicker";
 
+import { scrollToTop } from "@/app/utils/scrollToTop";
 const LowPriority = 1;
 
 function Divider() {
   return <div className="divider" />;
 }
+
+
 
 const ELEMENT_FORMAT_OPTIONS: {
   [key in Exclude<ElementFormatType, ''>]: {
@@ -740,199 +744,234 @@ export default function ToolbarPlugin({
 
 
   return (
-    <div className="toolbar flex justify-between items-center overflow-hidden" ref={toolbarRef}>
-      <div className="flex gap-1">
-        <button
-          disabled={!canUndo}
-          onClick={() => {
-            editor.dispatchCommand(UNDO_COMMAND, undefined);
-          }}
-          className="toolbar-item spaced"
-          aria-label="Undo"
-        >
-          <i className="format undo" />
-        </button>
-        <button
-          disabled={!canRedo}
-          onClick={() => {
-            editor.dispatchCommand(REDO_COMMAND, undefined);
-          }}
-          className="toolbar-item"
-          aria-label="Redo"
-        >
-          <i className="format redo" />
-        </button>
-        <Divider />
-        {blockType in blockTypeToBlockName && activeEditor === editor && (
-          <>
-            <BlockFormatDropDown
-              disabled={!isEditable}
-              blockType={blockType}
-              rootType={rootType}
-              editor={activeEditor}
-            />
-            <Divider />
-          </>
-        )}
-        {
-          blockType === 'code' ? (
-            <DropDown
-              disabled={!isEditable}
-              buttonClassName="toolbar-item code-language"
-              buttonLabel={getLanguageFriendlyName(codeLanguage)}
-              buttonAriaLabel="Select language">
-              {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
-                return (
-                  <DropDownItem
-                    className={`item ${dropDownActiveClass(
-                      value === codeLanguage,
-                    )}`}
-                    onClick={() => onCodeLanguageSelect(value)}
-                    key={value}>
-                    <span className="text">{name}</span>
-                  </DropDownItem>
-                );
-              })}
-            </DropDown>
-          )
-            :
+    <div className="toolbar flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
+      <div className="flex flex-col gap-1">
+        <div className="flex flex-col  gap-1">
+          {/* //#region */}
+          {/* Undo Redo Buttons */}
+          <div className="flex justify-center gap-1">
+            <button
+              disabled={!canUndo}
+              onClick={() => {
+                editor.dispatchCommand(UNDO_COMMAND, undefined);
+              }}
+              className="toolbar-item spaced"
+              aria-label="Undo"
+            >
+              <i className="format undo" />
+            </button>
+            <button
+              disabled={!canRedo}
+              onClick={() => {
+                editor.dispatchCommand(REDO_COMMAND, undefined);
+              }}
+              className="toolbar-item"
+              aria-label="Redo"
+            >
+              <i className="format redo" />
+            </button>
+          </div>
+          {/* //#endregion */}
+          <Divider />
+
+          {/* //#region */}
+          {/* BlockType Dropdown */}
+          {blockType in blockTypeToBlockName && activeEditor === editor && (
             <>
-              <FontPicker
+              <BlockFormatDropDown
                 disabled={!isEditable}
-                style={'font-family'}
-                value={fontFamily}
+                blockType={blockType}
+                rootType={rootType}
                 editor={activeEditor}
               />
               <Divider />
-              <FontSizeStepper
-                selectionFontSize={fontSize.slice(0, -2)}
-                editor={activeEditor}
-                disabled={!isEditable} />
+            </>
+          )}
+          {/* //#endregion */}
+
+          {
+            blockType === 'code' ? (
+              <DropDown
+                disabled={!isEditable}
+                buttonClassName="toolbar-item code-language"
+                buttonLabel={getLanguageFriendlyName(codeLanguage)}
+                buttonAriaLabel="Select language">
+                {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
+                  return (
+                    <DropDownItem
+                      className={`item ${dropDownActiveClass(
+                        value === codeLanguage,
+                      )}`}
+                      onClick={() => onCodeLanguageSelect(value)}
+                      key={value}>
+                      <span className="text">{name}</span>
+                    </DropDownItem>
+                  );
+                })}
+              </DropDown>
+            )
+              :
+              <>
+                <div className="flex gap-1 justify-between items-center">
+                  <FontPicker
+                    disabled={!isEditable}
+                    style={'font-family'}
+                    value={fontFamily}
+                    editor={activeEditor}
+                  />
+
+                  <FontSizeStepper
+                    selectionFontSize={fontSize.slice(0, -2)}
+                    editor={activeEditor}
+                    disabled={!isEditable} />
+                </div>
+                <Divider />
+              </>
+          }
+          {
+            blockType !== 'code' &&
+            <>
+              <div className="flex flex-wrap justify-start gap-1">
+                <button
+                  onClick={() => {
+                    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+                  }}
+                  className={"toolbar-item spaced " + (isBold ? "active" : "")}
+                  aria-label="Format Bold"
+                >
+                  <i className="format bold" />
+                </button>
+                <button
+                  onClick={() => {
+                    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+                  }}
+                  className={"toolbar-item spaced " + (isItalic ? "active" : "")}
+                  aria-label="Format Italics"
+                >
+                  <i className="format italic" />
+                </button>
+                <button
+                  onClick={() => {
+                    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+                  }}
+                  className={"toolbar-item spaced " + (isUnderline ? "active" : "")}
+                  aria-label="Format Underline"
+                >
+                  <i className="format underline" />
+                </button>
+                <button
+                  onClick={insertLink}
+                  className={'toolbar-item spaced ' + (isLink ? 'active' : '')}
+                  aria-label="Insert link"
+                  title="Insert link"
+                  type="button"
+                >
+                  <i className="format link" />
+                </button>
+                <button
+                  onClick={() => {
+                    activeEditor.dispatchCommand(
+                      FORMAT_TEXT_COMMAND,
+                      'strikethrough',
+                    );
+                  }}
+                  className={'toolbar-item spaced' + dropDownActiveClass(isStrikethrough)}
+                  title="Strikethrough"
+                  aria-label="Format text with a strikethrough">
+                  <i className="format strikethrough" />
+                  {/* <span className="text"></span> */}
+                </button>
+                <button
+                  onClick={() => {
+                    activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
+                  }}
+                  className={'toolbar-item spaced' + dropDownActiveClass(isSubscript)}
+                  title="Subscript"
+                  aria-label="Format text with a subscript">
+                  <i className="format subscript" />
+
+                </button>
+                <button
+                  onClick={() => {
+                    activeEditor.dispatchCommand(
+                      FORMAT_TEXT_COMMAND,
+                      'superscript',
+                    );
+                  }}
+                  className={'toolbar-item spaced ' + dropDownActiveClass(isSuperscript)}
+                  title="Superscript"
+                  aria-label="Format text with a superscript">
+                  <i className="format superscript" />
+
+                </button>
+                <button
+                  onClick={clearFormatting}
+                  className="toolbar-item spaced"
+                  title="Clear text formatting"
+                  aria-label="Clear all text formatting">
+                  <i className="format clear" />
+
+                </button>
+              </div>
               <Divider />
             </>
-        }
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-          }}
-          className={"toolbar-item spaced " + (isBold ? "active" : "")}
-          aria-label="Format Bold"
-        >
-          <i className="format bold" />
-        </button>
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-          }}
-          className={"toolbar-item spaced " + (isItalic ? "active" : "")}
-          aria-label="Format Italics"
-        >
-          <i className="format italic" />
-        </button>
-        <button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-          }}
-          className={"toolbar-item spaced " + (isUnderline ? "active" : "")}
-          aria-label="Format Underline"
-        >
-          <i className="format underline" />
-        </button>
-        <DropDown
-          disabled={!isEditable}
-          buttonClassName="toolbar-item spaced"
-          buttonLabel=""
-          buttonAriaLabel="Formatting options for additional text styles"
-          buttonIconClassName="icon dropdown-more">
-          <DropDownItem
-            onClick={() => {
-              activeEditor.dispatchCommand(
-                FORMAT_TEXT_COMMAND,
-                'strikethrough',
-              );
-            }}
-            className={'item ' + dropDownActiveClass(isStrikethrough)}
-            title="Strikethrough"
-            aria-label="Format text with a strikethrough">
-            <i className="icon strikethrough" />
-            <span className="text">Strikethrough</span>
-          </DropDownItem>
-          <DropDownItem
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
-            }}
-            className={'item ' + dropDownActiveClass(isSubscript)}
-            title="Subscript"
-            aria-label="Format text with a subscript">
-            <i className="icon subscript" />
-            <span className="text">Subscript</span>
-          </DropDownItem>
-          <DropDownItem
-            onClick={() => {
-              activeEditor.dispatchCommand(
-                FORMAT_TEXT_COMMAND,
-                'superscript',
-              );
-            }}
-            className={'item ' + dropDownActiveClass(isSuperscript)}
-            title="Superscript"
-            aria-label="Format text with a superscript">
-            <i className="icon superscript" />
-            <span className="text">Superscript</span>
-          </DropDownItem>
-          <DropDownItem
-            onClick={clearFormatting}
-            className="item"
-            title="Clear text formatting"
-            aria-label="Clear all text formatting">
-            <i className="icon clear" />
-            <span className="text">Clear Formatting</span>
-          </DropDownItem>
-        </DropDown>
-        <Divider />
-        <ElementFormatDropdown
-          disabled={!isEditable}
-          value={elementFormat}
-          editor={activeEditor}
-          isRTL={isRTL}
-        />
-        {" "}
-        <button
-          onClick={insertLink}
-          className={'toolbar-item spaced ' + (isLink ? 'active' : '')}
-          aria-label="Insert link"
-          title="Insert link"
-          type="button"
-        >
-          <i className="format link" />
-        </button>
-        <Divider />
-        <DropdownColorPicker
-          disabled={!isEditable}
-          buttonClassName="toolbar-item color-picker"
-          buttonAriaLabel="Formatting text color"
-          buttonIconClassName="icon font-color"
-          color={fontColor}
-          onChange={onFontColorSelect}
-          title="text color"
-        />
-        <DropdownColorPicker
-          disabled={!isEditable}
-          buttonClassName="toolbar-item color-picker"
-          buttonAriaLabel="Formatting background color"
-          buttonIconClassName="icon bg-color"
-          color={bgColor}
-          onChange={onBgColorSelect}
-          title="bg color"
-        />
-        <Divider />
+          }
+
+          <ElementFormatDropdown
+            disabled={!isEditable}
+            value={elementFormat}
+            editor={activeEditor}
+            isRTL={isRTL}
+          />
+          {" "}
+          {
+            blockType !== 'code' &&
+            <>
+
+              <Divider />
+              <div className="flex gap-1">
+                <DropdownColorPicker
+                  disabled={!isEditable}
+                  buttonClassName="toolbar-item color-picker"
+                  buttonAriaLabel="Formatting text color"
+                  buttonIconClassName="icon font-color"
+                  color={fontColor}
+                  onChange={onFontColorSelect}
+                  title="text color"
+                />
+                <DropdownColorPicker
+                  disabled={!isEditable}
+                  buttonClassName="toolbar-item color-picker"
+                  buttonAriaLabel="Formatting background color"
+                  buttonIconClassName="icon bg-color"
+                  color={bgColor}
+                  onChange={onBgColorSelect}
+                  title="bg color"
+                />
+              </div>
+              <Divider />
+            </>
+          }
 
 
-      </div>
-      <div>
-        <button onClick={() => setIsPreviewMode(true)} className="toolbar-item">
-          <EyeIcon className="size-5 text-blue-500" />
-        </button>
+
+
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <button
+            onClick={() => {
+              activeEditor.dispatchCommand(
+                INSERT_HORIZONTAL_RULE_COMMAND,
+                undefined,
+              );
+            }}
+            className=" toolbar-item">
+            <i className="icon horizontal-rule" />
+            <span className="text">Divider</span>
+          </button>
+
+        </div>
       </div>
     </div>
   );

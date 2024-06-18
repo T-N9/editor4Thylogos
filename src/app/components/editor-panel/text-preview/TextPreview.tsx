@@ -19,10 +19,11 @@ import {
   getCodeLanguages,
   registerCodeHighlighting,
 } from "@lexical/code";
-
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 /* Icons */
 import { EyeIcon } from "@heroicons/react/16/solid";
 import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
+import { scrollToTop } from "@/app/utils/scrollToTop";
 
 
 interface TextPreviewProps {
@@ -36,7 +37,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
 }) => {
   const initialConfig = {
     namespace: "Preview Board",
-    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode],
+    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, HorizontalRuleNode],
     onError(error: Error) {
       console.error(error);
       throw error;
@@ -47,11 +48,15 @@ const TextPreview: React.FC<TextPreviewProps> = ({
   };
   // console.log({ editorState })
   return (
-    <main className="bg-white rounded-xl">
+    <main className="bg-white">
       <section>
-        <div className="flex px-1 justify-between items-center py-1 border-b-2 border-solid border-gray-200">
+        <div className="sticky top-0 z-10 bg-white shadow-md flex px-1 justify-between items-center py-1 ">
           <p className="text-gray-600 font-bold ml-5">Preview</p>
-          <button onClick={() => setIsPreviewMode(false)} className="toolbar-item">
+          <button onClick={() => {
+            scrollToTop();
+            setIsPreviewMode(false)
+          }
+          } className="toolbar-item">
             <EyeIcon className="size-5" />
           </button>
         </div>

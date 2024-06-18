@@ -8,8 +8,8 @@
 
 import './fontSizeStepper.css';
 
-import {$patchStyleText} from '@lexical/selection';
-import {$getSelection, LexicalEditor} from 'lexical';
+import { $patchStyleText } from '@lexical/selection';
+import { $getSelection, LexicalEditor } from 'lexical';
 import * as React from 'react';
 
 const MIN_ALLOWED_FONT_SIZE = 8;
@@ -186,42 +186,44 @@ export default function FontSizeStepper({
   }, [selectionFontSize]);
 
   return (
-    <div className='flex gap-1 justify-center items-center'>
-      <button
-        type="button"
-        disabled={
-          disabled ||
-          (selectionFontSize !== '' &&
-            Number(inputValue) <= MIN_ALLOWED_FONT_SIZE)
-        }
-        onClick={() => handleButtonClick(updateFontSizeType.decrement)}
-        className="toolbar-item font-decrement">
-        <i className="format minus-icon" />
-      </button>
+    <div>
+      <div className='flex gap-1 justify-center items-center'>
+        <button
+          type="button"
+          disabled={
+            disabled ||
+            (selectionFontSize !== '' &&
+              Number(inputValue) <= MIN_ALLOWED_FONT_SIZE)
+          }
+          onClick={() => handleButtonClick(updateFontSizeType.decrement)}
+          className="toolbar-item font-decrement">
+          <i className="format minus-icon" />
+        </button>
 
-      <input
-        type="number"
-        value={inputValue}
-        disabled={disabled}
-        className="toolbar-item font-size-input"
-        min={MIN_ALLOWED_FONT_SIZE}
-        max={MAX_ALLOWED_FONT_SIZE}
-        onChange={(e) => setInputValue(e.target.value)}
-        onKeyDown={handleKeyPress}
-        onBlur={handleInputBlur}
-      />
+        <input
+          type="number"
+          value={inputValue}
+          disabled={disabled}
+          className="toolbar-item font-size-input"
+          min={MIN_ALLOWED_FONT_SIZE}
+          max={MAX_ALLOWED_FONT_SIZE}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyPress}
+          onBlur={handleInputBlur}
+        />
 
-      <button
-        type="button"
-        disabled={
-          disabled ||
-          (selectionFontSize !== '' &&
-            Number(inputValue) >= MAX_ALLOWED_FONT_SIZE)
-        }
-        onClick={() => handleButtonClick(updateFontSizeType.increment)}
-        className="toolbar-item font-increment">
-        <i className="format add-icon" />
-      </button>
+        <button
+          type="button"
+          disabled={
+            disabled ||
+            (selectionFontSize !== '' &&
+              Number(inputValue) >= MAX_ALLOWED_FONT_SIZE)
+          }
+          onClick={() => handleButtonClick(updateFontSizeType.increment)}
+          className="toolbar-item font-increment">
+          <i className="format add-icon" />
+        </button>
+      </div>
     </div>
   );
 }

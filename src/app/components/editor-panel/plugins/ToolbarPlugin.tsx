@@ -31,6 +31,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
+import useModal from "@/app/hooks/useModal";
 import DropDown, { DropDownItem } from '../../ui/DropDown';
 import {
   $createCodeNode,
@@ -46,6 +47,11 @@ import {
   $isEditorIsNestedEditor,
   mergeRegister,
 } from '@lexical/utils';
+import {
+  INSERT_IMAGE_COMMAND,
+  InsertImageDialog,
+  InsertImagePayload,
+} from "./ImagesPlugin";
 
 import {
   $getSelectionStyleValueForProperty,
@@ -276,6 +282,7 @@ export default function ToolbarPlugin({
   const [isRTL, setIsRTL] = useState(false);
   const [isCode, setIsCode] = useState(false);
   const [isImageCaption, setIsImageCaption] = useState(false);
+  const [modal, showModal] = useModal();
 
   const blockTypeToBlockName = {
     bullet: 'Bulleted List',
@@ -470,7 +477,7 @@ export default function ToolbarPlugin({
   const $updateToolbar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
-      if (activeEditor !== editor && $isEditorIsNestedEditor(activeEditor)) {
+      if (activeEditor !== editor) {
         const rootElement = activeEditor.getRootElement();
         setIsImageCaption(
           !!rootElement?.parentElement?.classList.contains(
@@ -754,6 +761,7 @@ export default function ToolbarPlugin({
     }
   }, [activeEditor, isLink, setIsLinkEditMode]);
 
+  const canViewerSeeInsertDropdown = !isImageCaption;
   const canViewerSeeInsertCodeButton = !isImageCaption;
 
   return (
@@ -997,8 +1005,48 @@ export default function ToolbarPlugin({
             <span className="text">Divider</span>
           </button>
 
+          {canViewerSeeInsertDropdown && (
+            <>
+              <Divider />
+              <DropDown
+                disabled={!isEditable}
+                buttonClassName="toolbar-item spaced"
+                buttonLabel="Image"
+                buttonAriaLabel="Insert Image"
+                buttonIconClassName="icon plus">
+                <DropDownItem
+                  onClick={() => {
+                    showModal('Insert Image', (onClose) => (
+                      <InsertImageDialog
+                        activeEditor={activeEditor}
+                        onClose={onClose}
+                      />
+                    ));
+                  }}
+                  className="item">
+                  <i className="icon image" />
+                  <span className="text">Image</span>
+                </DropDownItem>
+                {/* <DropDownItem
+                  onClick={() => {
+                    showModal('Insert Inline Image', (onClose) => (
+                      <InsertInlineImageDialog
+                        activeEditor={activeEditor}
+                        onClose={onClose}
+                      />
+                    ));
+                  }}
+                  className="item">
+                  <i className="icon image" />
+                  <span className="text">Inline Image</span>
+                </DropDownItem> */}
+              </DropDown>
+            </>
+          )}
+
         </div>
       </div>
+      {modal}
     </div>
   );
 }

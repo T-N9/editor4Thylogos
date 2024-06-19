@@ -6,11 +6,11 @@
  *
  */
 
-import type {LexicalEditor} from 'lexical';
+import type { LexicalEditor } from 'lexical';
 
-import {calculateZoomLevel} from '@lexical/utils';
+import { calculateZoomLevel } from '@lexical/utils';
 import * as React from 'react';
-import {useRef} from 'react';
+import { useRef } from 'react';
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
@@ -35,8 +35,8 @@ export default function ImageResizer({
   captionsEnabled,
 }: {
   editor: LexicalEditor;
-  buttonRef: {current: null | HTMLButtonElement};
-  imageRef: {current: null | HTMLElement};
+  buttonRef: { current: null | HTMLButtonElement };
+  imageRef: { current: null | HTMLElement };
   maxWidth?: number;
   onResizeEnd: (width: 'inherit' | number, height: 'inherit' | number) => void;
   onResizeStart: () => void;
@@ -49,6 +49,7 @@ export default function ImageResizer({
     priority: '',
     value: 'default',
   });
+
   const positioningRef = useRef<{
     currentHeight: 'inherit' | number;
     currentWidth: 'inherit' | number;
@@ -75,8 +76,8 @@ export default function ImageResizer({
   const maxWidthContainer = maxWidth
     ? maxWidth
     : editorRootElement !== null
-    ? editorRootElement.getBoundingClientRect().width - 20
-    : 100;
+      ? editorRootElement.getBoundingClientRect().width - 20
+      : 100;
   const maxHeightContainer =
     editorRootElement !== null
       ? editorRootElement.getBoundingClientRect().height - 20
@@ -142,13 +143,13 @@ export default function ImageResizer({
     if (!editor.isEditable()) {
       return;
     }
-
+    
     const image = imageRef.current;
     const controlWrapper = controlWrapperRef.current;
 
     if (image !== null && controlWrapper !== null) {
       event.preventDefault();
-      const {width, height} = image.getBoundingClientRect();
+      const { width, height } = image.getBoundingClientRect();
       const zoom = calculateZoomLevel(image);
       const positioning = positioningRef.current;
       positioning.startWidth = width;
@@ -253,7 +254,7 @@ export default function ImageResizer({
   };
   return (
     <div ref={controlWrapperRef}>
-      {!showCaption && captionsEnabled && (
+      {!showCaption && captionsEnabled && editor.isEditable() && (
         <button
           className="image-caption-button"
           ref={buttonRef}
@@ -263,54 +264,59 @@ export default function ImageResizer({
           Add Caption
         </button>
       )}
-      <div
-        className="image-resizer image-resizer-n"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.north);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-ne"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.north | Direction.east);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-e"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.east);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-se"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.south | Direction.east);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-s"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.south);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-sw"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.south | Direction.west);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-w"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.west);
-        }}
-      />
-      <div
-        className="image-resizer image-resizer-nw"
-        onPointerDown={(event) => {
-          handlePointerDown(event, Direction.north | Direction.west);
-        }}
-      />
+      { editor.isEditable() &&
+        <>
+          <div
+            className="image-resizer image-resizer-n"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.north);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-ne"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.north | Direction.east);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-e"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.east);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-se"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.south | Direction.east);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-s"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.south);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-sw"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.south | Direction.west);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-w"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.west);
+            }}
+          />
+          <div
+            className="image-resizer image-resizer-nw"
+            onPointerDown={(event) => {
+              handlePointerDown(event, Direction.north | Direction.west);
+            }}
+          />
+
+        </>
+      }
     </div>
   );
 }

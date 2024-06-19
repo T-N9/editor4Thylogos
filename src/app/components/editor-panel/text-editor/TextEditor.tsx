@@ -31,6 +31,7 @@ import { useEditorState } from '@/app/context/EditorStateContext';
 
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
+import { ImageNode } from '../nodes/image-node';
 import {
     CodeHighlightNode,
     CodeNode,
@@ -41,6 +42,7 @@ import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
 import PreviewToolBar from '../preview-toolbar';
+import ImagesPlugin from '../plugins/ImagesPlugin';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
@@ -114,7 +116,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             QuoteNode,
             CodeNode,
             CodeHighlightNode,
-            HorizontalRuleNode
+            HorizontalRuleNode,
+            ImageNode
         ],
         editorState: editorState,
         // Handling of errors during update
@@ -143,6 +146,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     />
 
                     <PreviewToolBar/>
+                    <ImagesPlugin/>
                     <LinkPlugin />
                     <ListPlugin />
                     <CheckListPlugin />

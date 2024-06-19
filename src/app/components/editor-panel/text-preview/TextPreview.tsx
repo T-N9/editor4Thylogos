@@ -25,6 +25,7 @@ import { EyeIcon } from "@heroicons/react/16/solid";
 import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
 import { scrollToTop } from "@/app/utils/scrollToTop";
 import PreviewToolBar from "../preview-toolbar";
+import { ImageNode } from "../nodes/image-node";
 
 
 interface TextPreviewProps {
@@ -38,7 +39,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
 }) => {
   const initialConfig = {
     namespace: "Preview Board",
-    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, HorizontalRuleNode],
+    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, HorizontalRuleNode, ImageNode],
     onError(error: Error) {
       console.error(error);
       throw error;

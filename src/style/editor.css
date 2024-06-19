@@ -1114,16 +1114,16 @@ i.page-break,
   text-decoration: line-through;
 }
 
-.editor-shell .editor-image img.focused {
+.editor-shell .is-editing .editor-image img.focused {
   outline: 2px solid rgb(60, 132, 244);
   user-select: none;
 }
 
-.editor-shell .editor-image img.focused.draggable {
+.editor-shell .is-editing .editor-image img.focused.draggable {
   cursor: grab;
 }
 
-.editor-shell .editor-image img.focused.draggable:active {
+.editor-shell .is-editing .editor-image img.focused.draggable:active {
   cursor: grabbing;
 }
 
@@ -1135,7 +1135,7 @@ i.page-break,
 .editor-shell .editor-image .image-caption-container {
   display: block;
   position: absolute;
-  bottom: 4px;
+  bottom: 0px;
   left: 0;
   right: 0;
   padding: 0;

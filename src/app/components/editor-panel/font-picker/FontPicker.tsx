@@ -11,7 +11,7 @@ import {
 
     LexicalEditor,
 } from 'lexical';
-import { dropDownActiveClass } from '../plugins/ToolbarPlugin';
+import { dropDownActiveClass } from '../plugins/ToolbarPlugin/ToolbarPlugin';
 
 const FONT_FAMILY_OPTIONS: [string, string][] = [
     ['Arial', 'Arial'],

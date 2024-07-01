@@ -26,6 +26,8 @@ import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
 import { scrollToTop } from "@/app/utils/scrollToTop";
 import PreviewToolBar from "../preview-toolbar";
 import { ImageNode } from "../nodes/image-node";
+import { LayoutContainerNode } from "../nodes/layout-node/LayoutContainerNode";
+import { LayoutItemNode } from "../nodes/layout-node/LayoutItemNode";
 
 
 interface TextPreviewProps {
@@ -39,7 +41,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
 }) => {
   const initialConfig = {
     namespace: "Preview Board",
-    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, HorizontalRuleNode, ImageNode],
+    nodes: [LinkNode, HeadingNode, ListNode, ListItemNode, QuoteNode, CodeNode, CodeHighlightNode, HorizontalRuleNode, ImageNode, LayoutContainerNode, LayoutItemNode],
     onError(error: Error) {
       console.error(error);
       throw error;
@@ -50,7 +52,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
   };
   // console.log({ editorState })
   return (
-    <main className="w-full inline-block">       
+    <main className="w-full inline-block">
       <PreviewToolBar />
       <section className="">
         <LexicalComposer initialConfig={initialConfig}>

@@ -15,7 +15,7 @@ import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { EditorState, createEditor } from 'lexical';
-import ToolbarPlugin from '../plugins/ToolbarPlugin';
+import ToolbarPlugin from '../plugins/ToolbarPlugin/ToolbarPlugin';
 import TreeViewPlugin from '../plugins/TreeViewPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
@@ -43,6 +43,9 @@ import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
 import PreviewToolBar from '../preview-toolbar';
 import ImagesPlugin from '../plugins/ImagesPlugin';
+import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
+import { LayoutContainerNode } from '../nodes/layout-node/LayoutContainerNode';
+import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
@@ -117,7 +120,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             CodeNode,
             CodeHighlightNode,
             HorizontalRuleNode,
-            ImageNode
+            ImageNode,
+            LayoutContainerNode,
+            LayoutItemNode
         ],
         editorState: editorState,
         // Handling of errors during update
@@ -156,6 +161,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <TabFocusPlugin />
                     <HorizontalRulePlugin />
                     <TreeViewPlugin />
+                    <LayoutPlugin/>
                     {floatingAnchorElem && !isSmallWidthViewport && (
                         <>
                             <DraggableBlockPlugin anchorElem={floatingAnchorElem} />

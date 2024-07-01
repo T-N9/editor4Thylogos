@@ -32,7 +32,7 @@ import {
   UNDO_COMMAND,
 } from 'lexical';
 import useModal from "@/app/hooks/useModal";
-import DropDown, { DropDownItem } from '../../ui/DropDown';
+import DropDown, { DropDownItem } from '../../../ui/DropDown';
 import {
   $createCodeNode,
   $isCodeNode,
@@ -51,7 +51,7 @@ import {
   INSERT_IMAGE_COMMAND,
   InsertImageDialog,
   InsertImagePayload,
-} from "./ImagesPlugin";
+} from "../ImagesPlugin";
 
 import {
   $getSelectionStyleValueForProperty,
@@ -86,11 +86,12 @@ import { sanitizeUrl } from "@/app/utils/url";
 
 /* Icons */
 import { EyeIcon } from "@heroicons/react/24/outline";
-import FontSizeStepper from "../font-size-stepper/FontSizeStepper";
-import FontPicker from "../font-picker/FontPicker";
-import DropdownColorPicker from "../../ui/DropdownColorPicker";
+import FontSizeStepper from "../../font-size-stepper/FontSizeStepper";
+import FontPicker from "../../font-picker/FontPicker";
+import DropdownColorPicker from "../../../ui/DropdownColorPicker";
 
 import { scrollToTop } from "@/app/utils/scrollToTop";
+import InsertLayoutDialog from "../LayoutPlugin/InsertLayoutDialog";
 const LowPriority = 1;
 
 function Divider() {
@@ -766,7 +767,7 @@ export default function ToolbarPlugin({
 
   return (
     <div className="toolbar flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
-      <div className="flex  gap-1">
+      <div className="flex flex-wrap  gap-1">
         <div className="flex gap-1">
           {/* //#region */}
           {/* Undo Redo Buttons */}
@@ -1027,22 +1028,24 @@ export default function ToolbarPlugin({
                   <i className="icon image" />
                   <span className="text">Image</span>
                 </DropDownItem>
-                {/* <DropDownItem
-                  onClick={() => {
-                    showModal('Insert Inline Image', (onClose) => (
-                      <InsertInlineImageDialog
-                        activeEditor={activeEditor}
-                        onClose={onClose}
-                      />
-                    ));
-                  }}
-                  className="item">
-                  <i className="icon image" />
-                  <span className="text">Inline Image</span>
-                </DropDownItem> */}
               </DropDown>
             </>
           )}
+
+          <Divider/>
+          <button
+            onClick={() => {
+              showModal('Insert Columns Layout', (onClose) => (
+                <InsertLayoutDialog
+                  activeEditor={activeEditor}
+                  onClose={onClose}
+                />
+              ));
+            }}
+            className="item">
+            <i className="icon columns" />
+            <span className="text">Columns Layout</span>
+          </button>
 
         </div>
       </div>

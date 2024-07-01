@@ -13,7 +13,7 @@ const PreviewToolBar: React.FC = () => {
     const {handleClickPreview} = usePreviewToolbar();
 
     return (
-        <div className='fixed left-1/2 z-30 -translate-x-1/2 top-2 bg-white px-5 py-1 rounded-md shadow-md'>
+        <div className='fixed right-5 bottom-8 z-30 bg-white px-5 py-1 rounded-md shadow-md'>
             <button
                 onClick={handleClickPreview}
                 className='toolbar-item'

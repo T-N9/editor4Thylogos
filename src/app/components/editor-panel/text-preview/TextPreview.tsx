@@ -50,12 +50,11 @@ const TextPreview: React.FC<TextPreviewProps> = ({
   };
   // console.log({ editorState })
   return (
-    <main className="w-full inline-block">
+    <main className="w-full inline-block">       
+      <PreviewToolBar />
       <section className="">
-        <PreviewToolBar/>
-
         <LexicalComposer initialConfig={initialConfig}>
-          <div className={`editor-container mx-auto`}>
+          <div className={`editor-container mx-auto shadow-lg min-w-full lg:min-w-[1095px]`}>
             <RichTextPlugin
               contentEditable={
                 <div className="editor-scroller">

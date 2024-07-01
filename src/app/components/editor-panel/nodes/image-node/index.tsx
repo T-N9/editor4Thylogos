@@ -162,7 +162,16 @@ import type {
       this.__captionsEnabled = captionsEnabled || captionsEnabled === undefined;
     }
   
+
     exportJSON(): SerializedImageNode {
+      console.log({
+        width : this.__width,
+        height : this.__height,
+        maxWidth : this.__maxWidth,
+        showCaption : this.__showCaption,
+        src : this.__src,
+        type : 'image',
+      })
       return {
         altText: this.getAltText(),
         caption: this.__caption.toJSON(),
@@ -237,7 +246,7 @@ import type {
   export function $createImageNode({
     altText,
     height,
-    maxWidth = 500,
+    maxWidth = 1000,
     captionsEnabled,
     src,
     width,

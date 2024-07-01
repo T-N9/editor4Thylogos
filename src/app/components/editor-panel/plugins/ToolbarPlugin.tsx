@@ -766,8 +766,8 @@ export default function ToolbarPlugin({
 
   return (
     <div className="toolbar flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
-      <div className="flex flex-col gap-1">
-        <div className="flex flex-col  gap-1">
+      <div className="flex  gap-1">
+        <div className="flex gap-1">
           {/* //#region */}
           {/* Undo Redo Buttons */}
           <div className="flex justify-center gap-1">
@@ -852,7 +852,7 @@ export default function ToolbarPlugin({
           {
             blockType !== 'code' &&
             <>
-              <div className="flex flex-wrap justify-start gap-1">
+              <div className="flex justify-start gap-1">
                 <button
                   onClick={() => {
                     editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
@@ -992,7 +992,7 @@ export default function ToolbarPlugin({
 
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="flex gap-1">
           <button
             onClick={() => {
               activeEditor.dispatchCommand(
@@ -1001,8 +1001,8 @@ export default function ToolbarPlugin({
               );
             }}
             className=" toolbar-item">
-            <i className="icon horizontal-rule" />
-            <span className="text">Divider</span>
+            <i className="icon !mr-0 horizontal-rule" />
+            {/* <span className="text">Divider</span> */}
           </button>
 
           {canViewerSeeInsertDropdown && (

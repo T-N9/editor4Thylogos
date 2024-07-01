@@ -134,7 +134,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             <LexicalComposer initialConfig={initialConfig}>
                 <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} setIsPreviewMode={setIsPreviewMode} />
                 <div
-                    className={`editor-container flex-[6]`}>
+                    className={`editor-container mx-auto flex-[6] min-w-full lg:min-w-[1095px]`}>
                     <RichTextPlugin
                         contentEditable={<div className="editor-scroller">
                             <div className="editor" ref={onRef}>

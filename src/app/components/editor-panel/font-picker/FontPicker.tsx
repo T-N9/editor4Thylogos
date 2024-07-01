@@ -15,6 +15,7 @@ import { dropDownActiveClass } from '../plugins/ToolbarPlugin/ToolbarPlugin';
 
 const FONT_FAMILY_OPTIONS: [string, string][] = [
     ['Arial', 'Arial'],
+    [`Yati`, 'Yati'],
     ['Courier New', 'Courier New'],
     ['Georgia', 'Georgia'],
     ['Times New Roman', 'Times New Roman'],

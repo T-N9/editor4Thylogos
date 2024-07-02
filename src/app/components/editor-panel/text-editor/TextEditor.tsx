@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, Dispatch } from 'react';
-import { $getRoot, $getSelection } from 'lexical';
+import { $getRoot, $getSelection, LexicalEditor } from 'lexical';
 import ExampleTheme from '../editor-theme/DefaultTheme';
 
 import { LinkNode } from '@lexical/link'
@@ -46,13 +46,14 @@ import ImagesPlugin from '../plugins/ImagesPlugin';
 import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
 import { LayoutContainerNode } from '../nodes/layout-node/LayoutContainerNode';
 import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
-import { useLocalStorage } from 'react-use'
+import { useLocalStorage } from 'react-use';
+import {$generateHtmlFromNodes} from '@lexical/html';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
 
 interface MyOnChangePluginProps {
-    onChange: (editorState: EditorState) => void;
+    onChange: (editorState: EditorState, editor: LexicalEditor) => void;
 }
 
 interface TextEditorProps {
@@ -65,8 +66,9 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange }) => {
     const [editor] = useLexicalComposerContext();
     const [serializedEditorState, setSerializedEditorState] = useLocalStorage<
     string | null
-  >('my-editor-state-example-key', null)
+  >('my-editor-state-key', null)
   const [isFirstRender, setIsFirstRender] = useState(true)
+
 
   useEffect(() => {
     if (isFirstRender) {
@@ -82,7 +84,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange }) => {
     useEffect(() => {
         return editor.registerUpdateListener(({ editorState }) => {
             setSerializedEditorState(JSON.stringify(editorState.toJSON()))
-            onChange(editorState);
+            onChange(editorState, editor);
         });
     }, [editor, onChange]);
 
@@ -120,10 +122,14 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         };
     }, [isSmallWidthViewport]);
 
-    const onChange = (editorState: EditorState) => {
+    const onChange = (editorState: EditorState, editor: LexicalEditor) => {
         const editorStateJSON = editorState.toJSON();
         setEditorState(JSON.stringify(editorStateJSON));
         // console.log({ editorStateJSON });
+        editor.update(() => {
+            const raw = $generateHtmlFromNodes(editor, null)
+            console.log({rawHtml: raw})
+          })
     };
 
     const initialConfig = {

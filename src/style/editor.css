@@ -31,6 +31,11 @@ body {
   padding: 0 20px;
 }
 
+.standard-container {
+  max-width: 1095px;
+  margin: auto;
+}
+
 header {
   max-width: 580px;
   margin: auto;

@@ -1,6 +1,7 @@
 'use client'
 // EditorStateContext.tsx
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { CAN_USE_DOM } from '../shared/canUseDOM';
 
 interface EditorStateContextProps {
     editorState: string;
@@ -23,17 +24,25 @@ export const useEditorState = () => {
 interface EditorStateProviderProps {
     children: ReactNode;
 }
+const initialData: string = '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":null,"format":"","indent":0,"type":"root","version":1}}';
+
+const localState = (): string => {
+    try {
+        if (CAN_USE_DOM) {
+            console.log('localState is got');
+            return localStorage.getItem('thylogos-editorState') || initialData;
+        } else {
+            return initialData;
+        }
+    } catch (e) {
+        console.error('Error retrieving editor state from localStorage:', e);
+        return initialData;
+    }
+};
 
 export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({ children }) => {
 
-
-    let localState = () : string => {
-        if (typeof window !== "undefined") {
-            return localStorage.getItem('thylogos-editorState') || '';
-        }
-        return ''
-    }
-    const [editorState, setEditorState] = useState<string>(localState() !== '' ? localState : '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":null,"format":"","indent":0,"type":"root","version":1}}');
+    const [editorState, setEditorState] = useState<string>(localState() !== '' ? localState() : initialData);
     const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false);
 
     return (

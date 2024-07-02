@@ -766,7 +766,7 @@ export default function ToolbarPlugin({
   const canViewerSeeInsertCodeButton = !isImageCaption;
 
   return (
-    <div className="toolbar flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
+    <div className="toolbar max-w-[1095px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
       <div className="flex flex-wrap  gap-1">
         <div className="flex gap-1">
           {/* //#region */}

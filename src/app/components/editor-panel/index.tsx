@@ -7,6 +7,7 @@ import TextEditor from './text-editor/TextEditor'
 import { useEditorState } from '@/app/context/EditorStateContext';
 import TextPreview from './text-preview/TextPreview';
 import { debounce } from 'lodash-es';
+import TitleInput from './title-input/TitleInput';
 
 const EditorPanel = () => {
 
@@ -17,32 +18,35 @@ const EditorPanel = () => {
       if (state && typeof window !== undefined) {
         localStorage.setItem('thylogos-editorState', state);
       }
-      // console.log('debounced editorState');
-    }, 300),
-    [] 
+      console.log('debounced editorState');
+    }, 500),
+    []
   );
 
-  useEffect(() => { 
+  useEffect(() => {
     debouncedSave(editorState);
-   
+
     return () => {
       debouncedSave.cancel();
     };
   }, [editorState, debouncedSave]);
 
   return (
-    <main className={`editor-shell mx-auto mt-8 rounded-sm max-w-[1300px] w-[1300px] ${isPreviewMode ? 'inline-block previewing' : 'flex'} flex-col gap-2 text-black relative leading-7 font-normal justify-center`}>
-      {
-        !isPreviewMode &&
-        <TextEditor editorState={editorState} setEditorState={setEditorState} setIsPreviewMode={setIsPreviewMode} />
-      }
+    <>
+      {/* <TitleInput /> */}
+      <main className={`flex justify-center editor-shell mx-auto mt-8 rounded-sm max-w-[1300px] w-[1300px] ${isPreviewMode ? 'inline-block previewing' : 'flex'} flex-col gap-2 text-black relative leading-7 font-normal justify-center`}>
+        {
+          !isPreviewMode &&
+          <TextEditor editorState={editorState} setEditorState={setEditorState} setIsPreviewMode={setIsPreviewMode} />
+        }
 
-      {
-        isPreviewMode &&
-        <TextPreview editorState={editorState} setIsPreviewMode={setIsPreviewMode} />
-      }
+        {
+          isPreviewMode &&
+          <TextPreview editorState={editorState} setIsPreviewMode={setIsPreviewMode} />
+        }
 
-    </main>
+      </main>
+    </>
   )
 }
 

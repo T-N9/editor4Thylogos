@@ -29,7 +29,7 @@ const initialData: string = '{"root":{"children":[{"children":[],"direction":nul
 const localState = (): string => {
     try {
         if (CAN_USE_DOM) {
-            console.log('localState is got');
+            // console.log('localState is got');
             return localStorage.getItem('thylogos-editorState') || initialData;
         } else {
             return initialData;
@@ -42,7 +42,7 @@ const localState = (): string => {
 
 export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({ children }) => {
 
-    const [editorState, setEditorState] = useState<string>(localState() !== '' ? localState() : initialData);
+    const [editorState, setEditorState] = useState<string>(initialData);
     const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false);
 
     return (

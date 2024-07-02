@@ -18,7 +18,7 @@ const EditorPanel = () => {
       if (state && typeof window !== undefined) {
         localStorage.setItem('thylogos-editorState', state);
       }
-      console.log('debounced editorState');
+      // console.log('debounced editorState');
     }, 500),
     []
   );

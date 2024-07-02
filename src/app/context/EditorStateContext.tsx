@@ -28,7 +28,7 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({ childr
 
 
     let localState = () : string => {
-        if (typeof window !== undefined) {
+        if (typeof window !== "undefined") {
             return localStorage.getItem('thylogos-editorState') || '';
         }
         return ''

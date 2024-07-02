@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch } from "react";
+import React, { Dispatch, useEffect } from "react";
 
 /* Lexical Theme */
 import ExampleTheme from "../editor-theme/DefaultTheme";
@@ -50,13 +50,19 @@ const TextPreview: React.FC<TextPreviewProps> = ({
     editable: false,
     theme: ExampleTheme,
   };
+
+  useEffect(() => {
+      scrollToTop()
+  }, [])
   // console.log({ editorState })
   return (
+
+
     <main className="w-full inline-block">
       <PreviewToolBar />
       <section className="">
         <LexicalComposer initialConfig={initialConfig}>
-          <div className={`editor-container mx-auto shadow-lg min-w-full lg:min-w-[1095px]`}>
+          <div className={`editor-container mx-auto min-w-full lg:min-w-[1095px]`}>
             <RichTextPlugin
               contentEditable={
                 <div className="editor-scroller">

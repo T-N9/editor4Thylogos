@@ -18,7 +18,7 @@
 }
 
 button {
-  font-family: Yati !important;
+  font-family: Roboto !important;
 }
 
 body {
@@ -103,6 +103,11 @@ header h1 {
 
 .previewing .editor{
   border: 2px solid transparent ;
+  resize: none !important;;
+}
+
+.previewing .editor-scroller{
+  resize: none !important;;
 }
 
 .test-recorder-output {
@@ -1914,8 +1919,8 @@ button.item.dropdown-item-active i {
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
-  top: 30px;
-  left: 28px;
+  top: 31px;
+  left: 30px;
   right: 28px;
   -webkit-user-select: none;
   user-select: none;

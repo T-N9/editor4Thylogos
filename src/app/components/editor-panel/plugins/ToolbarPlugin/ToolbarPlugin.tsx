@@ -1042,9 +1042,9 @@ export default function ToolbarPlugin({
                 />
               ));
             }}
-            className="item">
+            className="item toolbar-item">
             <i className="icon columns" />
-            <span className="text">Columns Layout</span>
+            <span className="text ">Columns Layout</span>
           </button>
 
         </div>

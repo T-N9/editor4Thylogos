@@ -1,8 +1,3 @@
-import { Dispatch } from 'react'
-
-/* Util */
-import { scrollToTop } from '@/app/utils/scrollToTop';
-
 /* Icons */
 import { EyeIcon } from '@heroicons/react/24/outline';
 

@@ -25,7 +25,8 @@ interface EditorStateProviderProps {
 }
 
 export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({ children }) => {
-    const [editorState, setEditorState] = useState<string>('{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":null,"format":"","indent":0,"type":"root","version":1}}');
+    let localState =localStorage.getItem('thylogos-editorState');
+    const [editorState, setEditorState] = useState<string>(localState ? localState :'{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":null,"format":"","indent":0,"type":"root","version":1}}');
     const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false);
 
     return (

@@ -14,7 +14,7 @@ const EditorPanel = () => {
 
   const debouncedSave = useCallback(
     debounce((state) => {
-      if (state) {
+      if (state && typeof window !== undefined) {
         localStorage.setItem('thylogos-editorState', state);
       }
       // console.log('debounced editorState');

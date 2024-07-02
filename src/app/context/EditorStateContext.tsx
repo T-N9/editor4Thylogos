@@ -1,13 +1,13 @@
 'use client'
 // EditorStateContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 interface EditorStateContextProps {
     editorState: string;
     isPreviewMode: boolean;
     /* actions */
     setEditorState: (state: string) => void;
-    setIsPreviewMode : (state: boolean) => void;
+    setIsPreviewMode: (state: boolean) => void;
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(undefined);
@@ -25,8 +25,16 @@ interface EditorStateProviderProps {
 }
 
 export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({ children }) => {
-    let localState = (typeof window !== undefined) && localStorage.getItem('thylogos-editorState');
-    const [editorState, setEditorState] = useState<string>(localState ? localState :'{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":null,"format":"","indent":0,"type":"root","version":1}}');
+
+    const [localState, setLocalState] = useState('');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedState = localStorage.getItem('thylogos-editorState');
+            setLocalState(savedState || '');
+        }
+    }, []);
+    const [editorState, setEditorState] = useState<string>(localState ? localState : '{"root":{"children":[{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":null,"format":"","indent":0,"type":"root","version":1}}');
     const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false);
 
     return (

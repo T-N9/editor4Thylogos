@@ -44,7 +44,7 @@ import {
   $findMatchingParent,
   $getNearestBlockElementAncestorOrThrow,
   $getNearestNodeOfType,
-  $isEditorIsNestedEditor,
+  // $isEditorIsNestedEditor,
   mergeRegister,
 } from '@lexical/utils';
 import {

@@ -1657,7 +1657,7 @@ button.toolbar-item:disabled .chevron-down {
 }
 
 button.toolbar-item.active {
-  background-color: rgba(223, 232, 250, 0.3);
+  background-color: rgba(188, 211, 255, 0.3);
 }
 
 button.toolbar-item.active i {

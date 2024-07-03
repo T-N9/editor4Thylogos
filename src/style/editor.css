@@ -980,21 +980,6 @@ i.page-break,
   transform: translateX(20px);
 }
 
-.editor-shell h1 {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-.editor-shell h2 {
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.editor-shell h3 {
-  font-size: 22px;
-  font-weight: bold;
-}
-
 .editor-shell ul {
   list-style-type: disc;
 }

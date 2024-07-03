@@ -31,17 +31,26 @@
     font-size: 3rem;
     font-weight: 700;
     margin: 0;
+    padding: 20px 0 ;
+    line-height: 50px;
+    
   }
   .PlaygroundEditorTheme__h2 {
     font-size: 2.75rem;
     font-weight: 700;
     margin: 0;
+    padding: 20px 0 ;
+    line-height: 50px;
+    
 
   }
   .PlaygroundEditorTheme__h3 {
     font-size: 2.5rem;
     font-weight: 700;
     margin: 0;
+    padding: 20px 0 ;
+    line-height: 50px;
+    
 
   }
 
@@ -49,18 +58,27 @@
     font-size:2.25rem;
     font-weight: 700;
     margin: 0;
+    padding: 20px 0 ;
+    line-height: 50px;
+    
   }
 
   .PlaygroundEditorTheme__h5 {
     font-size:1.65rem;
     font-weight: 700;
     margin: 0;
+    padding: 20px 0 ;
+    line-height: 50px;
+    
   }
 
   .PlaygroundEditorTheme__h6 {
     font-size:1.35rem;
     font-weight: 700;
     margin: 0;
+    padding: 20px 0 ;
+    line-height: 50px;
+    
   }
 
   .PlaygroundEditorTheme__indent {

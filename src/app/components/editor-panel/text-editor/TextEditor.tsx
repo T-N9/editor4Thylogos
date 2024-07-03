@@ -40,6 +40,7 @@ import {
 } from "@lexical/code";
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
+import TableOfContentsPlugin from '../plugins/TableOfContentPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
 import PreviewToolBar from '../preview-toolbar';
 import ImagesPlugin from '../plugins/ImagesPlugin';
@@ -47,7 +48,7 @@ import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
 import { LayoutContainerNode } from '../nodes/layout-node/LayoutContainerNode';
 import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
 import { useLocalStorage } from 'react-use';
-import {$generateHtmlFromNodes} from '@lexical/html';
+import { $generateHtmlFromNodes } from '@lexical/html';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
@@ -65,21 +66,21 @@ interface TextEditorProps {
 const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange }) => {
     const [editor] = useLexicalComposerContext();
     const [serializedEditorState, setSerializedEditorState] = useLocalStorage<
-    string | null
-  >('my-editor-state-key', null)
-  const [isFirstRender, setIsFirstRender] = useState(true)
+        string | null
+    >('my-editor-state-key', null)
+    const [isFirstRender, setIsFirstRender] = useState(true)
 
 
-  useEffect(() => {
-    if (isFirstRender) {
-      setIsFirstRender(false)
+    useEffect(() => {
+        if (isFirstRender) {
+            setIsFirstRender(false)
 
-      if (serializedEditorState) {
-        const initialEditorState = editor.parseEditorState(serializedEditorState)
-        editor.setEditorState(initialEditorState)
-      }
-    }
-  }, [isFirstRender, serializedEditorState, editor])
+            if (serializedEditorState) {
+                const initialEditorState = editor.parseEditorState(serializedEditorState)
+                editor.setEditorState(initialEditorState)
+            }
+        }
+    }, [isFirstRender, serializedEditorState, editor])
 
     useEffect(() => {
         return editor.registerUpdateListener(({ editorState }) => {
@@ -128,8 +129,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         // console.log({ editorStateJSON });
         editor.update(() => {
             const raw = $generateHtmlFromNodes(editor, null)
-            console.log({rawHtml: raw})
-          })
+            console.log({ rawHtml: raw })
+        })
     };
 
     const initialConfig = {
@@ -173,8 +174,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                         ErrorBoundary={LexicalErrorBoundary}
                     />
 
-                    <PreviewToolBar/>
-                    <ImagesPlugin/>
+                    <PreviewToolBar />
+                    <ImagesPlugin />
                     <LinkPlugin />
                     <ListPlugin />
                     <CheckListPlugin />
@@ -184,7 +185,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <TabFocusPlugin />
                     <HorizontalRulePlugin />
                     <TreeViewPlugin />
-                    <LayoutPlugin/>
+                    <LayoutPlugin />
+                    <TableOfContentsPlugin />
+
                     {floatingAnchorElem && !isSmallWidthViewport && (
                         <>
                             <DraggableBlockPlugin anchorElem={floatingAnchorElem} />

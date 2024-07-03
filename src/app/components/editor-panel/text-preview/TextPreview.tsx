@@ -28,6 +28,7 @@ import PreviewToolBar from "../preview-toolbar";
 import { ImageNode } from "../nodes/image-node";
 import { LayoutContainerNode } from "../nodes/layout-node/LayoutContainerNode";
 import { LayoutItemNode } from "../nodes/layout-node/LayoutItemNode";
+import TableOfContentsPlugin from "../plugins/TableOfContentPlugin";
 
 
 interface TextPreviewProps {
@@ -75,6 +76,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
               ErrorBoundary={LexicalErrorBoundary}
             />
             <CodeHighlightPlugin />
+            <TableOfContentsPlugin />
           </div>
         </LexicalComposer>
       </section>

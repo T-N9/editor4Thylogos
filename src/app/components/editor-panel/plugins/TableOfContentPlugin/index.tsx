@@ -137,51 +137,56 @@ function TableOfContentsList({
     // console.log({tableOfContents})
 
     return (
-        <div className="table-of-contents shadow border rounded-md">
-            <h1 className='font-bold text-gray-300'>Table of Contents</h1>
-            <ul className="headings">
-                {tableOfContents.map(([key, text, tag], index) => {
-                    if (index === 0) {
-                        return (
-                            <div className="normal-heading-wrapper" key={key}>
-                                <div
-                                    className="first-heading"
-                                    onClick={() => scrollToNode(key, index)}
-                                    role="button"
-                                    tabIndex={0}>
-                                    {('' + text).length > 20
-                                        ? text.substring(0, 20) + '...'
-                                        : text}
-                                </div>
-                                <br />
-                            </div>
-                        );
-                    } else {
-                        return (
-                            <div
-                                className={`normal-heading-wrapper ${selectedKey === key ? 'selected-heading-wrapper' : ''
-                                    }`}
-                                key={key}>
-                                <div
-                                    onClick={() => scrollToNode(key, index)}
-                                    role="button"
-                                    className={indent(tag)}
-                                    tabIndex={0}>
-                                    <li
-                                        className={`normal-heading ${selectedKey === key ? 'selected-heading' : ''
-                                            }
-                    `}>
-                                        {('' + text).length > 27
-                                            ? text.substring(0, 27) + '...'
-                                            : text}
-                                    </li>
-                                </div>
-                            </div>
-                        );
-                    }
-                })}
-            </ul>
-        </div>
+        <>
+            {tableOfContents.length > 0 &&
+                <div className="table-of-contents shadow border rounded-md">
+                    <h1 className='font-bold text-gray-300'>Table of Contents</h1>
+                    <ul className="headings">
+                        {tableOfContents.map(([key, text, tag], index) => {
+                            if (index === 0) {
+                                return (
+                                    <div className="normal-heading-wrapper" key={key}>
+                                        <div
+                                            className="first-heading"
+                                            onClick={() => scrollToNode(key, index)}
+                                            role="button"
+                                            tabIndex={0}>
+                                            {('' + text).length > 20
+                                                ? text.substring(0, 20) + '...'
+                                                : text}
+                                        </div>
+                                        <br />
+                                    </div>
+                                );
+                            } else {
+                                return (
+                                    <div
+                                        className={`normal-heading-wrapper ${selectedKey === key ? 'selected-heading-wrapper' : ''
+                                            }`}
+                                        key={key}>
+                                        <div
+                                            onClick={() => scrollToNode(key, index)}
+                                            role="button"
+                                            className={indent(tag)}
+                                            tabIndex={0}>
+                                            <li
+                                                className={`normal-heading ${selectedKey === key ? 'selected-heading' : ''
+                                                    }
+                                `}>
+                                                {('' + text).length > 27
+                                                    ? text.substring(0, 27) + '...'
+                                                    : text}
+                                            </li>
+                                        </div>
+                                    </div>
+                                );
+                            }
+                        })}
+                    </ul>
+                </div>}
+
+        </>
+
     );
 }
 

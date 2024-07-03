@@ -16,6 +16,7 @@ import {INSERT_LAYOUT_COMMAND} from './LayoutPlugin';
 const LAYOUTS = [
   {label: '2 columns (equal width)', value: '1fr 1fr'},
   {label: '2 columns (25% - 75%)', value: '1fr 3fr'},
+  {label: '2 columns (75% - 75%)', value: '3fr 1fr'},
   {label: '3 columns (equal width)', value: '1fr 1fr 1fr'},
   {label: '3 columns (25% - 50% - 25%)', value: '1fr 2fr 1fr'},
   {label: '4 columns (equal width)', value: '1fr 1fr 1fr 1fr'},

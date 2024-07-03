@@ -17,23 +17,49 @@
     position: relative;
   }
   .PlaygroundEditorTheme__quote {
+    position: relative;
     margin: 0;
-    margin-left: 20px;
+    padding: 0px 50px;
     margin-bottom: 10px;
     font-size: 15px;
     color: rgb(101, 103, 107);
-    border-left-color: rgb(206, 208, 212);
+    /* border-left-color: rgb(206, 208, 212);
     border-left-width: 4px;
     border-left-style: solid;
-    padding-left: 16px;
+    padding-left: 16px; */
   }
+
+  .PlaygroundEditorTheme__quote::before{
+    content: url('/icons/quote-open.svg');
+    position: absolute;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    opacity: 0.2;
+    z-index: -1;
+    top: -10px;
+    left: -10px;
+  }
+
+  .PlaygroundEditorTheme__quote::after{
+    content: url('/icons/quote-close.svg');
+    position: absolute;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    opacity: 0.2;
+    z-index: -1;
+    bottom: -10px;
+    right: -10px;
+  }
+
   .PlaygroundEditorTheme__h1 {
     font-size: 3rem;
     font-weight: 700;
     margin: 0;
     padding: 20px 0 ;
     line-height: 50px;
-    
+
   }
   .PlaygroundEditorTheme__h2 {
     font-size: 2.75rem;
@@ -41,7 +67,7 @@
     margin: 0;
     padding: 20px 0 ;
     line-height: 50px;
-    
+
 
   }
   .PlaygroundEditorTheme__h3 {
@@ -50,7 +76,7 @@
     margin: 0;
     padding: 20px 0 ;
     line-height: 50px;
-    
+
 
   }
 
@@ -60,7 +86,7 @@
     margin: 0;
     padding: 20px 0 ;
     line-height: 50px;
-    
+
   }
 
   .PlaygroundEditorTheme__h5 {
@@ -69,7 +95,7 @@
     margin: 0;
     padding: 20px 0 ;
     line-height: 50px;
-    
+
   }
 
   .PlaygroundEditorTheme__h6 {
@@ -78,7 +104,7 @@
     margin: 0;
     padding: 20px 0 ;
     line-height: 50px;
-    
+
   }
 
   .PlaygroundEditorTheme__indent {

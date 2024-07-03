@@ -1042,17 +1042,6 @@ i.page-break,
   background-repeat: no-repeat;
 }
 
-.editor-shell blockquote {
-
-  margin: 0 0 10px 20px;
-  font-size: 15px;
-  color: #65676b;
-  border-left-color: #ced0d4;
-  border-left-width: 4px;
-  border-left-style: solid;
-  padding-left: 16px;
-}
-
 .editor-shell ul li[role="checkbox"][aria-checked="true"]::after {
   content: "";
   cursor: pointer;

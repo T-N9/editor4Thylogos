@@ -1,8 +1,5 @@
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
 import {
   $createParagraphNode,
-  $getNodeByKey,
-  $getRoot,
   $getSelection,
   $isElementNode,
   $isRangeSelection,
@@ -10,28 +7,18 @@ import {
   $isTextNode,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
-  COMMAND_PRIORITY_CRITICAL,
-  COMMAND_PRIORITY_NORMAL,
   ElementFormatType,
-  FORMAT_ELEMENT_COMMAND,
-  FORMAT_TEXT_COMMAND,
-  INDENT_CONTENT_COMMAND,
-  KEY_MODIFIER_COMMAND,
   LexicalEditor,
   NodeKey,
-  OUTDENT_CONTENT_COMMAND,
   REDO_COMMAND,
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
 import useModal from '@/app/hooks/useModal';
-import DropDown, {DropDownItem} from '../../../ui/DropDown';
 import {
   $createCodeNode,
   $isCodeNode,
-  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
   CODE_LANGUAGE_MAP,
-  getLanguageFriendlyName,
 } from '@lexical/code';
 import {
   $findMatchingParent,
@@ -40,11 +27,6 @@ import {
   // $isEditorIsNestedEditor,
   mergeRegister,
 } from '@lexical/utils';
-import {
-  INSERT_IMAGE_COMMAND,
-  InsertImageDialog,
-  InsertImagePayload,
-} from '../ImagesPlugin';
 
 import {
   $getSelectionStyleValueForProperty,

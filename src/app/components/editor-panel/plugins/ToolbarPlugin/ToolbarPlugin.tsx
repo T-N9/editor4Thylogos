@@ -78,7 +78,7 @@ export default function ToolbarPlugin({
 
   const [editor] = useLexicalComposerContext();
 
-  const {  
+  const {
     activeEditor,
     isEditable,
     isLink,
@@ -99,7 +99,7 @@ export default function ToolbarPlugin({
     selectedElementKey,
 
     canViewerSeeInsertDropdown,
- 
+
     blockTypeToBlockName,
 
     setCanUndo,
@@ -244,162 +244,158 @@ export default function ToolbarPlugin({
   }, [activeEditor, isLink, setIsLinkEditMode]);
 
   return (
-    <div className="toolbar max-w-[1095px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
-      <div className="flex flex-wrap  gap-1">
-        <div className="flex gap-1">
+    <div className="toolbar max-w-[1195px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
+      <div className="flex flex-wrap  gap-3">
+        <UndoRedoButtonGroup editor={editor} />
+        {blockType in blockTypeToBlockName && activeEditor === editor && (
+          <>
+            <BlockFormatDropDown
+              disabled={!isEditable}
+              blockType={blockType}
+              rootType={rootType}
+              editor={activeEditor}
+            />
 
-          <UndoRedoButtonGroup editor={editor} />
-          <Divider />
-          {blockType in blockTypeToBlockName && activeEditor === editor && (
+          </>
+        )}
+
+        {
+          blockType === 'code' ? (
+            <DropDown
+              disabled={!isEditable}
+              buttonClassName="toolbar-item code-language"
+              buttonLabel={getLanguageFriendlyName(codeLanguage)}
+              buttonAriaLabel="Select language">
+              {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
+                return (
+                  <DropDownItem
+                    className={`item ${dropDownActiveClass(
+                      value === codeLanguage,
+                    )}`}
+                    onClick={() => onCodeLanguageSelect(value)}
+                    key={value}>
+                    <span className="text">{name}</span>
+                  </DropDownItem>
+                );
+              })}
+            </DropDown>
+          )
+            :
             <>
-              <BlockFormatDropDown
-                disabled={!isEditable}
-                blockType={blockType}
-                rootType={rootType}
-                editor={activeEditor}
-              />
-              <Divider />
-            </>
-          )}
-
-          {
-            blockType === 'code' ? (
-              <DropDown
-                disabled={!isEditable}
-                buttonClassName="toolbar-item code-language"
-                buttonLabel={getLanguageFriendlyName(codeLanguage)}
-                buttonAriaLabel="Select language">
-                {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
-                  return (
-                    <DropDownItem
-                      className={`item ${dropDownActiveClass(
-                        value === codeLanguage,
-                      )}`}
-                      onClick={() => onCodeLanguageSelect(value)}
-                      key={value}>
-                      <span className="text">{name}</span>
-                    </DropDownItem>
-                  );
-                })}
-              </DropDown>
-            )
-              :
-              <>
-                <div className="flex gap-1 justify-between items-center">
-                  <FontPicker
-                    disabled={!isEditable}
-                    style={'font-family'}
-                    value={fontFamily}
-                    editor={activeEditor}
-                  />
-
-                  <FontSizeStepper
-                    selectionFontSize={fontSize.slice(0, -2)}
-                    editor={activeEditor}
-                    disabled={!isEditable} />
-                </div>
-                <Divider />
-              </>
-          }
-          {
-            blockType !== 'code' &&
-            <>
-              <TextFormatter editor={editor} setIsLinkEditMode={setIsLinkEditMode}/>
-              <Divider />
-            </>
-          }
-
-          <TextAlignmentDropdown
-            disabled={!isEditable}
-            value={elementFormat}
-            editor={activeEditor}
-            isRTL={isRTL}
-          />
-          {" "}
-          {
-            blockType !== 'code' &&
-            <>
-
-              <Divider />
-              <div className="flex gap-1">
-                <DropdownColorPicker
+              <div className="flex gap-3 justify-between items-center">
+                <FontPicker
                   disabled={!isEditable}
-                  buttonClassName="toolbar-item color-picker flex-1"
-                  buttonAriaLabel="Formatting text color"
-                  buttonIconClassName="icon font-color"
-                  color={fontColor}
-                  onChange={onFontColorSelect}
-                  title="text color"
+                  style={'font-family'}
+                  value={fontFamily}
+                  editor={activeEditor}
                 />
-                <DropdownColorPicker
-                  disabled={!isEditable}
-                  buttonClassName="toolbar-item color-picker flex-1"
-                  buttonAriaLabel="Formatting background color"
-                  buttonIconClassName="icon bg-color"
-                  color={bgColor}
-                  onChange={onBgColorSelect}
-                  title="bg color"
-                />
+
+                <FontSizeStepper
+                  selectionFontSize={fontSize.slice(0, -2)}
+                  editor={activeEditor}
+                  disabled={!isEditable} />
               </div>
-              <Divider />
+
             </>
-          }
-        </div>
+        }
 
-        <div className="flex gap-1">
-          <button
-            onClick={() => {
-              activeEditor.dispatchCommand(
-                INSERT_HORIZONTAL_RULE_COMMAND,
-                undefined,
-              );
-            }}
-            className=" toolbar-item">
-            <i className="icon !mr-0 horizontal-rule" />
-          </button>
+        <TextAlignmentDropdown
+          disabled={!isEditable}
+          value={elementFormat}
+          editor={activeEditor}
+          isRTL={isRTL}
+        />
 
-          {canViewerSeeInsertDropdown && (
-            <>
-              <Divider />
-              <DropDown
+        <button
+          onClick={() => {
+            activeEditor.dispatchCommand(
+              INSERT_HORIZONTAL_RULE_COMMAND,
+              undefined,
+            );
+          }}
+          className=" toolbar-item">
+          <i className="icon !mr-0 horizontal-rule" />
+        </button>
+        {" "}
+
+        {
+          blockType !== 'code' &&
+          <>
+            <TextFormatter editor={editor} setIsLinkEditMode={setIsLinkEditMode} />
+
+          </>
+        }
+        {
+          blockType !== 'code' &&
+          <>
+            <div className="flex gap-1">
+              <DropdownColorPicker
                 disabled={!isEditable}
-                buttonClassName="toolbar-item spaced"
-                buttonLabel="Image"
-                buttonAriaLabel="Insert Image"
-                buttonIconClassName="icon plus">
-                <DropDownItem
-                  onClick={() => {
-                    showModal('Insert Image', (onClose) => (
-                      <InsertImageDialog
-                        activeEditor={activeEditor}
-                        onClose={onClose}
-                      />
-                    ));
-                  }}
-                  className="item">
-                  <i className="icon image" />
-                  <span className="text">Image</span>
-                </DropDownItem>
-              </DropDown>
-            </>
-          )}
+                buttonClassName="toolbar-item color-picker flex-1"
+                buttonAriaLabel="Formatting text color"
+                buttonIconClassName="icon font-color"
+                color={fontColor}
+                onChange={onFontColorSelect}
+                title="text color"
+              />
+              <DropdownColorPicker
+                disabled={!isEditable}
+                buttonClassName="toolbar-item color-picker flex-1"
+                buttonAriaLabel="Formatting background color"
+                buttonIconClassName="icon bg-color"
+                color={bgColor}
+                onChange={onBgColorSelect}
+                title="bg color"
+              />
+            </div>
+          </>
+        }
 
-          <Divider />
-          <button
-            onClick={() => {
-              showModal('Insert Columns Layout', (onClose) => (
-                <InsertLayoutDialog
-                  activeEditor={activeEditor}
-                  onClose={onClose}
-                />
-              ));
-            }}
-            className="item toolbar-item">
-            <i className="icon columns" />
-            <span className="text ">Columns Layout</span>
-          </button>
 
-        </div>
+
+
+        {canViewerSeeInsertDropdown && (
+          <>
+
+            <DropDown
+              disabled={!isEditable}
+              buttonClassName="toolbar-item spaced"
+              buttonLabel="Image"
+              buttonAriaLabel="Insert Image"
+              buttonIconClassName="icon plus">
+              <DropDownItem
+                onClick={() => {
+                  showModal('Insert Image', (onClose) => (
+                    <InsertImageDialog
+                      activeEditor={activeEditor}
+                      onClose={onClose}
+                    />
+                  ));
+                }}
+                className="item">
+                <i className="icon image" />
+                <span className="text">Image</span>
+              </DropDownItem>
+            </DropDown>
+          </>
+        )}
+
+
+        <button
+          onClick={() => {
+            showModal('Insert Columns Layout', (onClose) => (
+              <InsertLayoutDialog
+                activeEditor={activeEditor}
+                onClose={onClose}
+              />
+            ));
+          }}
+          className="item toolbar-item">
+          <i className="icon columns" />
+          <span className="text ">Columns Layout</span>
+        </button>
+
+
       </div>
       {modal}
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect, Dispatch } from 'react';
-import { $getRoot, $getSelection, LexicalEditor } from 'lexical';
+import React, { useState, useEffect } from 'react';
+import { LexicalEditor } from 'lexical';
 import ExampleTheme from '../editor-theme/DefaultTheme';
 
 import { LinkNode } from '@lexical/link'
@@ -14,7 +14,7 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { EditorState, createEditor } from 'lexical';
+import { EditorState } from 'lexical';
 import ToolbarPlugin from '../plugins/ToolbarPlugin/ToolbarPlugin';
 import TreeViewPlugin from '../plugins/TreeViewPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
@@ -25,9 +25,6 @@ import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin
 import { CAN_USE_DOM } from '@/app/shared/canUseDOM';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
 import FloatingTextFormatToolbarPlugin from '../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
-import { EyeIcon } from '@heroicons/react/16/solid';
-
-import { useEditorState } from '@/app/context/EditorStateContext';
 
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
@@ -35,8 +32,6 @@ import { ImageNode } from '../nodes/image-node';
 import {
     CodeHighlightNode,
     CodeNode,
-    getCodeLanguages,
-    registerCodeHighlighting,
 } from "@lexical/code";
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';

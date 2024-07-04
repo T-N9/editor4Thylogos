@@ -604,7 +604,7 @@ i.page-break,
 
 .link-editor .button.active,
 .toolbar .button.active {
-  background-color: rgb(223, 232, 250);
+  background-color: rgb(194, 214, 255);
 }
 
 .link-editor .link-input {
@@ -1603,6 +1603,7 @@ button.toolbar-item {
   flex-shrink: 0;
   align-items: center;
   justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
 }
 
 button.toolbar-item:disabled {
@@ -1631,7 +1632,7 @@ button.toolbar-item:disabled .chevron-down {
 }
 
 button.toolbar-item.active {
-  background-color: rgba(188, 211, 255, 0.3);
+  background-color: rgba(215, 215, 215, 0.3);
 }
 
 button.toolbar-item.active i {
@@ -1696,7 +1697,7 @@ button.toolbar-item.active i {
 .toolbar .divider {
   width: 1px;
   height: 100%;
-  background-color: #eee;
+  background-color: white;
   margin: 0 4px;
 }
 
@@ -1869,7 +1870,7 @@ button.item i {
 }
 
 button.item.dropdown-item-active {
-  background-color: rgba(223, 232, 250, 0.3);
+  background-color: rgba(215, 215, 215, 0.3);
 }
 
 button.item.dropdown-item-active i {

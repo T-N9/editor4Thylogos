@@ -14,7 +14,7 @@ import {
   SELECTION_CHANGE_COMMAND,
   UNDO_COMMAND,
 } from 'lexical';
-import useModal from '@/app/hooks/useModal';
+import useModal from '@/hooks/useModal';
 import {
   $createCodeNode,
   $isCodeNode,
@@ -56,8 +56,8 @@ import {useCallback, useEffect, useRef, useState, Dispatch} from 'react';
 import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
 
 /* Utils */
-import {getSelectedNode} from '@/app/utils/getSelectedNode';
-import {sanitizeUrl} from '@/app/utils/url';
+import {getSelectedNode} from '@/utils/getSelectedNode';
+import {sanitizeUrl} from '@/utils/url';
 
 /* Icons */
 import {EyeIcon} from '@heroicons/react/24/outline';
@@ -65,7 +65,7 @@ import FontSizeStepper from '../../font-size-stepper/FontSizeStepper';
 import FontPicker from '../../font-picker/FontPicker';
 import DropdownColorPicker from '../../../ui/DropdownColorPicker';
 
-import {scrollToTop} from '@/app/utils/scrollToTop';
+import {scrollToTop} from '@/utils/scrollToTop';
 import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
 
 const LowPriority = 1;

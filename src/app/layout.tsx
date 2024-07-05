@@ -3,7 +3,7 @@ import "../style/editor.css"
 import "./globals.css";
 import "../style/editor-theme.css"
 
-import { EditorStateProvider } from "./context/EditorStateContext";
+import { EditorStateProvider } from "../context/EditorStateContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",

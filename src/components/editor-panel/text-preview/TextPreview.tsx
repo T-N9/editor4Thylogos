@@ -23,7 +23,7 @@ import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 /* Icons */
 import { EyeIcon } from "@heroicons/react/16/solid";
 import CodeHighlightPlugin from "../plugins/CodeHighlightPlugin";
-import { scrollToTop } from "@/app/utils/scrollToTop";
+import { scrollToTop } from "@/utils/scrollToTop";
 import PreviewToolBar from "../preview-toolbar";
 import { ImageNode } from "../nodes/image-node";
 import { LayoutContainerNode } from "../nodes/layout-node/LayoutContainerNode";

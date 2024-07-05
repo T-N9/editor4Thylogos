@@ -43,7 +43,7 @@ import { useCallback, useEffect, useRef, useState, Dispatch } from "react";
 import { TOGGLE_LINK_COMMAND } from "@lexical/link";
 
 /* Utils */
-import { sanitizeUrl } from "@/app/utils/url";
+import { sanitizeUrl } from "@/utils/url";
 
 /* Icons */
 import FontSizeStepper from "../../font-size-stepper/FontSizeStepper";

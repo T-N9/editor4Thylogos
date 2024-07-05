@@ -4,7 +4,7 @@ import React, { useEffect, useCallback } from 'react'
 import TextEditor from './text-editor/TextEditor'
 
 /* Hooks */
-import { useEditorState } from '@/app/context/EditorStateContext';
+import { useEditorState } from '@/context/EditorStateContext';
 import TextPreview from './text-preview/TextPreview';
 import { debounce } from 'lodash-es';
 import TitleInput from './title-input/TitleInput';

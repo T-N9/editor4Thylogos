@@ -1,5 +1,5 @@
 /* Components */
-import EditorPanel from "./components/editor-panel";
+import EditorPanel from "../components/editor-panel";
 
 
 export default function Home() {

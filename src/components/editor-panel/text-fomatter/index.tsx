@@ -2,7 +2,7 @@ import {FORMAT_TEXT_COMMAND, LexicalEditor} from 'lexical';
 import React, {Dispatch, useCallback} from 'react';
 import useToolbar from '../plugins/ToolbarPlugin/useToolbar';
 import {dropDownActiveClass} from '../plugins/ToolbarPlugin/ToolbarPlugin';
-import {sanitizeUrl} from '@/app/utils/url';
+import {sanitizeUrl} from '@/utils/url';
 
 import {TOGGLE_LINK_COMMAND} from '@lexical/link';
 

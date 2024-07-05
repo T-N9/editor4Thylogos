@@ -22,7 +22,7 @@ import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import DraggableBlockPlugin from '../plugins/DraggableBlockPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 
-import { CAN_USE_DOM } from '@/app/shared/canUseDOM';
+import { CAN_USE_DOM } from '@/shared/canUseDOM';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
 import FloatingTextFormatToolbarPlugin from '../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
 

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {useEditorState} from '@/app/context/EditorStateContext';
+import {useEditorState} from '@/context/EditorStateContext';
 
-import {scrollToTop} from '@/app/utils/scrollToTop';
+import {scrollToTop} from '@/utils/scrollToTop';
 
 const usePreviewToolbar = () => {
   const {isPreviewMode, setIsPreviewMode} = useEditorState();

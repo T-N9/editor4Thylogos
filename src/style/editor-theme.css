@@ -520,6 +520,7 @@ div[readonly] .PlaygroundEditorTheme__layoutItem {
 .blog-panel .PlaygroundEditorTheme__layoutItem {
 
   border: none !important;
+  padding: 8px 0px !important;
 }
 
 @media (max-width: 500px) {

@@ -42,7 +42,7 @@
 
 .table-of-contents {
     color: #65676b;
-    position: fixed;
+    /* position: fixed; */
     top: 200px;
     right: 0px;
     padding: 10px;

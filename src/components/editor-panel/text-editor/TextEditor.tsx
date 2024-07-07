@@ -44,12 +44,14 @@ import { LayoutContainerNode } from '../nodes/layout-node/LayoutContainerNode';
 import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
 import { useLocalStorage } from 'react-use';
 import { $generateHtmlFromNodes } from '@lexical/html';
+import { useEditorState } from '@/context/EditorStateContext';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
 
 interface MyOnChangePluginProps {
     onChange: (editorState: EditorState, editor: LexicalEditor) => void;
+    setEditorState: (state: string) => void;
 }
 
 interface TextEditorProps {
@@ -58,7 +60,7 @@ interface TextEditorProps {
     setIsPreviewMode: (isPreviewMode: boolean) => void;
 }
 
-const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange }) => {
+const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditorState }) => {
     const [editor] = useLexicalComposerContext();
     const [serializedEditorState, setSerializedEditorState] = useLocalStorage<
         string | null
@@ -66,12 +68,15 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange }) => {
     const [isFirstRender, setIsFirstRender] = useState(true)
 
 
+
     useEffect(() => {
         if (isFirstRender) {
             setIsFirstRender(false)
 
             if (serializedEditorState) {
+                // console.log('Set Editor State')
                 const initialEditorState = editor.parseEditorState(serializedEditorState)
+                setEditorState(serializedEditorState)
                 editor.setEditorState(initialEditorState)
             }
         }
@@ -101,6 +106,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         }
     };
 
+    const { isContentShown, setHtmlData, setIsContentShown } = useEditorState();
+
     useEffect(() => {
         const updateViewPortWidth = () => {
             const isNextSmallWidthViewport =
@@ -124,7 +131,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         // console.log({ editorStateJSON });
         editor.update(() => {
             const raw = $generateHtmlFromNodes(editor, null)
-            console.log({ rawHtml: raw })
+            // console.log({ rawHtml: raw })
+            setHtmlData(raw)
         })
     };
 
@@ -181,7 +189,22 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <HorizontalRulePlugin />
                     <TreeViewPlugin />
                     <LayoutPlugin />
-                    <TableOfContentsPlugin />
+                    <aside className={`${isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
+                        <button className='inline-block p-1 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>
+                            {
+                                isContentShown ?
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
+                                    </svg>
+
+                                    :
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                                    </svg>
+                            }
+                        </button>
+                        <TableOfContentsPlugin />
+                    </aside>
 
                     {floatingAnchorElem && !isSmallWidthViewport && (
                         <>
@@ -198,7 +221,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                             />
                         </>
                     )}
-                    <MyOnChangePlugin onChange={onChange} />
+                    <MyOnChangePlugin onChange={onChange} setEditorState={setEditorState} />
                 </div>
             </LexicalComposer>
 

@@ -19,6 +19,11 @@
   position: relative;
 }
 
+.PlaygroundEditorTheme__paragraph img {
+  display: inline-block;
+}
+
+
 .PlaygroundEditorTheme__indent {
   --lexical-indent-base-value: 40px;
 }
@@ -507,10 +512,14 @@
   user-select: none;
 }
 
-div[readonly] .PlaygroundEditorTheme__layoutItem{
+div[readonly] .PlaygroundEditorTheme__layoutItem {
 
   border: none !important;
+}
 
+.blog-panel .PlaygroundEditorTheme__layoutItem {
+
+  border: none !important;
 }
 
 @media (max-width: 500px) {

@@ -164,14 +164,6 @@ import type {
   
 
     exportJSON(): SerializedImageNode {
-      console.log({
-        width : this.__width,
-        height : this.__height,
-        maxWidth : this.__maxWidth,
-        showCaption : this.__showCaption,
-        src : this.__src,
-        type : 'image',
-      })
       return {
         altText: this.getAltText(),
         caption: this.__caption.toJSON(),

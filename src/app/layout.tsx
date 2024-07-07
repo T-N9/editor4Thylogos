@@ -4,6 +4,7 @@ import "./globals.css";
 import "../style/editor-theme.css"
 
 import { EditorStateProvider } from "../context/EditorStateContext";
+import NavBar from "@/components/navigation/NavBar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
+        <NavBar/>
         <EditorStateProvider>
           {children}
         </EditorStateProvider>

@@ -15,8 +15,13 @@
 }
 
 .selected-heading {
-    color: #3578e5;
+    /* color: #3578e5; */
     position: relative;
+    /* text-decoration: underline; */
+}
+
+.normal-heading:hover {
+    color: #3578e5;
     text-decoration: underline;
 }
 
@@ -62,7 +67,7 @@
 }
 
 .headings {
-    list-style: none;
+    list-style: decimal;
     margin-top: 0;
     margin-left: 10px;
     padding: 0;
@@ -99,8 +104,8 @@
 }
 
 .normal-heading-wrapper li {
-    list-style-type: none !important;
-    margin-left: 0px !important;
+    list-style-type: disc !important;
+    margin-left: 20px !important;
 }
 
 .normal-heading-wrapper br {

@@ -56,6 +56,23 @@
   right: -10px;
 }
 
+@media screen and (max-width: 581px) {
+  .PlaygroundEditorTheme__quote::before {
+
+    width: 40px;
+    height: 40px;
+    top: -10px;
+    left: 0px;
+  }
+  
+  .PlaygroundEditorTheme__quote::after {
+    width: 40px;
+    height: 40px;
+    bottom: -10px;
+    right: 0px;
+  }
+}
+
 /* Default styles */
 .PlaygroundEditorTheme__h1 {
   font-size: 3rem;

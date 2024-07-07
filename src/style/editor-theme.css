@@ -513,7 +513,6 @@
 }
 
 div[readonly] .PlaygroundEditorTheme__layoutItem {
-
   border: none !important;
 }
 
@@ -526,5 +525,9 @@ div[readonly] .PlaygroundEditorTheme__layoutItem {
 @media (max-width: 500px) {
   .PlaygroundEditorTheme__layoutContainer {
     grid-template-columns: 1fr !important;
+  }
+
+  .PlaygroundEditorTheme__layoutItem {
+    padding: 8px 0px !important;
   }
 }

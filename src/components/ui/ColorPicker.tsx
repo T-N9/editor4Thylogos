@@ -38,6 +38,7 @@ const basicColors = [
   '#4a4a4a',
   '#9b9b9b',
   '#ffffff',
+  '#ffffff00',
 ];
 
 const WIDTH = 214;

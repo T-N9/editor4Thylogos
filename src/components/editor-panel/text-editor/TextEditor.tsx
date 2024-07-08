@@ -187,7 +187,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <AutoFocusPlugin />
                     <TabFocusPlugin />
                     <HorizontalRulePlugin />
-                    <TreeViewPlugin />
+                    {/* <TreeViewPlugin /> */}
                     <LayoutPlugin />
                     <aside className={`${isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
                         <button className='inline-block p-1 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>

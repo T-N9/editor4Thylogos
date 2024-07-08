@@ -34,7 +34,7 @@ const EditorPanel = () => {
   return (
     <>
       {/* <TitleInput /> */}
-      <main className={`flex justify-center editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] ${isPreviewMode ? 'inline-block previewing' : 'flex'} flex-col gap-2 text-gray-800 relative leading-7 font-normal justify-center`}>
+      <main className={`flex py-8 justify-center editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] ${isPreviewMode ? 'inline-block previewing' : 'flex'} flex-col gap-2 text-gray-800 relative leading-7 font-normal justify-center`}>
         {
           !isPreviewMode &&
           <TextEditor editorState={editorState} setEditorState={setEditorState} setIsPreviewMode={setIsPreviewMode} />

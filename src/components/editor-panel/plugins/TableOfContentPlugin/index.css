@@ -90,7 +90,7 @@
 .headings::before {
     content: ' ';
     position: absolute;
-    height: 220px;
+    height: 70%;
     width: 4px;
     right: 240px;
     margin-top: 5px;

@@ -238,12 +238,13 @@ export default function DropDown({
         type="button"
         disabled={disabled}
         aria-label={buttonAriaLabel || buttonLabel}
-        className={buttonClassName}
+        className={`${buttonClassName} ${buttonLabel  && 'min-w-36'}`}
         onClick={() => setShowDropDown(!showDropDown)}
-        ref={buttonRef}>
+        ref={buttonRef}
+        title={buttonAriaLabel}>
         {buttonIconClassName && <span className={buttonIconClassName} />}
         {buttonLabel && (
-          <span className="text dropdown-button-text">{buttonLabel}</span>
+          <span className="text dropdown-button-text">{buttonLabel.length > 10 ? buttonLabel.substring(0,7) + '...' : buttonLabel}</span>
         )}
         <i className="chevron-down" />
       </button>

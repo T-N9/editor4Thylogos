@@ -75,7 +75,7 @@ export default function FontPicker({
             buttonClassName={'toolbar-item ' + style}
             buttonLabel={value}
             buttonIconClassName={
-                style === 'font-family' ? 'hidden block-type font-family ' : ''
+                style === 'font-family' ? 'icon font-family' : ''
             }
             buttonAriaLabel={buttonAriaLabel}>
             {(style === 'font-family' ? FONT_FAMILY_OPTIONS : FONT_SIZE_OPTIONS).map(

@@ -337,6 +337,7 @@ export default function ToolbarPlugin({
                 buttonAriaLabel="Formatting text color"
                 buttonIconClassName="icon font-color"
                 color={fontColor}
+                // buttonLabel="Font Color"min-w-36
                 onChange={onFontColorSelect}
                 title="text color"
               />
@@ -346,6 +347,7 @@ export default function ToolbarPlugin({
                 buttonAriaLabel="Formatting background color"
                 buttonIconClassName="icon bg-color"
                 color={bgColor}
+                // buttonLabel="Bg Color"
                 onChange={onBgColorSelect}
                 title="bg color"
               />

@@ -46,7 +46,6 @@ import { useLocalStorage } from 'react-use';
 import { $generateHtmlFromNodes } from '@lexical/html';
 import { useEditorState } from '@/context/EditorStateContext';
 import TableOfContent from '../table-of-content';
-import { contentSizers } from '../content-resizer';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }

@@ -64,14 +64,10 @@ header h1 {
   margin: 20px 0 0 0;
 }
 
-.editor-shell {
-
-}
-
 .editor-shell .editor-container {
   /* background: #fff; */
   /* min-width: 1095px; */
-  max-width: 1095px; 
+  /* max-width: 1095px;  */
   position: relative;
   display: block;
   border-bottom-left-radius: 10px;

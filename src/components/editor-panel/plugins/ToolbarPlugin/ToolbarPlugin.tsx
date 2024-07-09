@@ -1,3 +1,4 @@
+'use client'
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -57,6 +58,7 @@ import BlockFormatDropDown from "../../block-format-dropdown";
 import TextFormatter from "../../text-fomatter";
 import Divider from "../../divider";
 import TextAlignmentDropdown from "../../text-alignment-dropdown";
+import ContentResizer from "../../content-resizer";
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -395,7 +397,7 @@ export default function ToolbarPlugin({
           <span className="text ">Columns Layout</span>
         </button>
 
-
+        <ContentResizer/>
       </div>
       {modal}
     </div>

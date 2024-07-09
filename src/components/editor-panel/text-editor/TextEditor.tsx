@@ -45,52 +45,62 @@ import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
 import { useLocalStorage } from 'react-use';
 import { $generateHtmlFromNodes } from '@lexical/html';
 import { useEditorState } from '@/context/EditorStateContext';
+import TableOfContent from '../table-of-content';
+import { contentSizers } from '../content-resizer';
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }
 
 interface MyOnChangePluginProps {
     onChange: (editorState: EditorState, editor: LexicalEditor) => void;
-    setEditorState: (state: string) => void;
+    setEditorState: (state: LocalEditorState) => void;
 }
 
 interface TextEditorProps {
-    editorState: string;
-    setEditorState: (state: string) => void;
+    editorState: LocalEditorState;
+    setEditorState: (state: LocalEditorState) => void;
     setIsPreviewMode: (isPreviewMode: boolean) => void;
+}
+
+export interface LocalEditorState {
+    editorState: string;
+    contentSize: number
 }
 
 const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditorState }) => {
     const [editor] = useLexicalComposerContext();
-    const [serializedEditorState, setSerializedEditorState] = useLocalStorage<
-        string | null
+    const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
+        LocalEditorState | null
     >('my-editor-state-key', null)
     const [isFirstRender, setIsFirstRender] = useState(true)
-
-
 
     useEffect(() => {
         if (isFirstRender) {
             setIsFirstRender(false)
 
-            if (serializedEditorState) {
+            if (localizedEditorState) {
                 // console.log('Set Editor State')
-                const initialEditorState = editor.parseEditorState(serializedEditorState)
-                setEditorState(serializedEditorState)
+                const initialEditorState = editor.parseEditorState(localizedEditorState.editorState)
+                setEditorState({ editorState: localizedEditorState.editorState, contentSize: localizedEditorState.contentSize })
                 editor.setEditorState(initialEditorState)
             }
         }
-    }, [isFirstRender, serializedEditorState, editor])
+    }, [isFirstRender, localizedEditorState?.editorState, editor])
 
     useEffect(() => {
         return editor.registerUpdateListener(({ editorState }) => {
-            setSerializedEditorState(JSON.stringify(editorState.toJSON()))
+            setLocalizedEditorState((prevState) => ({
+                editorState: JSON.stringify(editorState.toJSON()),
+                contentSize: prevState?.contentSize ?? 1,
+            }));
             onChange(editorState, editor);
         });
     }, [editor, onChange]);
 
     return null;
 };
+
+export const contentSizeClass = ['lg:w-[845px] lg:min-w-[845px]', 'lg:w-[1095px] lg:min-w-[1095px]', 'lg:w-[1440px] lg:min-w-[1440px]']
 
 const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, setIsPreviewMode }) => {
     /* States */
@@ -125,9 +135,9 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         };
     }, [isSmallWidthViewport]);
 
-    const onChange = (editorState: EditorState, editor: LexicalEditor) => {
-        const editorStateJSON = editorState.toJSON();
-        setEditorState(JSON.stringify(editorStateJSON));
+    const onChange = (onChangeEditorState: EditorState, editor: LexicalEditor) => {
+        const editorStateJSON = onChangeEditorState.toJSON();
+        setEditorState({ editorState: JSON.stringify(editorStateJSON), contentSize: editorState.contentSize });
         // console.log({ editorStateJSON });
         editor.update(() => {
             const raw = $generateHtmlFromNodes(editor, null)
@@ -151,7 +161,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             LayoutContainerNode,
             LayoutItemNode
         ],
-        editorState: editorState,
+        editorState: editorState.editorState,
         // Handling of errors during update
         onError(error: Error) {
             console.error(error);
@@ -166,7 +176,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
             <LexicalComposer initialConfig={initialConfig}>
                 <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} setIsPreviewMode={setIsPreviewMode} />
                 <div
-                    className={`editor-container mx-auto flex-[6] min-w-full lg:min-w-[1095px]`}>
+                    className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
                     <RichTextPlugin
                         contentEditable={<div className="editor-scroller">
                             <div className="editor" ref={onRef}>
@@ -189,22 +199,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
                     <HorizontalRulePlugin />
                     {/* <TreeViewPlugin /> */}
                     <LayoutPlugin />
-                    <aside className={`${isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
-                        <button className='inline-block p-1 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>
-                            {
-                                isContentShown ?
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
-                                    </svg>
-
-                                    :
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                    </svg>
-                            }
-                        </button>
-                        <TableOfContentsPlugin />
-                    </aside>
+                    <TableOfContent />
 
                     {floatingAnchorElem && !isSmallWidthViewport && (
                         <>

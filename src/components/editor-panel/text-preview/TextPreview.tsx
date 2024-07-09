@@ -32,9 +32,11 @@ import TableOfContentsPlugin from '../plugins/TableOfContentPlugin';
 import { initialData } from '@/context/EditorStateContext';
 
 import { useEditorState } from '@/context/EditorStateContext';
+import TableOfContent from '../table-of-content';
+import { contentSizeClass, LocalEditorState } from '../text-editor/TextEditor';
 
 interface TextPreviewProps {
-  editorState: string;
+  editorState: LocalEditorState;
   setIsPreviewMode: Dispatch<boolean>;
   isBlogMode?: boolean
 }
@@ -63,7 +65,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
       console.error(error);
       throw error;
     },
-    editorState: editorState,
+    editorState: editorState.editorState,
     editable: false,
     theme: ExampleTheme,
   };
@@ -71,9 +73,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
   useEffect(() => {
     scrollToTop();
   }, []);
-  // console.log({same : initialData === editorState })
 
-  const { isContentShown, setIsContentShown } = useEditorState();
   return (
     <main className="inline-block w-full previewing">
       {
@@ -84,7 +84,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
       <section className="">
         <LexicalComposer initialConfig={initialConfig}>
           <div
-            className={`editor-container mx-auto min-w-full lg:min-w-[1095px]`}>
+            className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
             <RichTextPlugin
               contentEditable={
                 <div className="editor-scroller">
@@ -97,27 +97,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
               ErrorBoundary={LexicalErrorBoundary}
             />
             <CodeHighlightPlugin />
-            <aside className={`${isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
-              <button className='inline-block p-1 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>
-
-                {
-                  isContentShown ?
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
-                    </svg>
-
-                    :
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 text-gray-500">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                    </svg>
-
-                }
-
-
-
-              </button>
-              <TableOfContentsPlugin />
-            </aside>
+            <TableOfContent />
           </div>
         </LexicalComposer>
       </section>

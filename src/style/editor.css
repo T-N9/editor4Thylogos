@@ -494,6 +494,10 @@ i.columns {
   background-image: url(/icons/3-columns.svg);
 }
 
+.icon.icon-cube {
+  background-image: url(/icons/cube.svg);
+}
+
 i.tweet {
   background-image: url(/icons/tweet.svg);
 }

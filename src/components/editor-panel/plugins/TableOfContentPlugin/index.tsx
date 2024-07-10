@@ -142,15 +142,15 @@ function TableOfContentsList({
         <>
             {tableOfContents.length > 0 &&
                 <aside className={`${isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
-                    <button className='inline-block p-1 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>
+                    <button className='inline-block py-2 px-4 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>
                         {
                             isContentShown ?
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-6 text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-4 text-gray-500">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
                                 </svg>
 
                                 :
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-6 text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-4 text-gray-500">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
                                 </svg>
                         }
@@ -159,45 +159,46 @@ function TableOfContentsList({
                         <h1 className='font-bold text-gray-300'>Table of Contents</h1>
                         <ul className="headings">
                             {tableOfContents.map(([key, text, tag], index) => {
-                                if (index === 0) {
-                                    return (
-                                        <div className="normal-heading-wrapper" key={key}>
-                                            <div
-                                                className="first-heading"
-                                                onClick={() => scrollToNode(key, index)}
-                                                role="button"
-                                                tabIndex={0}>
-                                                {('' + text).length > 20
-                                                    ? text.substring(0, 20) + '...'
-                                                    : text}
-                                            </div>
-                                            <br />
-                                        </div>
-                                    );
-                                } else {
-                                    return (
+                                // if (index === 0) {
+                                //     return (
+                                //         <div className="normal-heading-wrapper" key={key}>
+                                //             <div
+                                //                 className="first-heading"
+                                //                 onClick={() => scrollToNode(key, index)}
+                                //                 role="button"
+                                //                 tabIndex={0}>
+                                //                 {('' + text).length > 20
+                                //                     ? text.substring(0, 20) + '...'
+                                //                     : text}
+                                //             </div>
+                                //             <br />
+                                //         </div>
+                                //     );
+                                // } else {
+                                return (
+                                    <div
+                                        className={`normal-heading-wrapper ${selectedKey === key ? 'selected-heading-wrapper' : ''
+                                            }`}
+                                        key={key}>
                                         <div
-                                            className={`normal-heading-wrapper ${selectedKey === key ? 'selected-heading-wrapper' : ''
-                                                }`}
-                                            key={key}>
-                                            <div
-                                                onClick={() => scrollToNode(key, index)}
-                                                role="button"
-                                                className={indent(tag)}
-                                                tabIndex={0}>
-                                                <li
-                                                    className={`normal-heading ${selectedKey === key ? 'selected-heading' : ''
-                                                        }
+                                            onClick={() => scrollToNode(key, index)}
+                                            role="button"
+                                            className={indent(tag)}
+                                            tabIndex={0}>
+                                            <li
+                                                className={`normal-heading ${selectedKey === key ? 'selected-heading' : ''
+                                                    }
                                     `}>
-                                                    {('' + text).length > 27
-                                                        ? text.substring(0, 27) + '...'
-                                                        : text}
-                                                </li>
-                                            </div>
+                                                {('' + text).length > 27
+                                                    ? text.substring(0, 27) + '...'
+                                                    : text}
+                                            </li>
                                         </div>
-                                    );
-                                }
-                            })}
+                                    </div>
+                                );
+                                // }
+                            })
+                            }
                         </ul>
                     </div>
                 </aside>

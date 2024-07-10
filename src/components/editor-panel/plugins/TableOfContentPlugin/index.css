@@ -67,9 +67,8 @@
 }
 
 .headings {
-    list-style: decimal;
     margin-top: 0;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     padding: 0;
     overflow: scroll;
     width: 200px;

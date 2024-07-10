@@ -20,6 +20,7 @@ let skipAddingToHistoryStack = false;
 interface ColorPickerProps {
   color: string;
   onChange?: (value: string, skipHistoryStack: boolean) => void;
+  setContextColor ?: (value: string) => void;
 }
 
 const basicColors = [
@@ -47,10 +48,13 @@ const HEIGHT = 150;
 export default function ColorPicker({
   color,
   onChange,
+  setContextColor,
 }: Readonly<ColorPickerProps>): JSX.Element {
   const [selfColor, setSelfColor] = useState(transformColor('hex', color));
   const [inputColor, setInputColor] = useState(color);
   const innerDivRef = useRef(null);
+
+  // console.log({selfColor, inputColor})
 
   const saturationPosition = useMemo(
     () => ({
@@ -72,6 +76,7 @@ export default function ColorPicker({
     if (/^#[0-9A-Fa-f]{6}$/i.test(hex)) {
       const newColor = transformColor('hex', hex);
       setSelfColor(newColor);
+      setContextColor && setContextColor(newColor.hex);
     }
   };
 
@@ -83,6 +88,7 @@ export default function ColorPicker({
     };
     const newColor = transformColor('hsv', newHsv);
     setSelfColor(newColor);
+    setContextColor && setContextColor(newColor.hex);
     setInputColor(newColor.hex);
   };
 
@@ -91,6 +97,7 @@ export default function ColorPicker({
     const newColor = transformColor('hsv', newHsv);
 
     setSelfColor(newColor);
+    setContextColor && setContextColor(newColor.hex);
     setInputColor(newColor.hex);
   };
 
@@ -108,6 +115,7 @@ export default function ColorPicker({
     }
     const newColor = transformColor('hex', color);
     setSelfColor(newColor);
+    setContextColor && setContextColor(newColor.hex);
     setInputColor(newColor.hex);
   }, [color]);
 

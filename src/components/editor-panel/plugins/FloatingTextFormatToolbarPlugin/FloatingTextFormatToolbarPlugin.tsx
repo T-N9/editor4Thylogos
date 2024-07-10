@@ -8,10 +8,10 @@
 
 import './index.css';
 
-import {$isCodeHighlightNode} from '@lexical/code';
-import {$isLinkNode, TOGGLE_LINK_COMMAND} from '@lexical/link';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {mergeRegister} from '@lexical/utils';
+import { $isCodeHighlightNode } from '@lexical/code';
+import { $isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { mergeRegister } from '@lexical/utils';
 import {
   $getSelection,
   $isParagraphNode,
@@ -22,13 +22,21 @@ import {
   LexicalEditor,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import {Dispatch, useCallback, useEffect, useRef, useState} from 'react';
+import { Dispatch, useCallback, useEffect, useRef, useState } from 'react';
 import * as React from 'react';
-import {createPortal} from 'react-dom';
+import { createPortal } from 'react-dom';
 
-import {getDOMRangeRect} from '../../../../utils/getDOMRangeRect';
-import {getSelectedNode} from '../../../../utils/getSelectedNode';
-import {setFloatingElemPosition} from '../../../../utils/setFloatingElemPosition';
+import { getDOMRangeRect } from '../../../../utils/getDOMRangeRect';
+import { getSelectedNode } from '../../../../utils/getSelectedNode';
+import { setFloatingElemPosition } from '../../../../utils/setFloatingElemPosition';
+import DropdownColorPicker from '@/components/ui/DropdownColorPicker';
+import useToolbar from '../ToolbarPlugin/useToolbar';
+import {
+
+  $patchStyleText,
+
+} from '@lexical/selection';
+import { useEditorState } from '@/context/EditorStateContext';
 
 function TextFormatFloatingToolbar({
   editor,
@@ -160,7 +168,7 @@ function TextFormatFloatingToolbar({
       $updateTextFormatFloatingToolbar();
     });
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
+      editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           $updateTextFormatFloatingToolbar();
         });
@@ -176,6 +184,45 @@ function TextFormatFloatingToolbar({
       ),
     );
   }, [editor, $updateTextFormatFloatingToolbar]);
+
+  const {
+    activeEditor,
+    isEditable,
+    bgColor,
+
+    fontColor,
+
+  } = useToolbar(editor)
+
+  const { currentFontColor, currentBgColor, setCurrentFontColor, setCurrentBgColor } = useEditorState();
+  const applyStyleText = useCallback(
+    (styles: Record<string, string>, skipHistoryStack?: boolean) => {
+      activeEditor.update(
+        () => {
+          const selection = $getSelection();
+          if (selection !== null) {
+            $patchStyleText(selection, styles);
+          }
+        },
+        skipHistoryStack ? { tag: 'historic' } : {},
+      );
+    },
+    [activeEditor],
+  );
+
+  const onFontColorSelect = useCallback(
+    (value: string, skipHistoryStack: boolean) => {
+      applyStyleText({ color: value }, skipHistoryStack);
+    },
+    [applyStyleText],
+  );
+
+  const onBgColorSelect = useCallback(
+    (value: string, skipHistoryStack: boolean) => {
+      applyStyleText({ 'background-color': value }, skipHistoryStack);
+    },
+    [applyStyleText],
+  );
 
   return (
     <div ref={popupCharStylesEditorRef} className="floating-text-format-popup">
@@ -253,6 +300,32 @@ function TextFormatFloatingToolbar({
             aria-label="Insert link">
             <i className="format link" />
           </button>
+
+          <DropdownColorPicker
+            disabled={!isEditable}
+            buttonClassName="toolbar-item color-picker flex-1"
+            buttonAriaLabel="Formatting text color"
+            buttonIconClassName="icon font-color"
+            color={fontColor}
+            currentColor={currentFontColor}
+            setContextColor={setCurrentFontColor}
+            // buttonLabel="Font Color"min-w-36
+            onChange={onFontColorSelect}
+            title="text color"
+          />
+
+          <DropdownColorPicker
+            disabled={!isEditable}
+            buttonClassName="toolbar-item color-picker flex-1"
+            buttonAriaLabel="Formatting background color"
+            buttonIconClassName="icon bg-color"
+            color={bgColor}
+            currentColor={currentBgColor}
+            setContextColor={setCurrentBgColor}
+            // buttonLabel="Bg Color"
+            onChange={onBgColorSelect}
+            title="bg color"
+          />
         </>
       )}
     </div>

@@ -16,7 +16,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import {createPortal} from 'react-dom';
+import { createPortal } from 'react-dom';
 
 type DropDownContextType = {
   registerItem: (ref: React.RefObject<HTMLButtonElement>) => void;
@@ -45,7 +45,7 @@ export function DropDownItem({
     throw new Error('DropDownItem must be used within a DropDown');
   }
 
-  const {registerItem} = dropDownContext;
+  const { registerItem } = dropDownContext;
 
   useEffect(() => {
     if (ref && ref.current) {
@@ -150,6 +150,8 @@ export default function DropDown({
   buttonIconClassName,
   children,
   stopCloseOnClickSelf,
+  color,
+  isColored,
 }: {
   disabled?: boolean;
   buttonAriaLabel?: string;
@@ -158,6 +160,8 @@ export default function DropDown({
   buttonLabel?: string;
   children: ReactNode;
   stopCloseOnClickSelf?: boolean;
+  isColored?: boolean;
+  color?: string;
 }): JSX.Element {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -175,7 +179,7 @@ export default function DropDown({
     const dropDown = dropDownRef.current;
 
     if (showDropDown && button !== null && dropDown !== null) {
-      const {top, left} = button.getBoundingClientRect();
+      const { top, left } = button.getBoundingClientRect();
       dropDown.style.top = `${top + button.offsetHeight + dropDownPadding}px`;
       dropDown.style.left = `${Math.min(
         left,
@@ -209,14 +213,14 @@ export default function DropDown({
       };
     }
   }, [dropDownRef, buttonRef, showDropDown, stopCloseOnClickSelf]);
-  
+
   useEffect(() => {
     const handleButtonPositionUpdate = () => {
       if (showDropDown) {
         const button = buttonRef.current;
         const dropDown = dropDownRef.current;
         if (button !== null && dropDown !== null) {
-          const {top} = button.getBoundingClientRect();
+          const { top } = button.getBoundingClientRect();
           const newPosition = top + button.offsetHeight + dropDownPadding;
           if (newPosition !== dropDown.getBoundingClientRect().top) {
             dropDown.style.top = `${newPosition}px`;
@@ -238,13 +242,14 @@ export default function DropDown({
         type="button"
         disabled={disabled}
         aria-label={buttonAriaLabel || buttonLabel}
-        className={`${buttonClassName} ${buttonLabel  && 'min-w-36'}`}
+        className={`${buttonClassName} ${buttonLabel && 'min-w-36'}`}
         onClick={() => setShowDropDown(!showDropDown)}
         ref={buttonRef}
         title={buttonAriaLabel}>
         {buttonIconClassName && <span className={buttonIconClassName} />}
+        {isColored && <span style={{ backgroundColor: color || '#ffffff' }} className={'w-7 h-7 rounded-md shadow mr-2'}></span>}
         {buttonLabel && (
-          <span className="text dropdown-button-text">{buttonLabel.length > 10 ? buttonLabel.substring(0,7) + '...' : buttonLabel}</span>
+          <span className="text dropdown-button-text">{buttonLabel.length > 10 ? buttonLabel.substring(0, 7) + '...' : buttonLabel}</span>
         )}
         <i className="chevron-down" />
       </button>

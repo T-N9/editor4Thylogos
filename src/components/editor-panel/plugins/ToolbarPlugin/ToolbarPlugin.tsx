@@ -59,6 +59,7 @@ import TextFormatter from "../../text-fomatter";
 import Divider from "../../divider";
 import TextAlignmentDropdown from "../../text-alignment-dropdown";
 import ContentResizer from "../../content-resizer";
+import { useEditorState } from "@/context/EditorStateContext";
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -110,6 +111,8 @@ export default function ToolbarPlugin({
 
     $updateToolbar,
   } = useToolbar(editor)
+
+  const { currentFontColor , currentBgColor,  setCurrentFontColor, setCurrentBgColor } = useEditorState();
 
   function getCodeLanguageOptions(): [string, string][] {
     const options: [string, string][] = [];
@@ -337,6 +340,8 @@ export default function ToolbarPlugin({
                 buttonAriaLabel="Formatting text color"
                 buttonIconClassName="icon font-color"
                 color={fontColor}
+                currentColor={currentFontColor}
+                setContextColor={setCurrentFontColor}
                 // buttonLabel="Font Color"min-w-36
                 onChange={onFontColorSelect}
                 title="text color"
@@ -347,6 +352,8 @@ export default function ToolbarPlugin({
                 buttonAriaLabel="Formatting background color"
                 buttonIconClassName="icon bg-color"
                 color={bgColor}
+                currentColor={currentBgColor}
+                setContextColor={setCurrentBgColor}
                 // buttonLabel="Bg Color"
                 onChange={onBgColorSelect}
                 title="bg color"

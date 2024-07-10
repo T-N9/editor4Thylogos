@@ -6,6 +6,7 @@
  *
  */
 
+import { useEffect } from 'react';
 import * as React from 'react';
 
 import ColorPicker from './ColorPicker';
@@ -21,6 +22,8 @@ type Props = {
   stopCloseOnClickSelf?: boolean;
   color: string;
   onChange?: (color: string, skipHistoryStack: boolean) => void;
+  currentColor?: string;
+  setContextColor?: (color: string) => void;
 };
 
 export default function DropdownColorPicker({
@@ -28,14 +31,25 @@ export default function DropdownColorPicker({
   stopCloseOnClickSelf = true,
   color,
   onChange,
+  currentColor,
+  setContextColor,
   ...rest
 }: Props) {
+
+  useEffect(() => {
+
+   if(color.length > 4 && setContextColor) {
+    setContextColor(color)
+   }
+  }, [color]);
   return (
     <DropDown
       {...rest}
       disabled={disabled}
-      stopCloseOnClickSelf={stopCloseOnClickSelf}>
-      <ColorPicker color={color} onChange={onChange} />
+      stopCloseOnClickSelf={stopCloseOnClickSelf}
+      isColored={true}
+      color={currentColor}>
+      <ColorPicker color={color} onChange={onChange} setContextColor={setContextColor} />
     </DropDown>
   );
 }

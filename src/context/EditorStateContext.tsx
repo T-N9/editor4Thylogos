@@ -24,12 +24,16 @@ interface EditorStateContextProps {
   isPreviewMode: boolean;
   htmlData: string;
   isContentShown: boolean;
+  currentFontColor: string;
+  currentBgColor: string;
 
   /* actions */
   setEditorState: (state: ContextEditorState) => void;
   setIsPreviewMode: (state: boolean) => void;
   setHtmlData: (data: string) => void;
   setIsContentShown: (state: boolean) => void;
+  setCurrentFontColor : (state: string) => void;
+  setCurrentBgColor :(state : string) => void;
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(
@@ -63,6 +67,8 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
   const [isPreviewMode, setIsPreviewMode] = useState<boolean>(false);
   const [htmlData, setHtmlData] = useState<string>('');
   const [isContentShown, setIsContentShown] = useState<boolean>(false);
+  const [ currentFontColor, setCurrentFontColor] = useState<string>('');
+  const [ currentBgColor, setCurrentBgColor] = useState<string>('');
 
   return (
     <EditorStateContext.Provider
@@ -75,6 +81,11 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
         setEditorState,
         setIsPreviewMode,
         setHtmlData,
+        currentFontColor,
+        setCurrentFontColor,
+
+        currentBgColor,
+        setCurrentBgColor,
 
         setIsContentShown
       }}>

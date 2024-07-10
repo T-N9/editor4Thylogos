@@ -247,7 +247,7 @@ export default function DropDown({
         ref={buttonRef}
         title={buttonAriaLabel}>
         {buttonIconClassName && <span className={buttonIconClassName} />}
-        {isColored && <span style={{ backgroundColor: color || '#ffffff' }} className={'w-7 h-7 rounded-md shadow mr-2'}></span>}
+        {isColored && <span style={{ backgroundColor: color || '#ffffff' }} className={'w-5 h-5 rounded-md shadow mr-2'}></span>}
         {buttonLabel && (
           <span className="text dropdown-button-text">{buttonLabel.length > 10 ? buttonLabel.substring(0, 7) + '...' : buttonLabel}</span>
         )}

@@ -41,7 +41,7 @@ export default function BlockFormatDropDown({
         className={'item ' + dropDownActiveClass(blockType === 'paragraph')}
         onClick={formatParagraph}>
         <i className="icon paragraph" />
-        <span className="text">Normal</span>
+        <span className="text">Paragraph</span>
       </DropDownItem>
       <DropDownItem
         className={'item ' + dropDownActiveClass(blockType === 'h1')}

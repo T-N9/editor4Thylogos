@@ -100,7 +100,7 @@ header h1 {
   position: relative;
   resize: vertical;
   z-index: -1;
-  border: 2px dashed #85ccffa9 ;
+  border: 2px dashed #222 ;
 }
 
 .previewing .editor{
@@ -497,6 +497,20 @@ i.columns {
 .icon.icon-cube {
   background-image: url(/icons/cube.svg);
 }
+
+.icon.icon-cube-sm {
+  background-image: url(/icons/icon-cube-sm.svg);
+}
+
+.icon.icon-cube-md {
+  background-image: url(/icons/icon-cube-md.svg);
+}
+
+
+.icon.icon-cube-lg {
+  background-image: url(/icons/icon-cube-lg.svg);
+}
+
 
 i.tweet {
   background-image: url(/icons/tweet.svg);

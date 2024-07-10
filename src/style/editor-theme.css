@@ -522,6 +522,12 @@ div[readonly] .PlaygroundEditorTheme__layoutItem {
   padding: 8px 0px !important;
 }
 
+@media (max-width: 1024px) {
+  .PlaygroundEditorTheme__layoutContainer {
+    grid-template-columns: 1fr 1fr!important;
+  }
+}
+
 @media (max-width: 500px) {
   .PlaygroundEditorTheme__layoutContainer {
     grid-template-columns: 1fr !important;

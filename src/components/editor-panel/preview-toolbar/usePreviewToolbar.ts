@@ -13,7 +13,9 @@ const usePreviewToolbar = () => {
   };
 
   return {
+    isPreviewMode,
     handleClickPreview,
+
   };
 };
 

@@ -498,6 +498,10 @@ i.columns {
   background-image: url(/icons/cube.svg);
 }
 
+.icon.icon-myanmar {
+  background-image: url(/icons/myanmar.svg);
+}
+
 .icon.icon-cube-sm {
   background-image: url(/icons/icon-cube-sm.svg);
 }

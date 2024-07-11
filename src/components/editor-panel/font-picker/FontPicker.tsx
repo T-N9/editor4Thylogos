@@ -14,9 +14,9 @@ enum LanguageOptions {
 }
 
 enum BlockTypeOptions {
-  DISPLAY,
-  PARA,
-  WRITING,
+  DISPLAY = 'icon-display',
+  PARA = 'icon-para',
+  WRITING ='icon-writing',
 }
 
 const FONT_FAMILY_OPTIONS: {
@@ -30,6 +30,8 @@ const FONT_FAMILY_OPTIONS: {
   {info: ['Times New Roman', 'Times New Roman']},
   {info: [`Roboto`, 'Roboto']},
   {info: [`Indie Flower`, 'Indie Flower']},
+  {info : ['Noto Sans JP', 'Noto Sans JP'] ,lang: LanguageOptions.JP},
+  {info : ['Noto Serif JP', 'Noto Serif JP'] ,lang: LanguageOptions.JP , type : BlockTypeOptions.WRITING},
 ];
 
 const FONT_SIZE_OPTIONS: [string, string][] = [
@@ -90,12 +92,12 @@ export default function FontPicker({
           }`}
           onClick={() => handleClick(option.info[0])}
           key={option.info[0]}>
-          <span className="text flex gap-3">
+          <span className="text flex gap-1">
             <span>{option.info[1]}</span>{' '}
-            <span>
+            <span className='flex'>
               {' '}
-              {option.lang && <span className={`icon ${option.lang} rounded-md opacity-70`}></span>}
-              {option.type && <span> ({option.type})</span>}
+              {option.lang && <span className={`icon ${option.lang} rounded-md opacity-70 !mr-0`}></span>}
+              {option.type && <span className={`icon ${option.type} rounded-md opacity-70 !mr-0`}></span>}
             </span>{' '}
           </span>
         </DropDownItem>

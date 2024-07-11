@@ -502,6 +502,18 @@ i.columns {
   background-image: url(/icons/myanmar.svg);
 }
 
+.icon.icon-japanese {
+  background-image: url(/icons/japan.svg);
+}
+
+.icon.icon-display {
+  background-image: url(/icons/icon-display.svg);
+}
+
+.icon.icon-writing {
+  background-image: url(/icons/icon-writing.svg);
+}
+
 .icon.icon-cube-sm {
   background-image: url(/icons/icon-cube-sm.svg);
 }

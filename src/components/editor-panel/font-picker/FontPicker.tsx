@@ -26,6 +26,7 @@ const FONT_FAMILY_OPTIONS: {
 }[] = [
   {info: ['Arial', 'Arial']},
   {info: [`Yati`, 'Yati'], lang: LanguageOptions.MM},
+  {info: [`MiSans, Roboto`, 'MiSans'], lang: LanguageOptions.MM},
   {info: ['Courier New', 'Courier New']},
   {info: ['Times New Roman', 'Times New Roman']},
   {info: [`Roboto`, 'Roboto']},
@@ -85,9 +86,9 @@ export default function FontPicker({
       buttonLabel={value}
       buttonIconClassName={style === 'font-family' ? 'icon font-family' : ''}
       buttonAriaLabel={buttonAriaLabel}>
-      {FONT_FAMILY_OPTIONS.map((option) => (
+      {FONT_FAMILY_OPTIONS.map((option, index) => (
         <DropDownItem
-          className={`item ${dropDownActiveClass(value === option.info[0])} ${
+          className={`item ${dropDownActiveClass(value === option.info[1])} ${
             style === 'font-size' ? 'fontsize-item' : ''
           }`}
           onClick={() => handleClick(option.info[0])}

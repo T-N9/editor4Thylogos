@@ -112,7 +112,7 @@ export default function ToolbarPlugin({
     $updateToolbar,
   } = useToolbar(editor)
 
-  const { currentFontColor , currentBgColor,  setCurrentFontColor, setCurrentBgColor } = useEditorState();
+  const { currentFontColor, currentBgColor, setCurrentFontColor, setCurrentBgColor } = useEditorState();
 
   function getCodeLanguageOptions(): [string, string][] {
     const options: [string, string][] = [];
@@ -406,7 +406,7 @@ export default function ToolbarPlugin({
           <span className="text ">Columns Layout</span>
         </button>
 
-        <ContentResizer/>
+        <ContentResizer />
       </div>
       {modal}
     </div>

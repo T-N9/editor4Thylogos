@@ -249,7 +249,7 @@ export default function DropDown({
         {buttonIconClassName && <span className={buttonIconClassName} />}
         {isColored && <span style={{ backgroundColor: color || '#ffffff' }} className={'w-5 h-5 rounded-md shadow mr-2'}></span>}
         {buttonLabel && (
-          <span className="text dropdown-button-text">{buttonLabel.length > 10 ? buttonLabel.substring(0, 7) + '...' : buttonLabel}</span>
+          <span className="text dropdown-button-text">{buttonLabel.split(',')[0].length > 10 ? buttonLabel.split(',')[0].substring(0, 7) + '...' : buttonLabel.split(',')[0]}</span>
         )}
         <i className="chevron-down" />
       </button>

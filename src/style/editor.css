@@ -20,6 +20,91 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Walone';
+  src: url('/fonts/Walone-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Walone';
+  src: url('/fonts/Walone-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Strong';
+  src: url('/fonts/Strong-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Strong';
+  src: url('/fonts/Strong-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Spring Rev';
+  src: url('/fonts/SpringRev.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aqrada';
+  src: url('/fonts/Aqrada.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'U Moe';
+  src: url('/fonts/Umoe.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Modern';
+  src: url('/fonts/Modern.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Yellowtail';
+  src: url('/fonts/Yellowtail.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Burmese Handwriting';
+  src: url('/fonts/Burmese-Handwriting.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Typewriter';
+  src: url('/fonts/Typewriter.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Press';
+  src: url('/fonts/Press.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 button {
   font-family: Roboto !important;
 }
@@ -793,6 +878,8 @@ i.page-break,
   border-radius: 8px;
   min-height: 40px;
   background-color: #fff;
+  max-height: 350px;
+  overflow-y: scroll;
 }
 
 .dropdown .item {
@@ -1168,14 +1255,12 @@ i.page-break,
 
 .editor-shell .editor-image .image-caption-container {
   display: block;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  padding: 0;
+  position: relative;
+  padding: 0px 10px;
   margin: 0;
   border-top: 1px solid #fff;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgb(236, 236, 236);
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
   min-width: 100px;
   color: #000;
   overflow: hidden;

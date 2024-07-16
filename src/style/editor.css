@@ -192,7 +192,7 @@ header h1 {
   position: relative;
   resize: vertical;
   z-index: -1;
-  border: 2px dashed #222 ;
+  border: 2px dashed #e1e1e1 ;
 }
 
 .previewing .editor{
@@ -879,7 +879,7 @@ i.page-break,
   min-height: 40px;
   background-color: #fff;
   max-height: 350px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .dropdown .item {

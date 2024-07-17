@@ -59,6 +59,7 @@ interface TextEditorProps {
     editorState: LocalEditorState;
     setEditorState: (state: LocalEditorState) => void;
     setIsPreviewMode: (isPreviewMode: boolean) => void;
+
 }
 
 export interface LocalEditorState {
@@ -141,7 +142,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
     const onChange = (onChangeEditorState: EditorState, editor: LexicalEditor) => {
         const editorStateJSON = onChangeEditorState.toJSON();
         setEditorState({ editorState: JSON.stringify(editorStateJSON), contentSize: editorState.contentSize });
-        console.log(apiContent === JSON.stringify(editorStateJSON));
+        // console.log(apiContent === JSON.stringify(editorStateJSON));
         editor.update(() => {
             const raw = $generateHtmlFromNodes(editor, null)
             // console.log({ rawHtml: raw })
@@ -149,79 +150,54 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         })
     };
 
-    const initialConfig = {
-        namespace: 'React.js Demo',
-        nodes: [
-            LinkNode,
-            HeadingNode,
-            ListNode,
-            ListItemNode,
-            QuoteNode,
-            CodeNode,
-            CodeHighlightNode,
-            HorizontalRuleNode,
-            ImageNode,
-            LayoutContainerNode,
-            LayoutItemNode
-        ],
-        editorState: editorState.editorState,
-        // Handling of errors during update
-        onError(error: Error) {
-            console.error(error);
-            throw error;
-        },
-        // The editor theme
-        theme: ExampleTheme,
-    };
-
     return (
         <>
-            <LexicalComposer initialConfig={initialConfig}>
-                <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} setIsPreviewMode={setIsPreviewMode} />
-                <div
-                    className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
-                    <RichTextPlugin
-                        contentEditable={<div className="editor-scroller">
-                            <div className="editor" ref={onRef}>
-                                <ContentEditable className='contentEditable' />
-                            </div>
-                        </div>}
-                        placeholder={<Placeholder />}
-                        ErrorBoundary={LexicalErrorBoundary}
-                    />
 
-                    <PreviewToolBar />
-                    <ImagesPlugin />
-                    <LinkPlugin />
-                    <ListPlugin />
-                    <CheckListPlugin />
-                    <CodeHighlightPlugin />
-                    <HistoryPlugin />
-                    <AutoFocusPlugin />
-                    <TabFocusPlugin />
-                    <HorizontalRulePlugin />
-                    {/* <TreeViewPlugin /> */}
-                    <LayoutPlugin />
-                    <TableOfContent />
+            <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} setIsPreviewMode={setIsPreviewMode} />
+            <div
+                className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
+                <RichTextPlugin
+                    contentEditable={<div className="editor-scroller">
+                        <div className="editor" ref={onRef}>
+                            <ContentEditable className='contentEditable' />
+                        </div>
+                    </div>}
+                    placeholder={<Placeholder />}
+                    ErrorBoundary={LexicalErrorBoundary}
+                />
 
-                    {floatingAnchorElem && !isSmallWidthViewport && (
-                        <>
-                            <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
-                            <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
-                            <FloatingLinkEditorPlugin
-                                anchorElem={floatingAnchorElem}
-                                isLinkEditMode={isLinkEditMode}
-                                setIsLinkEditMode={setIsLinkEditMode}
-                            />
-                            <FloatingTextFormatToolbarPlugin
-                                anchorElem={floatingAnchorElem}
-                                setIsLinkEditMode={setIsLinkEditMode}
-                            />
-                        </>
-                    )}
-                    <MyOnChangePlugin onChange={onChange} setEditorState={setEditorState} />
-                </div>
-            </LexicalComposer>
+                <PreviewToolBar />
+                <ImagesPlugin />
+                <LinkPlugin />
+                <ListPlugin />
+                <CheckListPlugin />
+                <CodeHighlightPlugin />
+                <HistoryPlugin />
+                <AutoFocusPlugin />
+                <TabFocusPlugin />
+                <HorizontalRulePlugin />
+                {/* <TreeViewPlugin /> */}
+                <LayoutPlugin />
+                <TableOfContent />
+
+                {floatingAnchorElem && !isSmallWidthViewport && (
+                    <>
+                        <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
+                        <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
+                        <FloatingLinkEditorPlugin
+                            anchorElem={floatingAnchorElem}
+                            isLinkEditMode={isLinkEditMode}
+                            setIsLinkEditMode={setIsLinkEditMode}
+                        />
+                        <FloatingTextFormatToolbarPlugin
+                            anchorElem={floatingAnchorElem}
+                            setIsLinkEditMode={setIsLinkEditMode}
+                        />
+                    </>
+                )}
+                <MyOnChangePlugin onChange={onChange} setEditorState={setEditorState} />
+            </div>
+
 
         </>
     );

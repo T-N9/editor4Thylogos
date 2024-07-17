@@ -60,6 +60,7 @@ import Divider from "../../divider";
 import TextAlignmentDropdown from "../../text-alignment-dropdown";
 import ContentResizer from "../../content-resizer";
 import { useEditorState } from "@/context/EditorStateContext";
+import { useToolbarContext } from "@/context/ToolbarStateContext";
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -82,35 +83,64 @@ export default function ToolbarPlugin({
   const [editor] = useLexicalComposerContext();
 
   const {
-    activeEditor,
-    isEditable,
-    isLink,
-    isRTL,
-    blockType,
-    rootType,
-    codeLanguage,
-    fontFamily,
-    fontSize,
-    fontColor,
-    elementFormat,
-    toolbarRef,
-    bgColor,
-
-    modal,
-    showModal,
-
-    selectedElementKey,
-
     canViewerSeeInsertDropdown,
-
     blockTypeToBlockName,
-
-    setCanUndo,
-    setCanRedo,
-    setActiveEditor,
-
     $updateToolbar,
   } = useToolbar(editor)
+
+  const {
+    activeEditor,
+    setActiveEditor,
+    blockType,
+    setBlockType,
+    rootType,
+    setRootType,
+    selectedElementKey,
+    setSelectedElementKey,
+    toolbarRef,
+    canUndo,
+    setCanUndo,
+    canRedo,
+    setCanRedo,
+    isBold,
+    setIsBold,
+    isItalic,
+    setIsItalic,
+    isUnderline,
+    setIsUnderline,
+    isStrikethrough,
+    setIsStrikethrough,
+    isLink,
+    setIsLink,
+    isEditable,
+    setIsEditable,
+    codeLanguage,
+    setCodeLanguage,
+    fontSize,
+    setFontSize,
+    fontFamily,
+    setFontFamily,
+    fontColor,
+    setFontColor,
+    bgColor,
+    setBgColor,
+    isSubscript,
+    setIsSubscript,
+    isSuperscript,
+    setIsSuperscript,
+    elementFormat,
+    setElementFormat,
+    isRTL,
+    setIsRTL,
+    isCode,
+    setIsCode,
+    isImageCaption,
+    setIsImageCaption,
+    modal,
+    showModal,
+  }=useToolbarContext();
+
+
 
   const { currentFontColor, currentBgColor, setCurrentFontColor, setCurrentBgColor } = useEditorState();
 
@@ -249,10 +279,10 @@ export default function ToolbarPlugin({
   }, [activeEditor, isLink, setIsLinkEditMode]);
 
   return (
-    <div className="toolbar max-w-[1195px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
+    <div className="toolbar max-w-[825px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
       <div className="flex flex-wrap  gap-3">
         <UndoRedoButtonGroup editor={editor} />
-        {blockType in blockTypeToBlockName && activeEditor === editor && (
+        {/* {blockType in blockTypeToBlockName && activeEditor === editor && (
           <>
             <BlockFormatDropDown
               disabled={!isEditable}
@@ -262,7 +292,7 @@ export default function ToolbarPlugin({
             />
 
           </>
-        )}
+        )} */}
 
         {
           blockType === 'code' ? (
@@ -287,7 +317,7 @@ export default function ToolbarPlugin({
           )
             :
             <>
-              <div className="flex gap-3 justify-between items-center">
+              {/* <div className="flex gap-3 justify-between items-center">
                 <FontPicker
                   disabled={!isEditable}
                   style={'font-family'}
@@ -299,17 +329,17 @@ export default function ToolbarPlugin({
                   selectionFontSize={fontSize.slice(0, -2)}
                   editor={activeEditor}
                   disabled={!isEditable} />
-              </div>
+              </div> */}
 
             </>
         }
 
-        <TextAlignmentDropdown
+        {/* <TextAlignmentDropdown
           disabled={!isEditable}
           value={elementFormat}
           editor={activeEditor}
           isRTL={isRTL}
-        />
+        /> */}
 
         <button
           onClick={() => {
@@ -323,14 +353,14 @@ export default function ToolbarPlugin({
         </button>
         {" "}
 
-        {
+        {/* {
           blockType !== 'code' &&
           <>
             <TextFormatter editor={editor} setIsLinkEditMode={setIsLinkEditMode} />
 
           </>
-        }
-        {
+        } */}
+        {/* {
           blockType !== 'code' &&
           <>
             <div className="flex gap-1">
@@ -360,7 +390,7 @@ export default function ToolbarPlugin({
               />
             </div>
           </>
-        }
+        } */}
 
 
 
@@ -393,6 +423,7 @@ export default function ToolbarPlugin({
 
 
         <button
+          type="button"
           onClick={() => {
             showModal('Insert Columns Layout', (onClose) => (
               <InsertLayoutDialog

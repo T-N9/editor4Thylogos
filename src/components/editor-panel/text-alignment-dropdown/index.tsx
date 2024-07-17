@@ -9,11 +9,13 @@ export default function TextAlignmentDropdown({
     value,
     isRTL,
     disabled = false,
+    isOnlyIcon = false,
   }: {
     editor: LexicalEditor;
     value: ElementFormatType;
     isRTL: boolean;
     disabled: boolean;
+    isOnlyIcon?: boolean;
   }) {
     const formatOption = ELEMENT_FORMAT_OPTIONS[value || 'left'];
   
@@ -23,8 +25,9 @@ export default function TextAlignmentDropdown({
         buttonLabel={formatOption.name}
         buttonIconClassName={`icon ${isRTL ? formatOption.iconRTL : formatOption.icon
           }`}
-        buttonClassName="toolbar-item spaced alignment"
-        buttonAriaLabel="Formatting options for text alignment">
+        buttonClassName="toolbar-item spaced alignment text-alignment"
+        buttonAriaLabel="Formatting options for text alignment"
+        isOnlyIcon={isOnlyIcon}>
         <DropDownItem
           onClick={() => {
             editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, 'left');

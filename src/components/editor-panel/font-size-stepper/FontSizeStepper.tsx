@@ -187,7 +187,7 @@ export default function FontSizeStepper({
 
   return (
     <div>
-      <div className='flex gap-1 justify-center items-center'>
+      <div className='flex justify-center items-center'>
         <button
           type="button"
           disabled={

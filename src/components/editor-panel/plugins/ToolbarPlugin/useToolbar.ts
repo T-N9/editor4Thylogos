@@ -67,6 +67,7 @@ import DropdownColorPicker from '../../../ui/DropdownColorPicker';
 
 import {scrollToTop} from '@/utils/scrollToTop';
 import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
+import { useToolbarContext } from '@/context/ToolbarStateContext';
 
 const LowPriority = 1;
 
@@ -130,35 +131,57 @@ export const ELEMENT_FORMAT_OPTIONS: {
   };
 
 const useToolbar = (editor: LexicalEditor) => {
-  const [activeEditor, setActiveEditor] = useState(editor);
-  const [blockType, setBlockType] =
-    useState<keyof typeof blockTypeToBlockName>('paragraph');
-  const [rootType, setRootType] =
-    useState<keyof typeof rootTypeToRootName>('root');
-  const [selectedElementKey, setSelectedElementKey] = useState<NodeKey | null>(
-    null,
-  );
-  const toolbarRef = useRef(null);
-  const [canUndo, setCanUndo] = useState(false);
-  const [canRedo, setCanRedo] = useState(false);
-  const [isBold, setIsBold] = useState(false);
-  const [isItalic, setIsItalic] = useState(false);
-  const [isUnderline, setIsUnderline] = useState(false);
-  const [isStrikethrough, setIsStrikethrough] = useState(false);
-  const [isLink, setIsLink] = useState(false);
-  const [isEditable, setIsEditable] = useState(() => editor.isEditable());
-  const [codeLanguage, setCodeLanguage] = useState<string>('');
-  const [fontSize, setFontSize] = useState<string>('15px');
-  const [fontFamily, setFontFamily] = useState<string>('Arial');
-  const [fontColor, setFontColor] = useState<string>('#000');
-  const [bgColor, setBgColor] = useState<string>('#fff');
-  const [isSubscript, setIsSubscript] = useState(false);
-  const [isSuperscript, setIsSuperscript] = useState(false);
-  const [elementFormat, setElementFormat] = useState<ElementFormatType>('left');
-  const [isRTL, setIsRTL] = useState(false);
-  const [isCode, setIsCode] = useState(false);
-  const [isImageCaption, setIsImageCaption] = useState(false);
-  const [modal, showModal] = useModal();
+  const {
+    activeEditor,
+    setActiveEditor,
+    blockType,
+    setBlockType,
+    rootType,
+    setRootType,
+    selectedElementKey,
+    setSelectedElementKey,
+    toolbarRef,
+    canUndo,
+    setCanUndo,
+    canRedo,
+    setCanRedo,
+    isBold,
+    setIsBold,
+    isItalic,
+    setIsItalic,
+    isUnderline,
+    setIsUnderline,
+    isStrikethrough,
+    setIsStrikethrough,
+    isLink,
+    setIsLink,
+    isEditable,
+    setIsEditable,
+    codeLanguage,
+    setCodeLanguage,
+    fontSize,
+    setFontSize,
+    fontFamily,
+    setFontFamily,
+    fontColor,
+    setFontColor,
+    bgColor,
+    setBgColor,
+    isSubscript,
+    setIsSubscript,
+    isSuperscript,
+    setIsSuperscript,
+    elementFormat,
+    setElementFormat,
+    isRTL,
+    setIsRTL,
+    isCode,
+    setIsCode,
+    isImageCaption,
+    setIsImageCaption,
+    modal,
+    showModal,
+  }=useToolbarContext();
 
   const blockTypeToBlockName = {
     bullet: 'Bulleted List',

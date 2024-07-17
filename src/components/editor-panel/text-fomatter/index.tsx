@@ -1,10 +1,11 @@
-import {FORMAT_TEXT_COMMAND, LexicalEditor} from 'lexical';
-import React, {Dispatch, useCallback} from 'react';
+import { FORMAT_TEXT_COMMAND, LexicalEditor } from 'lexical';
+import React, { Dispatch, useCallback } from 'react';
 import useToolbar from '../plugins/ToolbarPlugin/useToolbar';
-import {dropDownActiveClass} from '../plugins/ToolbarPlugin/ToolbarPlugin';
-import {sanitizeUrl} from '@/utils/url';
+import { dropDownActiveClass } from '../plugins/ToolbarPlugin/ToolbarPlugin';
+import { sanitizeUrl } from '@/utils/url';
 
-import {TOGGLE_LINK_COMMAND} from '@lexical/link';
+import { TOGGLE_LINK_COMMAND } from '@lexical/link';
+import DropDown, { DropDownItem } from '@/components/ui/DropDown';
 
 interface TextFormatterProps {
   editor: LexicalEditor;
@@ -44,8 +45,9 @@ const TextFormatter: React.FC<TextFormatterProps> = ({
 
   return (
     <>
-      <div className="flex justify-start gap-1">
+      <div className="flex formatter-wrapper justify-start gap-1">
         <button
+          type='button'
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
           }}
@@ -54,6 +56,7 @@ const TextFormatter: React.FC<TextFormatterProps> = ({
           <i className="format bold" />
         </button>
         <button
+          type='button'
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'italic');
           }}
@@ -62,6 +65,7 @@ const TextFormatter: React.FC<TextFormatterProps> = ({
           <i className="format italic" />
         </button>
         <button
+          type='button'
           onClick={() => {
             editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'underline');
           }}
@@ -69,19 +73,7 @@ const TextFormatter: React.FC<TextFormatterProps> = ({
           aria-label="Format Underline">
           <i className="format underline" />
         </button>
-        {canViewerSeeInsertCodeButton && (
-          <button
-            disabled={!isEditable}
-            onClick={() => {
-              activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
-            }}
-            className={'toolbar-item spaced ' + (isCode ? 'active' : '')}
-            title="Insert code block"
-            type="button"
-            aria-label="Insert code block">
-            <i className="format code" />
-          </button>
-        )}
+
         <button
           onClick={insertLink}
           className={'toolbar-item spaced ' + (isLink ? 'active' : '')}
@@ -90,45 +82,77 @@ const TextFormatter: React.FC<TextFormatterProps> = ({
           type="button">
           <i className="format link" />
         </button>
-        <button
-          onClick={() => {
-            activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
-          }}
-          className={
-            'toolbar-item spaced' + dropDownActiveClass(isStrikethrough)
-          }
-          title="Strikethrough"
-          aria-label="Format text with a strikethrough">
-          <i className="format strikethrough" />
-          {/* <span className="text"></span> */}
-        </button>
-        <button
-          onClick={() => {
-            activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
-          }}
-          className={'toolbar-item spaced' + dropDownActiveClass(isSubscript)}
-          title="Subscript"
-          aria-label="Format text with a subscript">
-          <i className="format subscript" />
-        </button>
-        <button
-          onClick={() => {
-            activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
-          }}
-          className={
-            'toolbar-item spaced ' + dropDownActiveClass(isSuperscript)
-          }
-          title="Superscript"
-          aria-label="Format text with a superscript">
-          <i className="format superscript" />
-        </button>
-        <button
-          onClick={clearFormatting}
-          className="toolbar-item spaced"
-          title="Clear text formatting"
-          aria-label="Clear all text formatting">
-          <i className="format clear" />
-        </button>
+
+
+        <DropDown
+          disabled={!isEditable}
+          buttonClassName={'toolbar-item'}
+          // buttonLabel={''}
+          buttonIconClassName={'icon dropdown-more'}
+          buttonAriaLabel={'Select more formats'}
+          isDropArrow={false}
+        >
+          <div className='flex flex-col gap-1 p-1'>
+            {canViewerSeeInsertCodeButton && (
+              <button
+                disabled={!isEditable}
+                onClick={() => {
+                  activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'code');
+                }}
+                className={'toolbar-item spaced ' + (isCode ? 'active' : '')}
+                title="Insert code block"
+                type="button"
+                aria-label="Insert code block">
+                <i className="format code" />
+              </button>
+            )}
+            <button
+              type='button'
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough');
+              }}
+              className={
+                'toolbar-item spaced ' + dropDownActiveClass(isStrikethrough)
+              }
+              title="Strikethrough"
+              aria-label="Format text with a strikethrough">
+              <i className="format strikethrough" />
+
+            </button>
+            <button
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript');
+              }}
+              className={'toolbar-item spaced' + dropDownActiveClass(isSubscript)}
+              title="Subscript"
+              type='button'
+              aria-label="Format text with a subscript">
+              <i className="format subscript" />
+            </button>
+            <button
+              onClick={() => {
+                activeEditor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript');
+              }}
+              className={
+                'toolbar-item spaced ' + dropDownActiveClass(isSuperscript)
+              }
+              type='button'
+              title="Superscript"
+              aria-label="Format text with a superscript">
+              <i className="format superscript" />
+            </button>
+            <button
+              onClick={clearFormatting}
+              className="toolbar-item spaced"
+              type='button'
+              title="Clear text formatting"
+              aria-label="Clear all text formatting">
+              <i className="format clear" />
+            </button>
+          </div>
+        </DropDown>
+
+
       </div>
     </>
   );

@@ -1,38 +1,100 @@
 'use client'
 
+/* Nodes */
+import { LinkNode } from '@lexical/link'
+import { HeadingNode, QuoteNode } from '@lexical/rich-text';
+import { ListNode, ListItemNode } from '@lexical/list';
+import { ImageNode } from './nodes/image-node';
+import { CodeHighlightNode, CodeNode } from "@lexical/code";
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
+import { LayoutContainerNode } from './nodes/layout-node/LayoutContainerNode';
+import { LayoutItemNode } from './nodes/layout-node/LayoutItemNode';
+
 /* Components */
 import { Controller } from 'react-hook-form';
 import TextEditor from './text-editor/TextEditor'
 import TextPreview from './text-preview/TextPreview';
 /* Hooks */
 import useFromData from './useFromData';
+import ExampleTheme from './editor-theme/DefaultTheme';
+import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { ToolbarProvider } from '@/context/ToolbarStateContext';
 
 const EditorPanel = () => {
-
   const {
-
     control,
     handleSubmit,
-
     isPreviewMode,
     onSubmit,
     setIsPreviewMode,
-
     editorState,
-
     setEditorState,
     handleTitle,
     handleSlug
   } = useFromData()
 
+  const initialConfig = {
+    namespace: 'My Lexical Board',
+    nodes: [
+      LinkNode,
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      HorizontalRuleNode,
+      ImageNode,
+      LayoutContainerNode,
+      LayoutItemNode,
+    ],
+    onError(error: Error) {
+      console.error(error);
+      throw error;
+    },
+    editorState: editorState.editorState,
+    editable: true,
+    theme: ExampleTheme,
+  };
+
   return (
     <>
+      <LexicalComposer initialConfig={initialConfig}>
+        <InnerEditorPanel 
+          control={control}
+          handleSubmit={handleSubmit}
+          isPreviewMode={isPreviewMode}
+          onSubmit={onSubmit}
+          setIsPreviewMode={setIsPreviewMode}
+          editorState={editorState}
+          setEditorState={setEditorState}
+          handleTitle={handleTitle}
+          handleSlug={handleSlug}
+        />
+      </LexicalComposer>
+    </>
+  )
+}
+
+const InnerEditorPanel = ({
+  control,
+  handleSubmit,
+  isPreviewMode,
+  onSubmit,
+  setIsPreviewMode,
+  editorState,
+  setEditorState,
+  handleTitle,
+  handleSlug
+} : any) => {
+  const [editor] = useLexicalComposerContext();
+
+  return (
+    <ToolbarProvider editor={editor}>
       <main className={`flex py-8 justify-center editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] ${isPreviewMode ? 'inline-block previewing' : 'flex'} flex-col gap-2 text-gray-800 relative leading-7 font-normal justify-center`}>
-        <form className='space-y-4' onSubmit={(e) => { e.preventDefault(); handleSubmit(onSubmit) }}>
+        <form className='blog-form-panel mb-80 space-y-4' onSubmit={(e) => { e.preventDefault(); handleSubmit(onSubmit) }}>
           <div className='max-w-[845px] mx-auto space-y-4'>
-            <button className='inline-flex cursor-pointer items-center gap-1 rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-2 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100' type='submit'>
-              Save
-            </button>
             <Controller
               name="title"
               control={control}
@@ -76,16 +138,10 @@ const EditorPanel = () => {
             <TextPreview editorState={editorState} setIsPreviewMode={setIsPreviewMode} />
           }
 
-          <div className='max-w-[845px] mx-auto space-y-4'>
-            <button className='inline-flex cursor-pointer items-center gap-1 rounded border border-slate-300 bg-gradient-to-b from-slate-50 to-slate-200 px-4 py-2 font-semibold hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-300 focus-visible:ring-offset-2 active:opacity-100' type='submit'>
-              Submit
-            </button>
-          </div>
-
         </form>
       </main>
-    </>
-  )
+    </ToolbarProvider>
+  );
 }
 
-export default EditorPanel
+export default EditorPanel;

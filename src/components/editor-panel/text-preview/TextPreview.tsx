@@ -38,37 +38,15 @@ import { contentSizeClass, LocalEditorState } from '../text-editor/TextEditor';
 interface TextPreviewProps {
   editorState: LocalEditorState;
   setIsPreviewMode: Dispatch<boolean>;
-  isBlogMode?: boolean
+  isBlogMode?: boolean;
 }
 
 const TextPreview: React.FC<TextPreviewProps> = ({
   editorState,
   setIsPreviewMode,
-  isBlogMode
+  isBlogMode,
 }) => {
-  const initialConfig = {
-    namespace: 'Preview Board',
-    nodes: [
-      LinkNode,
-      HeadingNode,
-      ListNode,
-      ListItemNode,
-      QuoteNode,
-      CodeNode,
-      CodeHighlightNode,
-      HorizontalRuleNode,
-      ImageNode,
-      LayoutContainerNode,
-      LayoutItemNode,
-    ],
-    onError(error: Error) {
-      console.error(error);
-      throw error;
-    },
-    editorState: editorState.editorState,
-    editable: false,
-    theme: ExampleTheme,
-  };
+
 
   useEffect(() => {
     scrollToTop();
@@ -82,24 +60,24 @@ const TextPreview: React.FC<TextPreviewProps> = ({
       }
 
       <section className="">
-        <LexicalComposer initialConfig={initialConfig}>
-          <div
-            className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
-            <RichTextPlugin
-              contentEditable={
-                <div className="editor-scroller">
-                  <div className="editor">
-                    <ContentEditable readOnly className="contentEditable" />
-                  </div>
+
+        <div
+          className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
+          <RichTextPlugin
+            contentEditable={
+              <div className="editor-scroller">
+                <div className="editor">
+                  <ContentEditable readOnly className="contentEditable" />
                 </div>
-              }
-              placeholder={null}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
-            <CodeHighlightPlugin />
-            <TableOfContent />
-          </div>
-        </LexicalComposer>
+              </div>
+            }
+            placeholder={null}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
+          <CodeHighlightPlugin />
+          <TableOfContent />
+        </div>
+
       </section>
     </main>
   );

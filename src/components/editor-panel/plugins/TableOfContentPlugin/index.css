@@ -89,6 +89,7 @@
 .headings::before {
     content: ' ';
     position: absolute;
+    display: none;
     /* height: 70%; */
     width: 4px;
     top: 50%;

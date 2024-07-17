@@ -152,6 +152,8 @@ export default function DropDown({
   stopCloseOnClickSelf,
   color,
   isColored,
+  isOnlyIcon = false,
+  isDropArrow = true,
 }: {
   disabled?: boolean;
   buttonAriaLabel?: string;
@@ -162,6 +164,8 @@ export default function DropDown({
   stopCloseOnClickSelf?: boolean;
   isColored?: boolean;
   color?: string;
+  isOnlyIcon?: boolean;
+  isDropArrow?: boolean;
 }): JSX.Element {
   const dropDownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -242,16 +246,21 @@ export default function DropDown({
         type="button"
         disabled={disabled}
         aria-label={buttonAriaLabel || buttonLabel}
-        className={`${buttonClassName} ${buttonLabel && 'min-w-36'}`}
+        className={`${buttonClassName} gap-1 ${buttonLabel && !isOnlyIcon && 'min-w-36'} ${buttonIconClassName === 'icon font-family' && 'min-w-36'}`}
         onClick={() => setShowDropDown(!showDropDown)}
         ref={buttonRef}
         title={buttonAriaLabel}>
         {buttonIconClassName && <span className={buttonIconClassName} />}
-        {isColored && <span style={{ backgroundColor: color || '#ffffff' }} className={'w-5 h-5 rounded-md shadow mr-2'}></span>}
-        {buttonLabel && (
-          <span className="text dropdown-button-text">{buttonLabel.split(',')[0].length > 10 ? buttonLabel.split(',')[0].substring(0, 7) + '...' : buttonLabel.split(',')[0]}</span>
-        )}
-        <i className="chevron-down" />
+        {isColored && <span style={{ backgroundColor: color || '#ffffff' }} className={'w-5 h-5 rounded-md shadow mr-2 hidden'}></span>}
+        {buttonLabel && !isOnlyIcon ? (
+          <span className="text dropdown-button-text">
+            {buttonLabel.split(',')[0].length > 10 ? buttonLabel.split(',')[0].substring(0, 7) + '...' : buttonLabel.split(',')[0]}
+          </span>
+        ) : buttonIconClassName === 'icon font-family' ? (
+          <span className="text dropdown-button-text">Mixed</span>
+        ) : null}
+        {isDropArrow && <i className="chevron-down" />}
+
       </button>
 
       {showDropDown &&

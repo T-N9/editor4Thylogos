@@ -113,6 +113,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.blog-form-panel input{
+  font-family: Roboto;
+}
+
 body {
 
   margin: 0;
@@ -1576,6 +1580,8 @@ i.page-break,
 i.chevron-down {
   background-color: transparent;
   background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
   display: inline-block;
   height: 8px;
   width: 8px;
@@ -1727,6 +1733,7 @@ button.toolbar-item {
   align-items: center;
   justify-content: space-between;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  background-color: white;
 }
 
 button.toolbar-item:disabled {
@@ -1801,15 +1808,15 @@ button.toolbar-item.active i {
 .toolbar i.chevron-down,
 .toolbar-item i.chevron-down {
   margin-top: 3px;
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
   display: flex;
   user-select: none;
 }
 
 .toolbar i.chevron-down.inside {
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 10px;
   display: flex;
   margin-left: -25px;
   margin-top: 11px;
@@ -2029,7 +2036,7 @@ button.item.dropdown-item-active i {
   user-select: none;
   white-space: nowrap;
   display: inline-block;
-  pointer-events: none
+  pointer-events: none;
 }
 
 .contentEditable {

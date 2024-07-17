@@ -14,11 +14,13 @@ export default function BlockFormatDropDown({
   blockType,
   rootType,
   disabled = false,
+  isOnlyIcon = false,
 }: {
   blockType: keyof typeof blockTypeToBlockName;
   rootType: keyof typeof rootTypeToRootName;
   editor: LexicalEditor;
   disabled?: boolean;
+  isOnlyIcon?: boolean;
 }): JSX.Element {
   const {
     formatBulletList,
@@ -36,7 +38,8 @@ export default function BlockFormatDropDown({
       buttonClassName="toolbar-item block-controls"
       buttonIconClassName={'icon block-type ' + blockType}
       buttonLabel={blockTypeToBlockName[blockType]}
-      buttonAriaLabel="Formatting options for text style">
+      buttonAriaLabel="Formatting options for text style"
+      isOnlyIcon={isOnlyIcon}>
       <DropDownItem
         className={'item ' + dropDownActiveClass(blockType === 'paragraph')}
         onClick={formatParagraph}>

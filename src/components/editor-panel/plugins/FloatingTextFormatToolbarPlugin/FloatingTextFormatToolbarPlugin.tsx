@@ -37,6 +37,13 @@ import {
 
 } from '@lexical/selection';
 import { useEditorState } from '@/context/EditorStateContext';
+import TextFormatter from '../../text-fomatter';
+import Divider from '../../divider';
+import BlockFormatDropDown from '../../block-format-dropdown';
+import FontPicker from '../../font-picker/FontPicker';
+import { useToolbarContext } from '@/context/ToolbarStateContext';
+import FontSizeStepper from '../../font-size-stepper/FontSizeStepper';
+import TextAlignmentDropdown from '../../text-alignment-dropdown';
 
 function TextFormatFloatingToolbar({
   editor,
@@ -185,14 +192,30 @@ function TextFormatFloatingToolbar({
     );
   }, [editor, $updateTextFormatFloatingToolbar]);
 
+  // const {
+  //   activeEditor,
+  //   isEditable,
+  //   bgColor,
+  //   blockType,
+  //   rootType,
+  //   fontColor,
+  //   fontFamily
+
+  // } = useToolbar(editor)
+
   const {
     activeEditor,
     isEditable,
     bgColor,
-
+    blockType,
+    rootType,
     fontColor,
-
-  } = useToolbar(editor)
+    fontFamily,
+    fontSize,
+    elementFormat,
+    isRTL
+  }
+    = useToolbarContext()
 
   const { currentFontColor, currentBgColor, setCurrentFontColor, setCurrentBgColor } = useEditorState();
   const applyStyleText = useCallback(
@@ -228,7 +251,29 @@ function TextFormatFloatingToolbar({
     <div ref={popupCharStylesEditorRef} className="floating-text-format-popup">
       {editor.isEditable() && (
         <>
-          <button
+          <div className='flex flex-row items-center gap-1'>
+            <FontPicker
+              disabled={!isEditable}
+              style={'font-size'}
+              value={fontSize}
+              editor={activeEditor}
+            />
+            <BlockFormatDropDown
+              disabled={!isEditable}
+              blockType={blockType}
+              rootType={rootType}
+              editor={activeEditor}
+              isOnlyIcon={true}
+            />
+            <FontPicker
+              disabled={!isEditable}
+              style={'font-family'}
+              value={fontFamily}
+              editor={activeEditor}
+            />
+          </div>
+          <Divider />
+          {/* <button
             type="button"
             onClick={() => {
               editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'bold');
@@ -299,33 +344,46 @@ function TextFormatFloatingToolbar({
             className={'popup-item spaced ' + (isLink ? 'active' : '')}
             aria-label="Insert link">
             <i className="format link" />
-          </button>
+          </button> */}
+          <TextFormatter editor={editor} setIsLinkEditMode={setIsLinkEditMode} />
 
-          <DropdownColorPicker
-            disabled={!isEditable}
-            buttonClassName="toolbar-item color-picker flex-1"
-            buttonAriaLabel="Formatting text color"
-            buttonIconClassName="icon font-color"
-            color={fontColor}
-            currentColor={currentFontColor}
-            setContextColor={setCurrentFontColor}
-            // buttonLabel="Font Color"min-w-36
-            onChange={onFontColorSelect}
-            title="text color"
-          />
+          <Divider />
+          <div className='flex gap-1'>
 
-          <DropdownColorPicker
-            disabled={!isEditable}
-            buttonClassName="toolbar-item color-picker flex-1"
-            buttonAriaLabel="Formatting background color"
-            buttonIconClassName="icon bg-color"
-            color={bgColor}
-            currentColor={currentBgColor}
-            setContextColor={setCurrentBgColor}
-            // buttonLabel="Bg Color"
-            onChange={onBgColorSelect}
-            title="bg color"
-          />
+            <DropdownColorPicker
+              disabled={!isEditable}
+              buttonClassName="toolbar-item color-picker flex-1"
+              buttonAriaLabel="Formatting text color"
+              buttonIconClassName="icon font-color"
+              color={fontColor}
+              currentColor={currentFontColor}
+              setContextColor={setCurrentFontColor}
+              // buttonLabel="Font Color"min-w-36
+              onChange={onFontColorSelect}
+              title="text color"
+            />
+
+            <DropdownColorPicker
+              disabled={!isEditable}
+              buttonClassName="toolbar-item color-picker flex-1"
+              buttonAriaLabel="Formatting background color"
+              buttonIconClassName="icon bg-color"
+              color={bgColor}
+              currentColor={currentBgColor}
+              setContextColor={setCurrentBgColor}
+              // buttonLabel="Bg Color"
+              onChange={onBgColorSelect}
+              title="bg color"
+            />
+
+            <TextAlignmentDropdown
+              disabled={!isEditable}
+              value={elementFormat}
+              editor={activeEditor}
+              isRTL={isRTL}
+              isOnlyIcon={true}
+            />
+          </div>
         </>
       )}
     </div>

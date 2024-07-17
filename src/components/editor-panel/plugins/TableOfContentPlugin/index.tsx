@@ -136,13 +136,12 @@ function TableOfContentsList({
     }, [tableOfContents, editor]);
 
     const { isContentShown, setIsContentShown } = useEditorState()
-    // console.log({tableOfContents})
 
     return (
         <>
             {tableOfContents.length > 0 &&
                 <aside className={`${isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
-                    <button className='inline-block py-2 px-4 rounded-md bg-gray-200 shadow' onClick={() => setIsContentShown(!isContentShown)}>
+                    <button type='button' className='inline-block py-2 px-2 rounded-md rounded-tr-none rounded-br-none bg-gray-100 shadow' onClick={() => setIsContentShown(!isContentShown)}>
                         {
                             isContentShown ?
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-4 text-gray-500">
@@ -155,26 +154,10 @@ function TableOfContentsList({
                                 </svg>
                         }
                     </button>
-                    <div className="table-of-contents shadow border rounded-md">
+                    <div className="table-of-contents shadow border-r-4 border-gray-600">
                         <h1 className='font-bold text-gray-300'>Table of Contents</h1>
                         <ul className="headings">
                             {tableOfContents.map(([key, text, tag], index) => {
-                                // if (index === 0) {
-                                //     return (
-                                //         <div className="normal-heading-wrapper" key={key}>
-                                //             <div
-                                //                 className="first-heading"
-                                //                 onClick={() => scrollToNode(key, index)}
-                                //                 role="button"
-                                //                 tabIndex={0}>
-                                //                 {('' + text).length > 20
-                                //                     ? text.substring(0, 20) + '...'
-                                //                     : text}
-                                //             </div>
-                                //             <br />
-                                //         </div>
-                                //     );
-                                // } else {
                                 return (
                                     <div
                                         className={`normal-heading-wrapper ${selectedKey === key ? 'selected-heading-wrapper' : ''
@@ -196,7 +179,6 @@ function TableOfContentsList({
                                         </div>
                                     </div>
                                 );
-                                // }
                             })
                             }
                         </ul>

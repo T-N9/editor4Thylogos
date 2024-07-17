@@ -20,6 +20,7 @@ import TextPreview from '../editor-panel/text-preview/TextPreview';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
+import PreviewToolBar from '../editor-panel/preview-toolbar';
 
 interface HeadingInfo {
     content: string;
@@ -68,33 +69,36 @@ const BlogPost = () => {
     const initialConfig = {
         namespace: 'My Lexical Board',
         nodes: [
-          LinkNode,
-          HeadingNode,
-          ListNode,
-          ListItemNode,
-          QuoteNode,
-          CodeNode,
-          CodeHighlightNode,
-          HorizontalRuleNode,
-          ImageNode,
-          LayoutContainerNode,
-          LayoutItemNode,
+            LinkNode,
+            HeadingNode,
+            ListNode,
+            ListItemNode,
+            QuoteNode,
+            CodeNode,
+            CodeHighlightNode,
+            HorizontalRuleNode,
+            ImageNode,
+            LayoutContainerNode,
+            LayoutItemNode,
         ],
         onError(error: Error) {
-          console.error(error);
-          throw error;
+            console.error(error);
+            throw error;
         },
         editorState: editorState.editorState,
         editable: false,
         theme: ExampleTheme,
-      };
-    
+    };
+
 
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-800 relative leading-7 font-normal justify-center`}>
-                <TextPreview editorState={editorState} isBlogMode={true} setIsPreviewMode={setIsPreviewMode}/>
+                <TextPreview editorState={editorState} isBlogMode={true} setIsPreviewMode={setIsPreviewMode} />
             </main>
+
+            <PreviewToolBar />
+
         </LexicalComposer>
     )
 }

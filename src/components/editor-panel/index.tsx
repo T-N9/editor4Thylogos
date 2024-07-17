@@ -132,12 +132,6 @@ const InnerEditorPanel = ({
             !isPreviewMode &&
             <TextEditor editorState={editorState} setEditorState={setEditorState} setIsPreviewMode={setIsPreviewMode} />
           }
-
-          {
-            isPreviewMode &&
-            <TextPreview editorState={editorState} setIsPreviewMode={setIsPreviewMode} />
-          }
-
         </form>
       </main>
     </ToolbarProvider>

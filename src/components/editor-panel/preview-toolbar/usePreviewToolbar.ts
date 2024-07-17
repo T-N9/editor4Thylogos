@@ -1,21 +1,26 @@
-import React from 'react';
+import {usePathname, useRouter} from 'next/navigation';
 
 import {useEditorState} from '@/context/EditorStateContext';
 
-import {scrollToTop} from '@/utils/scrollToTop';
-
 const usePreviewToolbar = () => {
   const {isPreviewMode, setIsPreviewMode} = useEditorState();
-
+  const pathname = usePathname();
+  const router = useRouter();
   const handleClickPreview = () => {
-    scrollToTop();
-    setIsPreviewMode(!isPreviewMode);
+    console.log({pathname});
+    if (pathname === '/preview') {
+      setIsPreviewMode(false);
+      router.push('/');
+
+    }else {
+      setIsPreviewMode(true);
+      router.push('/preview')
+    }
   };
 
   return {
     isPreviewMode,
     handleClickPreview,
-
   };
 };
 

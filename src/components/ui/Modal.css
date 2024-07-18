@@ -60,5 +60,6 @@
   background-color: #ddd;
 }
 .Modal__content {
+  font-family: Roboto;
   padding-top: 20px;
 }

@@ -21,6 +21,7 @@ const UndoRedoButtonGroup: React.FC<UndoRedoButtonGroupProps> = ({ editor }) => 
     return (
         <div className="flex justify-center gap-1">
             <button
+                type='button'
                 disabled={!canUndo}
                 onClick={() => {
                     editor.dispatchCommand(UNDO_COMMAND, undefined);
@@ -31,6 +32,7 @@ const UndoRedoButtonGroup: React.FC<UndoRedoButtonGroupProps> = ({ editor }) => 
                 <i className="format undo" />
             </button>
             <button
+                type='button'
                 disabled={!canRedo}
                 onClick={() => {
                     editor.dispatchCommand(REDO_COMMAND, undefined);

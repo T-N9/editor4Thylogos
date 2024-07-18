@@ -138,7 +138,7 @@ export default function ToolbarPlugin({
     setIsImageCaption,
     modal,
     showModal,
-  }=useToolbarContext();
+  } = useToolbarContext();
 
 
 
@@ -334,14 +334,15 @@ export default function ToolbarPlugin({
             </>
         }
 
-        {/* <TextAlignmentDropdown
+        <TextAlignmentDropdown
           disabled={!isEditable}
           value={elementFormat}
           editor={activeEditor}
           isRTL={isRTL}
-        /> */}
+        />
 
         <button
+          type="button"
           onClick={() => {
             activeEditor.dispatchCommand(
               INSERT_HORIZONTAL_RULE_COMMAND,

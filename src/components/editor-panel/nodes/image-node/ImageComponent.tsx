@@ -67,6 +67,7 @@ import Placeholder from '@/components/ui/Placeholder';
 import { EmojiNode } from '../emoji-node';
 import { $isImageNode } from '.';
 import { KeywordNode } from '../keyword-node/KeywordNode';
+import FloatingTextFormatToolbarPlugin from '../../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
 
 const imageCache = new Set();
 
@@ -108,21 +109,30 @@ function LazyImage({
     width: 'inherit' | number;
     onError: () => void;
 }): JSX.Element {
-    useSuspenseImage(src);
+    // useSuspenseImage(src);
+
     return (
-        <img
-            className={className || undefined}
-            src={src}
-            alt={altText}
-            ref={imageRef}
-            style={{
-                height,
-                maxWidth,
-                width,
-            }}
-            onError={onError}
-            draggable="false"
-        />
+        <>
+            <img
+                className={className || undefined}
+                src={src}
+                alt={altText}
+                ref={imageRef}
+                style={{
+                    height,
+                    maxWidth,
+                    width,
+                }}
+                onError={onError}
+                draggable="false"
+            />
+
+            {
+                altText &&
+                <p style={{ width: width }} className={'image-caption bg-slate-100 p-2 text-xs '} dangerouslySetInnerHTML={{ __html: `${altText}` }}></p>
+            }
+
+        </>
     );
 }
 
@@ -192,6 +202,7 @@ export default function ImageComponent({
 
     const $onEnter = useCallback(
         (event: KeyboardEvent) => {
+            console.log('entering');
             const latestSelection = $getSelection();
             const buttonElem = buttonRef.current;
             if (
@@ -243,6 +254,7 @@ export default function ImageComponent({
     const onClick = useCallback(
         (payload: MouseEvent) => {
             const event = payload;
+            console.log('clicking', caption._editorState._nodeMap);
 
             if (isResizing) {
                 return true;
@@ -398,6 +410,16 @@ export default function ImageComponent({
 
     const draggable = isSelected && $isNodeSelection(selection) && !isResizing && editor.isEditable();
     const isFocused = isSelected || isResizing;
+
+    const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+    const [floatingAnchorElem, setFloatingAnchorElem] =
+        useState<HTMLDivElement | null>(null);
+
+    const onRef = (_floatingAnchorElem: HTMLDivElement) => {
+        if (_floatingAnchorElem !== null) {
+            setFloatingAnchorElem(_floatingAnchorElem);
+        }
+    };
     return (
         <Suspense fallback={null}>
             <>
@@ -405,24 +427,26 @@ export default function ImageComponent({
                     {isLoadError ? (
                         <BrokenImage />
                     ) : (
-                        <LazyImage
-                            className={
-                                isFocused
-                                    ? `focused ${$isNodeSelection(selection) ? 'draggable' : ''}`
-                                    : null
-                            }
-                            src={src}
-                            altText={altText}
-                            imageRef={imageRef}
-                            width={width}
-                            height={height}
-                            maxWidth={maxWidth}
-                            onError={() => setIsLoadError(true)}
-                        />
+                        <>
+                            <LazyImage
+                                className={
+                                    isFocused
+                                        ? `focused ${$isNodeSelection(selection) ? 'draggable' : ''}`
+                                        : null
+                                }
+                                src={src}
+                                altText={altText}
+                                imageRef={imageRef}
+                                width={width}
+                                height={height}
+                                maxWidth={maxWidth}
+                                onError={() => setIsLoadError(true)}
+                            />
+                        </>
                     )}
                 </div>
 
-                {showCaption && (
+                {/* {showCaption && (
                     <div className="image-caption-container">
                         <LexicalNestedComposer
                             initialEditor={caption}
@@ -453,7 +477,9 @@ export default function ImageComponent({
                             )}
                             <RichTextPlugin
                                 contentEditable={
-                                    <ContentEditable className="ImageNode__contentEditable" />
+                                    <div ref={onRef}>
+                                        <ContentEditable className="ImageNode__contentEditable" />
+                                    </div>
                                 }
                                 placeholder={
                                     <Placeholder className="ImageNode__placeholder">
@@ -462,10 +488,20 @@ export default function ImageComponent({
                                 }
                                 ErrorBoundary={LexicalErrorBoundary}
                             />
-                            {showNestedEditorTreeView === true ? <TreeViewPlugin /> : null}
+                            {/* {showNestedEditorTreeView === true ? <TreeViewPlugin /> : null}
+                            <TreeViewPlugin />
+                            {
+                                floatingAnchorElem &&
+                                <FloatingTextFormatToolbarPlugin
+                                    anchorElem={floatingAnchorElem}
+                                    setIsLinkEditMode={setIsLinkEditMode}
+                                />
+                            } */}
+                {/* 
+
                         </LexicalNestedComposer>
                     </div>
-                )}
+                )} */}
                 {resizable && $isNodeSelection(selection) && isFocused && (
                     <ImageResizer
                         showCaption={showCaption}

@@ -41,4 +41,45 @@
   .image-control-wrapper--resizing {
     touch-action: none;
   }
+
+  .image-caption {
+    font-family: Arial, sans-serif; /* Default font for the caption */
+    color: #333; /* Default text color for the caption */
+  }
+  
+  .image-caption a {
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underline from links */
+  }
+  
+  .image-caption a:hover {
+    text-decoration: underline; /* Underline links on hover */
+  }
+  
+  .image-caption b,
+  .image-caption strong {
+    font-weight: bold; /* Bold text */
+  }
+  
+  .image-caption i,
+  .image-caption em {
+    font-style: italic; /* Italic text */
+  }
+  
+  .image-caption u {
+    text-decoration: underline; /* Underlined text */
+  }
+  
+  .image-caption p {
+    margin: 0 0 1em; /* Paragraph margin */
+  }
+  
+  .image-caption ul,
+  .image-caption ol {
+    margin: 0 0 1em 1.5em; /* List margin and indent */
+  }
+  
+  .image-caption li {
+    margin-bottom: 0.5em; /* List item margin */
+  }
   

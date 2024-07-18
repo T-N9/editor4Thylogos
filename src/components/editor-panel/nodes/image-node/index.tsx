@@ -112,8 +112,12 @@ import type {
       });
       const nestedEditor = node.__caption;
       const editorState = nestedEditor.parseEditorState(caption.editorState);
+
       if (!editorState.isEmpty()) {
+        console.log('Editor State is not empty', {editorState});
         nestedEditor.setEditorState(editorState);
+      }else {
+        console.log('Editor State is empty', {editorState});
       }
       return node;
     }

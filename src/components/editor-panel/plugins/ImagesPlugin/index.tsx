@@ -70,7 +70,7 @@ export function InsertImageUriDialogBody({
                 data-test-id="image-modal-url-input"
             />
             <TextInput
-                label="Alt Text"
+                label="Alt/Caption Text"
                 placeholder="Random unsplash image"
                 onChange={setAltText}
                 value={altText}
@@ -120,7 +120,7 @@ export function InsertImageUploadedDialogBody({
                 data-test-id="image-modal-file-upload"
             />
             <TextInput
-                label="Alt Text"
+                label="Alt/Caption Text"
                 placeholder="Descriptive alternative text"
                 onChange={setAltText}
                 value={altText}

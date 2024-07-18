@@ -17,6 +17,7 @@
   display: flex;
   flex: 1;
   color: #666;
+  font-size: 16px;
 }
 .Input__input {
   display: flex;

@@ -255,7 +255,7 @@ export default function ImageResizer({
   };
   return (
     <div ref={controlWrapperRef}>
-      {!showCaption && captionsEnabled && editor.isEditable() && (
+      {/* {!showCaption && captionsEnabled && editor.isEditable() && (
         <button
           className="image-caption-button"
           ref={buttonRef}
@@ -264,7 +264,7 @@ export default function ImageResizer({
           }}>
           Add Caption
         </button>
-      )}
+      )} */}
       { editor.isEditable() &&
         <>
           <div

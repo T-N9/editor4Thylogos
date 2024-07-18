@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
 /* Nodes */
 import { LinkNode } from '@lexical/link'
@@ -10,7 +10,6 @@ import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { LayoutContainerNode } from '../editor-panel/nodes/layout-node/LayoutContainerNode';
 import { LayoutItemNode } from '../editor-panel/nodes/layout-node/LayoutItemNode';
-import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
 import { Parser } from 'htmlparser2';
 import { DomHandler, Element, Node } from 'domhandler';

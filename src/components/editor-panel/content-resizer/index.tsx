@@ -5,7 +5,12 @@ import { useLocalStorage } from 'react-use'
 import { LocalEditorState } from '../text-editor/TextEditor'
 import { initialData, useEditorState } from '@/context/EditorStateContext'
 
-export const contentSizers = [{ size: '845', text: 'Small', icon : 'icon icon-cube-sm' }, { size: '1095', text: 'Medium',icon : 'icon icon-cube-md' }, { size: '1440', text: 'Large',icon : 'icon icon-cube-lg'  }]
+export const contentSizers = [
+    { size: '625', text: 'X-small', icon: 'icon icon-cube-sm' },
+    { size: '845', text: 'Small', icon: 'icon icon-cube-sm' },
+    { size: '1095', text: 'Medium', icon: 'icon icon-cube-md' },
+    { size: '1440', text: 'Large', icon: 'icon icon-cube-lg' }
+]
 
 const ContentResizer = () => {
     const [currentSize, setCurrentSize] = useState<number>(0)
@@ -34,6 +39,7 @@ const ContentResizer = () => {
                         <DropDownItem
                             key={index}
                             onClick={() => {
+                                console.log({size, index});
                                 setLocalizedEditorState((prevState) => ({
                                     editorState: prevState?.editorState ?? initialData,
                                     contentSize: index,

@@ -120,8 +120,7 @@ html {
 body {
 
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, '.SFNSText-Regular',
-    sans-serif;
+  font-family: 'Roboto' !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #fff !important;
@@ -1318,7 +1317,6 @@ i.page-break,
   width: 7px;
   height: 7px;
   position: absolute;
-
   background-color: rgb(22, 111, 255);
   border: 1px solid #fff;
 }

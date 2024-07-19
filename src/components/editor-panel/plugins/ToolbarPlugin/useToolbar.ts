@@ -287,7 +287,7 @@ const useToolbar = (editor: LexicalEditor) => {
         ),
       );
       setFontFamily(
-        $getSelectionStyleValueForProperty(selection, 'font-family', 'Arial'),
+        $getSelectionStyleValueForProperty(selection, 'font-family', 'Roboto'),
       );
       let matchingParent;
       if ($isLinkNode(parent)) {

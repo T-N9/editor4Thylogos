@@ -282,17 +282,18 @@ export default function ToolbarPlugin({
     <div className="toolbar max-w-[825px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
       <div className="flex flex-wrap  gap-3">
         <UndoRedoButtonGroup editor={editor} />
-        {/* {blockType in blockTypeToBlockName && activeEditor === editor && (
+        {blockType in blockTypeToBlockName && activeEditor === editor && (
           <>
             <BlockFormatDropDown
               disabled={!isEditable}
               blockType={blockType}
               rootType={rootType}
               editor={activeEditor}
+              isOnlyIcon={true}
             />
 
           </>
-        )} */}
+        )}
 
         {
           blockType === 'code' ? (
@@ -339,6 +340,7 @@ export default function ToolbarPlugin({
           value={elementFormat}
           editor={activeEditor}
           isRTL={isRTL}
+          isOnlyIcon={true}
         />
 
         <button

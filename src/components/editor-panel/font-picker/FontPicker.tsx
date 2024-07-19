@@ -24,7 +24,8 @@ const FONT_FAMILY_OPTIONS: {
   lang?: LanguageOptions;
   type?: BlockTypeOptions;
 }[] = [
-    { info: ['Arial', 'Arial'] },
+    { info: [`Roboto`, 'Roboto'] },
+    { info: [`Inter`, 'Inter'] },
     { info: [`Yati`, 'Yati'], lang: LanguageOptions.MM },
     { info: [`MiSans, Roboto`, 'MiSans'], lang: LanguageOptions.MM },
     { info: [`Walone`, 'Walone'], lang: LanguageOptions.MM },
@@ -35,11 +36,11 @@ const FONT_FAMILY_OPTIONS: {
     { info: [`Burmese Handwriting`, 'Burmese Handwriting'], lang: LanguageOptions.MM, type: BlockTypeOptions.WRITING },
     { info: [`Typewriter`, 'Typewriter'], lang: LanguageOptions.MM, type: BlockTypeOptions.WRITING },
     { info: [`Press`, 'Press'], lang: LanguageOptions.MM, type: BlockTypeOptions.WRITING },
+    { info: ['Arial', 'Arial'] },
     { info: ['Courier New', 'Courier New'] },
+    { info: ['Times New Roman', 'Times New Roman'] },
     { info: ['Aqrada', 'Aqrada'], type: BlockTypeOptions.DISPLAY },
     { info: ['Yellowtail', 'Yellowtail'], type: BlockTypeOptions.WRITING },
-    { info: ['Times New Roman', 'Times New Roman'] },
-    { info: [`Roboto`, 'Roboto'] },
     { info: [`Indie Flower`, 'Indie Flower'], type: BlockTypeOptions.WRITING },
     { info: ['Noto Sans JP', 'Noto Sans JP'], lang: LanguageOptions.JP },
     { info: ['Noto Serif JP', 'Noto Serif JP'], lang: LanguageOptions.JP, type: BlockTypeOptions.WRITING },

@@ -1,12 +1,12 @@
-import BlogPost from '@/components/blog-post'
+import PreviewPost from '@/components/preview-post'
 import React from 'react'
 
-const Blog = () => {
+const Preview = () => {
   return (
     <section className=''>
-      <BlogPost/>
+      <PreviewPost/>
     </section>
   )
 }
 
-export default Blog
+export default Preview

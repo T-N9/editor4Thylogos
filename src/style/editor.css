@@ -84,7 +84,7 @@
 }
 
 @font-face {
-  font-family: 'Burmese Handwriting';
+  font-family: 'BurmeseHandwriting';
   src: url('/fonts/Burmese-Handwriting.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
@@ -103,6 +103,42 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Lakwel';
+  src: url('/fonts/Lakwel.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'YayChanZin';
+  src: url('/fonts/YayChanZin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'MyanmarSanPya';
+  src: url('/fonts/MyanmarSanpya.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'YoeYarOne';
+  src: url('/fonts/YoeYar-One.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Yunghkio';
+  src: url('/fonts/Yunghkio.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 
 button {
@@ -1978,6 +2014,10 @@ button.toolbar-item.active i {
   .editor-shell .editor-image img {
     width: 100% !important;
     height: auto !important;
+  }
+
+  .image-caption {
+    width: 100% !important;
   }
 }
 

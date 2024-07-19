@@ -39,7 +39,7 @@ const ContentResizer = () => {
                         <DropDownItem
                             key={index}
                             onClick={() => {
-                                console.log({size, index});
+                                // console.log({size, index});
                                 setLocalizedEditorState((prevState) => ({
                                     editorState: prevState?.editorState ?? initialData,
                                     contentSize: index,

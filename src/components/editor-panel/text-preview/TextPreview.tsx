@@ -37,13 +37,11 @@ import { contentSizeClass, LocalEditorState } from '../text-editor/TextEditor';
 
 interface TextPreviewProps {
   editorState: LocalEditorState;
-  setIsPreviewMode: Dispatch<boolean>;
   isBlogMode?: boolean;
 }
 
 const TextPreview: React.FC<TextPreviewProps> = ({
   editorState,
-  setIsPreviewMode,
   isBlogMode,
 }) => {
 

@@ -202,7 +202,7 @@ export default function ImageComponent({
 
     const $onEnter = useCallback(
         (event: KeyboardEvent) => {
-            console.log('entering');
+            // console.log('entering');
             const latestSelection = $getSelection();
             const buttonElem = buttonRef.current;
             if (
@@ -254,7 +254,7 @@ export default function ImageComponent({
     const onClick = useCallback(
         (payload: MouseEvent) => {
             const event = payload;
-            console.log('clicking', caption._editorState._nodeMap);
+            // console.log('clicking', caption._editorState._nodeMap);
 
             if (isResizing) {
                 return true;

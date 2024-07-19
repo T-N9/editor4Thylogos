@@ -82,6 +82,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
 
             if (localizedEditorState) {
                 // console.log('Set Editor State')
+                // console.log({localizedEditorState});
                 const initialEditorState = editor.parseEditorState(localizedEditorState.editorState)
                 setEditorState({ editorState: localizedEditorState.editorState, contentSize: localizedEditorState.contentSize })
                 editor.setEditorState(initialEditorState)
@@ -142,7 +143,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
     const onChange = (onChangeEditorState: EditorState, editor: LexicalEditor) => {
         const editorStateJSON = onChangeEditorState.toJSON();
         setEditorState({ editorState: JSON.stringify(editorStateJSON), contentSize: editorState.contentSize });
-        // console.log(apiContent === JSON.stringify(editorStateJSON));
+        // console.log({ editorData: JSON.stringify(editorStateJSON)});
         editor.update(() => {
             const raw = $generateHtmlFromNodes(editor, null)
             // console.log({ rawHtml: raw })

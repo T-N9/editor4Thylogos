@@ -83,9 +83,17 @@ export default function FontPicker({
       editor.update(() => {
         const selection = $getSelection();
         if (selection !== null) {
-          $patchStyleText(selection, {
-            [style]: option,
-          });
+          if(style === 'font-size'){
+            $patchStyleText(selection, {
+              [style]: option,
+              "line-height": `${parseInt(option)*1.4675 }px`
+            });
+          }else {
+            $patchStyleText(selection, {
+              [style]: option,
+            });
+          }
+
         }
       });
     },

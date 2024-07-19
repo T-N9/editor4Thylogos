@@ -1998,6 +1998,13 @@ button.toolbar-item.active i {
   }
 }
 
+@media (max-width: 820px) {
+  .editor-shell .editor-image img {
+    width: 100% !important;
+    height: auto !important;
+  }
+}
+
 @media (max-width: 500px) {
   .github-corner:hover .octo-arm {
     animation: none;

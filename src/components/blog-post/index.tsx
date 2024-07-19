@@ -57,11 +57,11 @@ const BlogPost = ({ title, slug, author, date, image, editorState, contentSize }
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-800 relative leading-7 font-normal justify-center`}>
-                <div className='max-w-[845px] lg:min-w-[845px] mx-auto space-y-4'>
+                <div className='max-w-[845px] lg:min-w-[845px] mx-auto space-y-8'>
                     <h1 style={{
                         fontFamily : 'Strong'
-                    }} className='text-5xl'>{title}</h1>
-                    <Image className='w-full h-[200px] lg:h-[400px] object-cover' src={image} width={600} height={400} alt={title}/>
+                    }} className='text-7xl text-red-800 leading-[5rem]'>{title}</h1>
+                    <Image className='w-screen lg:w-full h-[200px] md:h-[400px] object-cover' src={image} width={600} height={400} alt={title}/>
                 </div>
                 <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
             </main>

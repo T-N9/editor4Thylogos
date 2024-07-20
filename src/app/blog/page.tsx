@@ -6,16 +6,18 @@ const BlogPage = () => {
     
   return (
     <section className='text-black'>
-        <ul>
-          {blogData.map(post => (
-            <li key={post.title}>
-              <Link href={`/blog/${post.slug}`}>
-                <h2>{post.title}</h2>
-                <p>{post.date}</p>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <div className='max-w-[1350px] mx-auto my-5'>
+          <ul className='space-y-5'>
+            {blogData.map(post => (
+              <li key={post.title}>
+                <Link href={`/blog/${post.slug}`}>
+                  <h2 className='text-2xl'>{post.title}</h2>
+                  <p>{post.date}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
   
     </section>
   )

@@ -86,7 +86,7 @@ export default function FontPicker({
           if(style === 'font-size'){
             $patchStyleText(selection, {
               [style]: option,
-              "line-height": `${parseInt(option)*1.4675 }px`
+              "line-height": `${parseInt(option)*1.4675 }px`,
             });
           }else {
             $patchStyleText(selection, {

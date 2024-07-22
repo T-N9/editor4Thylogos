@@ -10,7 +10,7 @@ const usePreviewToolbar = () => {
     console.log({pathname});
     if (pathname === '/preview') {
       setIsPreviewMode(false);
-      router.push('/');
+      router.push('/upload');
 
     }else {
       setIsPreviewMode(true);

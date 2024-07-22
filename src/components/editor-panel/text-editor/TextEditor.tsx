@@ -1,12 +1,14 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { LexicalEditor } from 'lexical';
-import ExampleTheme from '../editor-theme/DefaultTheme';
+import { useLocalStorage } from 'react-use';
+import { CAN_USE_DOM } from '@/shared/canUseDOM';
+import { useEditorState } from '@/context/EditorStateContext';
 
-import { LinkNode } from '@lexical/link'
+/* Lexical Core */
+import { LexicalEditor, EditorState } from 'lexical';
+import { $generateHtmlFromNodes } from '@lexical/html';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
@@ -14,38 +16,22 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { EditorState } from 'lexical';
+import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+
+/* Plugins */
 import ToolbarPlugin from '../plugins/ToolbarPlugin/ToolbarPlugin';
-import TreeViewPlugin from '../plugins/TreeViewPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import DraggableBlockPlugin from '../plugins/DraggableBlockPlugin';
-import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
-
-import { CAN_USE_DOM } from '@/shared/canUseDOM';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
 import FloatingTextFormatToolbarPlugin from '../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
-
-import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { ListNode, ListItemNode } from '@lexical/list';
-import { ImageNode } from '../nodes/image-node';
-import {
-    CodeHighlightNode,
-    CodeNode,
-} from "@lexical/code";
-import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
-import TableOfContentsPlugin from '../plugins/TableOfContentPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
 import PreviewToolBar from '../preview-toolbar';
 import ImagesPlugin from '../plugins/ImagesPlugin';
 import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
-import { LayoutContainerNode } from '../nodes/layout-node/LayoutContainerNode';
-import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
-import { useLocalStorage } from 'react-use';
-import { $generateHtmlFromNodes } from '@lexical/html';
-import { useEditorState } from '@/context/EditorStateContext';
 import TableOfContent from '../table-of-content';
+
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
 }

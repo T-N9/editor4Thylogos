@@ -1,37 +1,15 @@
 'use client';
 
-import React, { Dispatch, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-/* Lexical Theme */
-import ExampleTheme from '../editor-theme/DefaultTheme';
-
-/* Lexical assets */
-import { LinkNode } from '@lexical/link';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
+/* Lexical core and plugins */
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
-import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { ListNode, ListItemNode } from '@lexical/list';
-import {
-  CodeHighlightNode,
-  CodeNode,
-  getCodeLanguages,
-  registerCodeHighlighting,
-} from '@lexical/code';
-import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
-/* Icons */
-import { EyeIcon } from '@heroicons/react/16/solid';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import { scrollToTop } from '@/utils/scrollToTop';
 import PreviewToolBar from '../preview-toolbar';
-import { ImageNode } from '../nodes/image-node';
-import { LayoutContainerNode } from '../nodes/layout-node/LayoutContainerNode';
-import { LayoutItemNode } from '../nodes/layout-node/LayoutItemNode';
-import TableOfContentsPlugin from '../plugins/TableOfContentPlugin';
-import { initialData } from '@/context/EditorStateContext';
 
-import { useEditorState } from '@/context/EditorStateContext';
 import TableOfContent from '../table-of-content';
 import { contentSizeClass, LocalEditorState } from '../text-editor/TextEditor';
 

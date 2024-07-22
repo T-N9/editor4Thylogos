@@ -11,9 +11,13 @@ import './ColorPicker.css';
 
 import { calculateZoomLevel } from '@lexical/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback } from 'react';
 import * as React from 'react';
 
 import TextInput from './TextInput';
+import { $getSelection } from 'lexical';
+import { $patchStyleText } from '@lexical/selection';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 
 let skipAddingToHistoryStack = false;
 
@@ -42,6 +46,14 @@ const basicColors = [
   '#ffffff',
   '#ffffff00',
 ];
+
+const gradientColors = [
+  ['#a1c4fd', '#c2e9fb'],
+  ['#84fab0', '#8fd3f4'],
+  ['#BBD2C5', '#536976', '#292E49'],
+  ['#FFE000', '#799F0C'],
+  ['#5433FF', '#20BDFF', '#A5FECB']
+]
 
 const WIDTH = 214;
 const HEIGHT = 150;
@@ -120,16 +132,38 @@ export default function ColorPicker({
     setContextColor && setContextColor(newColor.hex);
     setInputColor(newColor.hex);
   }, [color]);
+  const [editor] = useLexicalComposerContext();
 
+  const handleGradientClick = useCallback(
+    (option: string) => {
+      editor.update(() => {
+        const selection = $getSelection();
+        if (selection !== null) {
+          $patchStyleText(selection, {
+            'background-image': `linear-gradient(to right,${option})`,
+          });
+        }
+      });
+    },
+    [editor],
+  );
   return (
     <div
       className="color-picker-wrapper"
       style={{ width: WIDTH }}
       ref={innerDivRef}>
 
-      {/* {
-        title === 'bg color' && <span className='bg-black'>this is</span>
-      } */}
+      <div className='flex flex-wrap mb-4'>
+        {
+          gradientColors.map((group, index) => {
+            const gradientColors = group.join(', ');
+            return <button onClick={() => handleGradientClick(gradientColors)} key={index} style={{
+               backgroundImage: `linear-gradient(to right, ${gradientColors})`
+            }} className='inline-block w-12 h-5'>
+            </button>
+          })
+        }
+      </div>
       <TextInput label="Hex" onChange={onSetHex} value={inputColor} />
       <div className="color-picker-basic-color">
         {basicColors.map((basicColor) => (

@@ -211,7 +211,7 @@ export default function ToolbarPlugin({
       },
       COMMAND_PRIORITY_CRITICAL,
     );
-  }, [editor, $updateToolbar]);
+  }, [editor, $updateToolbar, setActiveEditor]);
 
   useEffect(() => {
     activeEditor.getEditorState().read(() => {
@@ -251,7 +251,7 @@ export default function ToolbarPlugin({
         LowPriority
       )
     );
-  }, [editor, $updateToolbar]);
+  }, [editor, $updateToolbar, setCanRedo, setCanUndo]);
 
   useEffect(() => {
     return activeEditor.registerCommand(

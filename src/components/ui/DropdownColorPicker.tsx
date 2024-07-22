@@ -42,7 +42,7 @@ export default function DropdownColorPicker({
    if(color.length > 4 && setContextColor) {
     setContextColor(color)
    }
-  }, [color]);
+  }, [color, setContextColor]);
   return (
     <DropDown
       {...rest}

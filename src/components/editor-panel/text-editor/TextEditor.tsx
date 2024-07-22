@@ -74,7 +74,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
                 editor.setEditorState(initialEditorState)
             }
         }
-    }, [isFirstRender, localizedEditorState?.editorState, editor])
+    }, [isFirstRender, localizedEditorState?.editorState, editor, localizedEditorState, setEditorState])
 
     useEffect(() => {
         return editor.registerUpdateListener(({ editorState }) => {
@@ -84,7 +84,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
             }));
             onChange(editorState, editor);
         });
-    }, [editor, onChange]);
+    }, [editor, onChange, setLocalizedEditorState]);
 
     return null;
 };

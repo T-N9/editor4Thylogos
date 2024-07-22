@@ -131,7 +131,7 @@ export default function ColorPicker({
     setSelfColor(newColor);
     setContextColor && setContextColor(newColor.hex);
     setInputColor(newColor.hex);
-  }, [color]);
+  }, [color, setContextColor]);
   const [editor] = useLexicalComposerContext();
 
   const handleGradientClick = useCallback(

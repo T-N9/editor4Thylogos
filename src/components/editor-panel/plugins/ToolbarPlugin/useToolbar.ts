@@ -299,7 +299,7 @@ const useToolbar = (editor: LexicalEditor) => {
         $getSelectionStyleValueForProperty(selection, 'font-size', '15px'),
       );
     }
-  }, [activeEditor, editor]);
+  }, [activeEditor, editor, setBgColor, setFontSize, setIsBold, setIsItalic, setSelectedElementKey, setIsLink, setBlockType, setIsSubscript, setIsSuperscript, setFontColor,setCodeLanguage, setElementFormat, setIsImageCaption, setIsRTL, setIsStrikethrough, setIsUnderline, setFontFamily]);
 
   useEffect(() => {
     return mergeRegister(
@@ -333,7 +333,7 @@ const useToolbar = (editor: LexicalEditor) => {
         LowPriority,
       ),
     );
-  }, [editor, $updateToolbar]);
+  }, [editor, $updateToolbar, setCanRedo, setCanUndo]);
 
   const formatParagraph = () => {
     editor.update(() => {

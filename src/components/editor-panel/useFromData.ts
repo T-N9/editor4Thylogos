@@ -24,7 +24,7 @@ const useFromData = () => {
 
   useEffect(() => {
     setValue('content', JSON.stringify(contextEditorState));
-  }, [contextEditorState]);
+  }, [contextEditorState, setValue]);
 
   const generateSlug = () => {
     const slug = watch('title')

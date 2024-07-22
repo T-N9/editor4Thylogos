@@ -17,6 +17,7 @@ import TextPreview from '../editor-panel/text-preview/TextPreview';
 
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
 import Image from 'next/image';
+import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
 
 interface BlogPostProps {
     title: string;
@@ -45,6 +46,7 @@ const BlogPost = ({ title, slug, author, date, image, editorState, contentSize }
             ImageNode,
             LayoutContainerNode,
             LayoutItemNode,
+            BgQuoteNode
         ],
         onError(error: Error) {
             console.error(error);

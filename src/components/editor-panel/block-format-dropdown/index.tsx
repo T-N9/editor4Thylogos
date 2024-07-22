@@ -6,8 +6,8 @@ import useToolbar, {
   rootTypeToRootName,
 } from '../plugins/ToolbarPlugin/useToolbar';
 
-import DropDown, {DropDownItem} from '../../ui/DropDown';
-import {dropDownActiveClass} from '../plugins/ToolbarPlugin/ToolbarPlugin';
+import DropDown, { DropDownItem } from '../../ui/DropDown';
+import { dropDownActiveClass } from '../plugins/ToolbarPlugin/ToolbarPlugin';
 
 export default function BlockFormatDropDown({
   editor,
@@ -30,6 +30,7 @@ export default function BlockFormatDropDown({
     formatHeading,
     formatNumberedList,
     formatQuote,
+    formatBgQuote
   } = useToolbar(editor);
 
   return (
@@ -107,6 +108,12 @@ export default function BlockFormatDropDown({
         onClick={formatQuote}>
         <i className="icon quote" />
         <span className="text">Quote</span>
+      </DropDownItem>
+      <DropDownItem
+        className={'item ' + dropDownActiveClass(blockType === 'bg-quote')}
+        onClick={formatBgQuote}>
+        <i className="icon quote" />
+        <span className="text">Bg Quote</span>
       </DropDownItem>
       <DropDownItem
         className={'item ' + dropDownActiveClass(blockType === 'code')}

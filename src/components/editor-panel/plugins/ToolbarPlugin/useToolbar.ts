@@ -68,6 +68,7 @@ import DropdownColorPicker from '../../../ui/DropdownColorPicker';
 import {scrollToTop} from '@/utils/scrollToTop';
 import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
 import { useToolbarContext } from '@/context/ToolbarStateContext';
+import { $createBgQuoteNode } from '../../nodes/bgQuote-node';
 
 const LowPriority = 1;
 
@@ -84,6 +85,7 @@ export const blockTypeToBlockName = {
   number: 'Numbered List',
   paragraph: 'Normal',
   quote: 'Quote',
+  'bg-quote' : 'Bg Quote',
 };
 
 export const rootTypeToRootName = {
@@ -182,21 +184,6 @@ const useToolbar = (editor: LexicalEditor) => {
     modal,
     showModal,
   }=useToolbarContext();
-
-  const blockTypeToBlockName = {
-    bullet: 'Bulleted List',
-    check: 'Check List',
-    code: 'Code Block',
-    h1: 'Heading 1',
-    h2: 'Heading 2',
-    h3: 'Heading 3',
-    h4: 'Heading 4',
-    h5: 'Heading 5',
-    h6: 'Heading 6',
-    number: 'Numbered List',
-    paragraph: 'Normal',
-    quote: 'Quote',
-  };
 
   const rootTypeToRootName = {
     root: 'Root',
@@ -393,6 +380,16 @@ const useToolbar = (editor: LexicalEditor) => {
       });
     }
   };
+
+  const formatBgQuote = () => {
+    if (blockType !== 'bg-quote') {
+      editor.update(() => {
+        const selection = $getSelection();
+        $setBlocksType(selection, () => $createBgQuoteNode());
+      });
+    }
+  };
+
   const formatCode = () => {
     if (blockType !== 'code') {
       editor.update(() => {
@@ -523,6 +520,7 @@ const useToolbar = (editor: LexicalEditor) => {
     formatNumberedList,
     formatParagraph,
     formatQuote,
+    formatBgQuote,
 
     clearFormatting,
 

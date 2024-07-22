@@ -20,6 +20,7 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
 import PreviewToolBar from '../editor-panel/preview-toolbar';
+import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
 
 interface HeadingInfo {
     content: string;
@@ -79,6 +80,7 @@ const BlogPost = () => {
             ImageNode,
             LayoutContainerNode,
             LayoutItemNode,
+            BgQuoteNode
         ],
         onError(error: Error) {
             console.error(error);

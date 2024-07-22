@@ -103,7 +103,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
     return null;
 };
 
-export const contentSizeClass = ['lg:w-[625px] lg:min-w-[625px]','lg:w-[845px] lg:min-w-[845px]', 'lg:w-[1095px] lg:min-w-[1095px]', 'lg:w-[1440px] lg:min-w-[1440px]']
+export const contentSizeClass = ['lg:w-[625px] lg:min-w-[625px]', 'lg:w-[845px] lg:min-w-[845px]', 'lg:w-[1095px] lg:min-w-[1095px]', 'lg:w-[1440px] lg:min-w-[1440px]']
 
 const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, setIsPreviewMode }) => {
     /* States */
@@ -152,55 +152,60 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
     };
 
     return (
-        <>
+      <>
+        <ToolbarPlugin
+          setIsLinkEditMode={setIsLinkEditMode}
+          setIsPreviewMode={setIsPreviewMode}
+        />
+        <div
+          className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
+          <RichTextPlugin
+            contentEditable={
+              <div className="editor-scroller">
+                <div className="editor" ref={onRef}>
+                  <ContentEditable className="contentEditable" />
+                </div>
+              </div>
+            }
+            placeholder={<Placeholder />}
+            ErrorBoundary={LexicalErrorBoundary}
+          />
 
-            <ToolbarPlugin setIsLinkEditMode={setIsLinkEditMode} setIsPreviewMode={setIsPreviewMode} />
-            <div
-                className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
-                <RichTextPlugin
-                    contentEditable={<div className="editor-scroller">
-                        <div className="editor" ref={onRef}>
-                            <ContentEditable className='contentEditable' />
-                        </div>
-                    </div>}
-                    placeholder={<Placeholder />}
-                    ErrorBoundary={LexicalErrorBoundary}
-                />
+          <PreviewToolBar />
+          <ImagesPlugin />
+          <LinkPlugin />
+          <ListPlugin />
+          <CheckListPlugin />
+          <CodeHighlightPlugin />
+          <HistoryPlugin />
+          <AutoFocusPlugin />
+          <TabFocusPlugin />
+          <HorizontalRulePlugin />
+          {/* <TreeViewPlugin /> */}
+          <LayoutPlugin />
+          <TableOfContent />
 
-                <PreviewToolBar />
-                <ImagesPlugin />
-                <LinkPlugin />
-                <ListPlugin />
-                <CheckListPlugin />
-                <CodeHighlightPlugin />
-                <HistoryPlugin />
-                <AutoFocusPlugin />
-                <TabFocusPlugin />
-                <HorizontalRulePlugin />
-                {/* <TreeViewPlugin /> */}
-                <LayoutPlugin />
-                <TableOfContent />
-
-                {floatingAnchorElem && !isSmallWidthViewport && (
-                    <>
-                        <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
-                        <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
-                        <FloatingLinkEditorPlugin
-                            anchorElem={floatingAnchorElem}
-                            isLinkEditMode={isLinkEditMode}
-                            setIsLinkEditMode={setIsLinkEditMode}
-                        />
-                        <FloatingTextFormatToolbarPlugin
-                            anchorElem={floatingAnchorElem}
-                            setIsLinkEditMode={setIsLinkEditMode}
-                        />
-                    </>
-                )}
-                <MyOnChangePlugin onChange={onChange} setEditorState={setEditorState} />
-            </div>
-
-
-        </>
+          {floatingAnchorElem && !isSmallWidthViewport && (
+            <>
+              <DraggableBlockPlugin anchorElem={floatingAnchorElem} />
+              <CodeActionMenuPlugin anchorElem={floatingAnchorElem} />
+              <FloatingLinkEditorPlugin
+                anchorElem={floatingAnchorElem}
+                isLinkEditMode={isLinkEditMode}
+                setIsLinkEditMode={setIsLinkEditMode}
+              />
+              <FloatingTextFormatToolbarPlugin
+                anchorElem={floatingAnchorElem}
+                setIsLinkEditMode={setIsLinkEditMode}
+              />
+            </>
+          )}
+          <MyOnChangePlugin
+            onChange={onChange}
+            setEditorState={setEditorState}
+          />
+        </div>
+      </>
     );
 };
 

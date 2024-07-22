@@ -260,6 +260,14 @@
   tab-size: 2;
   color: #addb67;
   border-radius: 10px;
+  /* white-space: pre; */
+  overflow-x: auto;
+}
+
+@media screen and (max-width: 450px) {
+  .PlaygroundEditorTheme__code { 
+    max-width: 387px;
+  }
 }
 
 .PlaygroundEditorTheme__code:before {

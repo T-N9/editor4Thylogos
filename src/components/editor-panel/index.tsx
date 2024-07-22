@@ -20,6 +20,7 @@ import ExampleTheme from './editor-theme/DefaultTheme';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ToolbarProvider } from '@/context/ToolbarStateContext';
+import { BgQuoteNode } from './nodes/bgQuote-node';
 
 const EditorPanel = () => {
   const {
@@ -48,6 +49,7 @@ const EditorPanel = () => {
       ImageNode,
       LayoutContainerNode,
       LayoutItemNode,
+      BgQuoteNode
     ],
     onError(error: Error) {
       console.error(error);

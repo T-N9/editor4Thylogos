@@ -1055,6 +1055,11 @@ i.page-break,
   background-image: url(/icons/chat-square-quote.svg);
 }
 
+.icon.bg-quote {
+  background-image: url(/icons/chat-square-quote.svg);
+}
+
+
 .icon.code {
   background-image: url(/icons/code.svg);
 }

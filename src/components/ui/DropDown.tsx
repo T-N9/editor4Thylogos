@@ -154,6 +154,7 @@ export default function DropDown({
   isColored,
   isOnlyIcon = false,
   isDropArrow = true,
+
 }: {
   disabled?: boolean;
   buttonAriaLabel?: string;

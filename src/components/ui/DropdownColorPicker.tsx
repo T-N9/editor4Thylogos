@@ -33,6 +33,7 @@ export default function DropdownColorPicker({
   onChange,
   currentColor,
   setContextColor,
+  title,
   ...rest
 }: Props) {
 
@@ -49,7 +50,7 @@ export default function DropdownColorPicker({
       stopCloseOnClickSelf={stopCloseOnClickSelf}
       isColored={true}
       color={currentColor}>
-      <ColorPicker color={color} onChange={onChange} setContextColor={setContextColor} />
+      <ColorPicker title={title} color={color} onChange={onChange} setContextColor={setContextColor} />
     </DropDown>
   );
 }

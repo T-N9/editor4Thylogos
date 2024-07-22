@@ -246,7 +246,7 @@
 }
 
 .PlaygroundEditorTheme__code {
-  background-color: rgb(240, 242, 245);
+  background-color: #011627;
   font-family: Menlo, Consolas, Monaco, monospace;
   display: block;
   padding: 8px 8px 8px 52px;
@@ -258,17 +258,19 @@
   overflow-x: auto;
   position: relative;
   tab-size: 2;
+  color: #addb67;
+  border-radius: 10px;
 }
 
 .PlaygroundEditorTheme__code:before {
   content: attr(data-gutter);
   position: absolute;
-  background-color: #eee;
+  background-color: #333;
   left: 0;
   top: 0;
   border-right: 1px solid #ccc;
   padding: 8px;
-  color: #777;
+  color: #9d9d9d;
   white-space: pre-wrap;
   text-align: right;
   min-width: 25px;
@@ -586,15 +588,15 @@
 }
 
 .PlaygroundEditorTheme__tokenPunctuation {
-  color: #999;
+  color: #c792ea;
 }
 
 .PlaygroundEditorTheme__tokenProperty {
-  color: #905;
+  color: #7fdbca;
 }
 
 .PlaygroundEditorTheme__tokenSelector {
-  color: #690;
+  color: rgb(156, 234, 2);
 }
 
 .PlaygroundEditorTheme__tokenOperator {

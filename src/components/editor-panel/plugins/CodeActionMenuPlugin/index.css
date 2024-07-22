@@ -9,12 +9,13 @@
 .code-action-menu-container {
   height: 35.8px;
   font-size: 10px;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(110, 255, 77);
   position: absolute;
   display: flex;
   align-items: center;
   flex-direction: row;
   user-select: none;
+  padding: 10px;
 }
 
 .code-action-menu-container .code-highlight-language {
@@ -30,8 +31,9 @@
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(110, 255, 77);
   text-transform: uppercase;
+  background-color: rgb(233, 233, 233);
 }
 
 .code-action-menu-container button.menu-item i.format {
@@ -39,7 +41,7 @@
   width: 16px;
   opacity: 0.6;
   display: flex;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgb(110, 255, 77);
   background-size: contain;
 }
 

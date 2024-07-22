@@ -9,8 +9,8 @@
 
 import './ColorPicker.css';
 
-import {calculateZoomLevel} from '@lexical/utils';
-import {useEffect, useMemo, useRef, useState} from 'react';
+import { calculateZoomLevel } from '@lexical/utils';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
 
 import TextInput from './TextInput';
@@ -20,7 +20,8 @@ let skipAddingToHistoryStack = false;
 interface ColorPickerProps {
   color: string;
   onChange?: (value: string, skipHistoryStack: boolean) => void;
-  setContextColor ?: (value: string) => void;
+  setContextColor?: (value: string) => void;
+  title?: string;
 }
 
 const basicColors = [
@@ -49,6 +50,7 @@ export default function ColorPicker({
   color,
   onChange,
   setContextColor,
+  title
 }: Readonly<ColorPickerProps>): JSX.Element {
   const [selfColor, setSelfColor] = useState(transformColor('hex', color));
   const [inputColor, setInputColor] = useState(color);
@@ -80,7 +82,7 @@ export default function ColorPicker({
     }
   };
 
-  const onMoveSaturation = ({x, y}: Position) => {
+  const onMoveSaturation = ({ x, y }: Position) => {
     const newHsv = {
       ...selfColor.hsv,
       s: (x / WIDTH) * 100,
@@ -92,8 +94,8 @@ export default function ColorPicker({
     setInputColor(newColor.hex);
   };
 
-  const onMoveHue = ({x}: Position) => {
-    const newHsv = {...selfColor.hsv, h: (x / WIDTH) * 360};
+  const onMoveHue = ({ x }: Position) => {
+    const newHsv = { ...selfColor.hsv, h: (x / WIDTH) * 360 };
     const newColor = transformColor('hsv', newHsv);
 
     setSelfColor(newColor);
@@ -122,15 +124,19 @@ export default function ColorPicker({
   return (
     <div
       className="color-picker-wrapper"
-      style={{width: WIDTH}}
+      style={{ width: WIDTH }}
       ref={innerDivRef}>
+
+      {/* {
+        title === 'bg color' && <span className='bg-black'>this is</span>
+      } */}
       <TextInput label="Hex" onChange={onSetHex} value={inputColor} />
       <div className="color-picker-basic-color">
         {basicColors.map((basicColor) => (
           <button
             className={basicColor === selfColor.hex ? ' active' : ''}
             key={basicColor}
-            style={{backgroundColor: basicColor}}
+            style={{ backgroundColor: basicColor }}
             onClick={() => {
               setInputColor(basicColor);
               setSelfColor(transformColor('hex', basicColor));
@@ -140,7 +146,7 @@ export default function ColorPicker({
       </div>
       <MoveWrapper
         className="color-picker-saturation"
-        style={{backgroundColor: `hsl(${selfColor.hsv.h}, 100%, 50%)`}}
+        style={{ backgroundColor: `hsl(${selfColor.hsv.h}, 100%, 50%)` }}
         onChange={onMoveSaturation}>
         <div
           className="color-picker-saturation_cursor"
@@ -162,7 +168,7 @@ export default function ColorPicker({
       </MoveWrapper>
       <div
         className="color-picker-color"
-        style={{backgroundColor: selfColor.hex}}
+        style={{ backgroundColor: selfColor.hex }}
       />
     </div>
   );
@@ -180,19 +186,19 @@ interface MoveWrapperProps {
   children: JSX.Element;
 }
 
-function MoveWrapper({className, style, onChange, children}: MoveWrapperProps) {
+function MoveWrapper({ className, style, onChange, children }: MoveWrapperProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const draggedRef = useRef(false);
 
   const move = (e: React.MouseEvent | MouseEvent): void => {
     if (divRef.current) {
-      const {current: div} = divRef;
-      const {width, height, left, top} = div.getBoundingClientRect();
+      const { current: div } = divRef;
+      const { width, height, left, top } = div.getBoundingClientRect();
       const zoom = calculateZoomLevel(div);
       const x = clamp(e.clientX / zoom - left, width, 0);
       const y = clamp(e.clientY / zoom - top, height, 0);
 
-      onChange({x, y});
+      onChange({ x, y });
     }
   };
 
@@ -299,7 +305,7 @@ function hex2rgb(hex: string): RGB {
   };
 }
 
-function rgb2hsv({r, g, b}: RGB): HSV {
+function rgb2hsv({ r, g, b }: RGB): HSV {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -309,18 +315,18 @@ function rgb2hsv({r, g, b}: RGB): HSV {
 
   const h = d
     ? (max === r
-        ? (g - b) / d + (g < b ? 6 : 0)
-        : max === g
+      ? (g - b) / d + (g < b ? 6 : 0)
+      : max === g
         ? 2 + (b - r) / d
         : 4 + (r - g) / d) * 60
     : 0;
   const s = max ? (d / max) * 100 : 0;
   const v = max * 100;
 
-  return {h, s, v};
+  return { h, s, v };
 }
 
-function hsv2rgb({h, s, v}: HSV): RGB {
+function hsv2rgb({ h, s, v }: HSV): RGB {
   s /= 100;
   v /= 100;
 
@@ -335,10 +341,10 @@ function hsv2rgb({h, s, v}: HSV): RGB {
   const g = Math.round([t, v, v, q, p, p][index] * 255);
   const b = Math.round([p, p, t, v, v, q][index] * 255);
 
-  return {b, g, r};
+  return { b, g, r };
 }
 
-function rgb2hex({b, g, r}: RGB): string {
+function rgb2hex({ b, g, r }: RGB): string {
   return '#' + [r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('');
 }
 
@@ -370,5 +376,5 @@ function transformColor<M extends keyof Color, C extends Color[M]>(
     hex = rgb2hex(rgb);
   }
 
-  return {hex, hsv, rgb};
+  return { hex, hsv, rgb };
 }

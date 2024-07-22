@@ -1236,6 +1236,7 @@ i.page-break,
   display: inline-block;
   position: relative;
   user-select: none;
+  border-radius: 10px;
 }
 
 .editor-shell .editor-code {
@@ -1269,6 +1270,7 @@ i.page-break,
 .editor-shell .editor-image img {
   max-width: 100%;
   cursor: default;
+  border-radius: 10px;
 }
 
 .editor-shell .editor-text-underline {
@@ -1295,6 +1297,14 @@ i.page-break,
 .editor-shell .editor-image .image-caption-container .tree-view-output {
   margin: 0;
   border-radius: 0;
+}
+
+.editor-image .is-editing .image-caption {
+  border :0.5px solid rgb(60, 132, 244);
+}
+
+.editor-image .is-editing {
+  border :0.5px solid rgb(60, 132, 244);
 }
 
 .editor-shell .editor-image .image-caption-container {

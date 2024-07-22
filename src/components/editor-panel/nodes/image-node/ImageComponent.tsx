@@ -129,7 +129,7 @@ function LazyImage({
 
             {
                 altText &&
-                <p style={{ width: width }} className={'image-caption bg-slate-100 p-2 text-xs '} dangerouslySetInnerHTML={{ __html: `${altText}` }}></p>
+                <p style={{ width: width }} className={'image-caption p-2 text-xs '} dangerouslySetInnerHTML={{ __html: `${altText}` }}></p>
             }
 
         </>

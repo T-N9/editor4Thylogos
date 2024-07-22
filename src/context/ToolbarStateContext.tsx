@@ -72,7 +72,7 @@ export const ToolbarProvider = ({ editor, children }: { editor: LexicalEditor; c
   const [isLink, setIsLink] = useState<boolean>(false);
   const [isEditable, setIsEditable] = useState(() => editor.isEditable());
   const [codeLanguage, setCodeLanguage] = useState<string>('');
-  const [fontSize, setFontSize] = useState<string>('15px');
+  const [fontSize, setFontSize] = useState<string>('18px');
   const [fontFamily, setFontFamily] = useState<string>('Roboto');
   const [fontColor, setFontColor] = useState<string>('#000');
   const [bgColor, setBgColor] = useState<string>('#fff');

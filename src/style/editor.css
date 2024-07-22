@@ -1199,7 +1199,7 @@ i.page-break,
   content: "";
   width: 16px;
   height: 16px;
-  top: 2px;
+  top: 5px;
   left: 0;
   cursor: pointer;
   display: block;
@@ -1218,7 +1218,7 @@ i.page-break,
   border-style: solid;
   position: absolute;
   display: block;
-  top: 6px;
+  top: 9px;
   width: 3px;
   left: 7px;
   right: 7px;

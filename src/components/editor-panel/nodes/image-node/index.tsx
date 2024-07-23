@@ -23,6 +23,7 @@ import type {
   import {$applyNodeReplacement, createEditor, DecoratorNode} from 'lexical';
   import * as React from 'react';
   import {Suspense} from 'react';
+import { contentSizers } from '../../content-resizer';
   
   const ImageComponent = React.lazy(() => import('./ImageComponent'));
   
@@ -242,7 +243,7 @@ import type {
   export function $createImageNode({
     altText,
     height,
-    maxWidth = 1000,
+    maxWidth,
     captionsEnabled,
     src,
     width,
@@ -250,11 +251,15 @@ import type {
     caption,
     key,
   }: ImagePayload): ImageNode {
+
+    const localState = JSON.parse(localStorage.getItem('my-editor-state-key') || '');
+
+    console.log({state : parseInt(contentSizers[localState.contentSize].size)});
     return $applyNodeReplacement(
       new ImageNode(
         src,
         altText,
-        maxWidth,
+        maxWidth = parseInt(contentSizers[localState.contentSize].size)-60,
         width,
         height,
         showCaption,

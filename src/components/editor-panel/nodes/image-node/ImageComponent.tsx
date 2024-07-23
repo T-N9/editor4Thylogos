@@ -68,6 +68,8 @@ import { EmojiNode } from '../emoji-node';
 import { $isImageNode } from '.';
 import { KeywordNode } from '../keyword-node/KeywordNode';
 import FloatingTextFormatToolbarPlugin from '../../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
+import { useEditorState } from '@/context/EditorStateContext';
+import { contentSizers } from '../../content-resizer';
 
 const imageCache = new Set();
 
@@ -110,11 +112,12 @@ function LazyImage({
     onError: () => void;
 }): JSX.Element {
     // useSuspenseImage(src);
+    console.log({ width, height, maxWidth });
 
     return (
         <>
             <img
-                className={className || undefined}
+                className={`${className || undefined}`}
                 src={src}
                 alt={altText}
                 ref={imageRef}
@@ -126,7 +129,6 @@ function LazyImage({
                 onError={onError}
                 draggable="false"
             />
-
             {
                 altText &&
                 <p style={{ width: width }} className={'image-caption p-2 text-xs '} dangerouslySetInnerHTML={{ __html: `${altText}` }}></p>
@@ -420,6 +422,8 @@ export default function ImageComponent({
             setFloatingAnchorElem(_floatingAnchorElem);
         }
     };
+
+    const { editorState } = useEditorState();
     return (
         <Suspense fallback={null}>
             <>
@@ -439,7 +443,7 @@ export default function ImageComponent({
                                 imageRef={imageRef}
                                 width={width}
                                 height={height}
-                                maxWidth={maxWidth}
+                                maxWidth={parseInt(contentSizers[editorState.contentSize].size)}
                                 onError={() => setIsLoadError(true)}
                             />
                         </>

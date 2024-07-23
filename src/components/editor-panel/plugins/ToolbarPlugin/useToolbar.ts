@@ -296,7 +296,7 @@ const useToolbar = (editor: LexicalEditor) => {
     }
     if ($isRangeSelection(selection)) {
       setFontSize(
-        $getSelectionStyleValueForProperty(selection, 'font-size', '15px'),
+        $getSelectionStyleValueForProperty(selection, 'font-size', '18px'),
       );
     }
   }, [activeEditor, editor, setBgColor, setFontSize, setIsBold, setIsItalic, setSelectedElementKey, setIsLink, setBlockType, setIsSubscript, setIsSuperscript, setFontColor,setCodeLanguage, setElementFormat, setIsImageCaption, setIsRTL, setIsStrikethrough, setIsUnderline, setFontFamily]);

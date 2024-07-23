@@ -1,4 +1,4 @@
-'use client'
+'use client';
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -6,10 +6,15 @@
  * LICENSE file in the root directory of this source tree.
  *
  */
-import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
+import {
+  $isCodeNode,
+  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+  getLanguageFriendlyName,
+} from '@lexical/code';
+import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import {mergeRegister} from '@lexical/utils';
 import {
   $getNodeByKey,
-
   $getSelection,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
@@ -18,49 +23,25 @@ import {
   KEY_MODIFIER_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import DropDown, { DropDownItem } from '../../../ui/DropDown';
-import {
+import DropDown, {DropDownItem} from '../../../ui/DropDown';
+import {InsertImageDialog} from '../ImagesPlugin';
 
-  $isCodeNode,
-  CODE_LANGUAGE_FRIENDLY_NAME_MAP,
+import {$patchStyleText} from '@lexical/selection';
 
-  getLanguageFriendlyName,
-} from '@lexical/code';
-import {
-  mergeRegister,
-} from '@lexical/utils';
-import {
-  InsertImageDialog,
-} from "../ImagesPlugin";
-
-import {
-
-  $patchStyleText,
-
-} from '@lexical/selection';
-
-import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
-import { useCallback, useEffect, useRef, useState, Dispatch } from "react";
-import { TOGGLE_LINK_COMMAND } from "@lexical/link";
+import {TOGGLE_LINK_COMMAND} from '@lexical/link';
+import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
+import {Dispatch, useCallback, useEffect} from 'react';
 
 /* Utils */
-import { sanitizeUrl } from "@/utils/url";
+import {sanitizeUrl} from '@/utils/url';
 
-/* Icons */
-import FontSizeStepper from "../../font-size-stepper/FontSizeStepper";
-import FontPicker from "../../font-picker/FontPicker";
-import DropdownColorPicker from "../../../ui/DropdownColorPicker";
-
-import InsertLayoutDialog from "../LayoutPlugin/InsertLayoutDialog";
-import UndoRedoButtonGroup from "../../endo-redo";
-import useToolbar from "./useToolbar";
-import BlockFormatDropDown from "../../block-format-dropdown";
-import TextFormatter from "../../text-fomatter";
-import Divider from "../../divider";
-import TextAlignmentDropdown from "../../text-alignment-dropdown";
-import ContentResizer from "../../content-resizer";
-import { useEditorState } from "@/context/EditorStateContext";
-import { useToolbarContext } from "@/context/ToolbarStateContext";
+import {useToolbarContext} from '@/context/ToolbarStateContext';
+import BlockFormatDropDown from '../../block-format-dropdown';
+import ContentResizer from '../../content-resizer';
+import UndoRedoButtonGroup from '../../endo-redo';
+import TextAlignmentDropdown from '../../text-alignment-dropdown';
+import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
+import useToolbar from './useToolbar';
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -75,74 +56,31 @@ export default function ToolbarPlugin({
   setIsLinkEditMode,
   setIsPreviewMode,
 }: {
-  setIsLinkEditMode: Dispatch<boolean>,
-  setIsPreviewMode: Dispatch<boolean>,
+  setIsLinkEditMode: Dispatch<boolean>;
+  setIsPreviewMode: Dispatch<boolean>;
 }) {
-
-
   const [editor] = useLexicalComposerContext();
 
-  const {
-    canViewerSeeInsertDropdown,
-    blockTypeToBlockName,
-    $updateToolbar,
-  } = useToolbar(editor)
+  const {canViewerSeeInsertDropdown, blockTypeToBlockName, $updateToolbar} =
+    useToolbar(editor);
 
   const {
     activeEditor,
     setActiveEditor,
     blockType,
-    setBlockType,
     rootType,
-    setRootType,
     selectedElementKey,
-    setSelectedElementKey,
     toolbarRef,
-    canUndo,
     setCanUndo,
-    canRedo,
     setCanRedo,
-    isBold,
-    setIsBold,
-    isItalic,
-    setIsItalic,
-    isUnderline,
-    setIsUnderline,
-    isStrikethrough,
-    setIsStrikethrough,
     isLink,
-    setIsLink,
     isEditable,
-    setIsEditable,
     codeLanguage,
-    setCodeLanguage,
-    fontSize,
-    setFontSize,
-    fontFamily,
-    setFontFamily,
-    fontColor,
-    setFontColor,
-    bgColor,
-    setBgColor,
-    isSubscript,
-    setIsSubscript,
-    isSuperscript,
-    setIsSuperscript,
     elementFormat,
-    setElementFormat,
     isRTL,
-    setIsRTL,
-    isCode,
-    setIsCode,
-    isImageCaption,
-    setIsImageCaption,
     modal,
     showModal,
   } = useToolbarContext();
-
-
-
-  const { currentFontColor, currentBgColor, setCurrentFontColor, setCurrentBgColor } = useEditorState();
 
   function getCodeLanguageOptions(): [string, string][] {
     const options: [string, string][] = [];
@@ -172,7 +110,6 @@ export default function ToolbarPlugin({
     [activeEditor, selectedElementKey],
   );
 
-
   const applyStyleText = useCallback(
     (styles: Record<string, string>, skipHistoryStack?: boolean) => {
       activeEditor.update(
@@ -182,25 +119,12 @@ export default function ToolbarPlugin({
             $patchStyleText(selection, styles);
           }
         },
-        skipHistoryStack ? { tag: 'historic' } : {},
+        skipHistoryStack ? {tag: 'historic'} : {},
       );
     },
     [activeEditor],
   );
 
-  const onFontColorSelect = useCallback(
-    (value: string, skipHistoryStack: boolean) => {
-      applyStyleText({ color: value }, skipHistoryStack);
-    },
-    [applyStyleText],
-  );
-
-  const onBgColorSelect = useCallback(
-    (value: string, skipHistoryStack: boolean) => {
-      applyStyleText({ 'background-color': value }, skipHistoryStack);
-    },
-    [applyStyleText],
-  );
   useEffect(() => {
     return editor.registerCommand(
       SELECTION_CHANGE_COMMAND,
@@ -221,7 +145,7 @@ export default function ToolbarPlugin({
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({ editorState }) => {
+      editor.registerUpdateListener(({editorState}) => {
         editorState.read(() => {
           $updateToolbar();
         });
@@ -232,7 +156,7 @@ export default function ToolbarPlugin({
           $updateToolbar();
           return false;
         },
-        LowPriority
+        LowPriority,
       ),
       editor.registerCommand(
         CAN_UNDO_COMMAND,
@@ -240,7 +164,7 @@ export default function ToolbarPlugin({
           setCanUndo(payload);
           return false;
         },
-        LowPriority
+        LowPriority,
       ),
       editor.registerCommand(
         CAN_REDO_COMMAND,
@@ -248,8 +172,8 @@ export default function ToolbarPlugin({
           setCanRedo(payload);
           return false;
         },
-        LowPriority
-      )
+        LowPriority,
+      ),
     );
   }, [editor, $updateToolbar, setCanRedo, setCanUndo]);
 
@@ -258,7 +182,7 @@ export default function ToolbarPlugin({
       KEY_MODIFIER_COMMAND,
       (payload) => {
         const event: KeyboardEvent = payload;
-        const { code, ctrlKey, metaKey } = event;
+        const {code, ctrlKey, metaKey} = event;
 
         if (code === 'KeyK' && (ctrlKey || metaKey)) {
           event.preventDefault();
@@ -279,8 +203,10 @@ export default function ToolbarPlugin({
   }, [activeEditor, isLink, setIsLinkEditMode]);
 
   return (
-    <div className="toolbar max-w-[825px] mx-auto flex-1 shadow-md flex justify-between items-start overflow-hidden" ref={toolbarRef}>
-      <div className="flex flex-wrap  gap-3">
+    <div
+      className="toolbar mx-auto flex max-w-[825px] flex-1 items-start justify-between overflow-hidden shadow-md"
+      ref={toolbarRef}>
+      <div className="flex flex-wrap gap-3">
         <UndoRedoButtonGroup editor={editor} />
         {blockType in blockTypeToBlockName && activeEditor === editor && (
           <>
@@ -291,49 +217,29 @@ export default function ToolbarPlugin({
               editor={activeEditor}
               isOnlyIcon={true}
             />
-
           </>
         )}
 
-        {
-          blockType === 'code' ? (
-            <DropDown
-              disabled={!isEditable}
-              buttonClassName="toolbar-item code-language"
-              buttonLabel={getLanguageFriendlyName(codeLanguage)}
-              buttonAriaLabel="Select language">
-              {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
-                return (
-                  <DropDownItem
-                    className={`item ${dropDownActiveClass(
-                      value === codeLanguage,
-                    )}`}
-                    onClick={() => onCodeLanguageSelect(value)}
-                    key={value}>
-                    <span className="text">{name}</span>
-                  </DropDownItem>
-                );
-              })}
-            </DropDown>
-          )
-            :
-            <>
-              {/* <div className="flex gap-3 justify-between items-center">
-                <FontPicker
-                  disabled={!isEditable}
-                  style={'font-family'}
-                  value={fontFamily}
-                  editor={activeEditor}
-                />
-
-                <FontSizeStepper
-                  selectionFontSize={fontSize.slice(0, -2)}
-                  editor={activeEditor}
-                  disabled={!isEditable} />
-              </div> */}
-
-            </>
-        }
+        {blockType === 'code' && (
+          <DropDown
+            disabled={!isEditable}
+            buttonClassName="toolbar-item code-language"
+            buttonLabel={getLanguageFriendlyName(codeLanguage)}
+            buttonAriaLabel="Select language">
+            {CODE_LANGUAGE_OPTIONS.map(([value, name]) => {
+              return (
+                <DropDownItem
+                  className={`item ${dropDownActiveClass(
+                    value === codeLanguage,
+                  )}`}
+                  onClick={() => onCodeLanguageSelect(value)}
+                  key={value}>
+                  <span className="text">{name}</span>
+                </DropDownItem>
+              );
+            })}
+          </DropDown>
+        )}
 
         <TextAlignmentDropdown
           disabled={!isEditable}
@@ -343,64 +249,22 @@ export default function ToolbarPlugin({
           isOnlyIcon={true}
         />
 
-        <button
-          type="button"
-          onClick={() => {
-            activeEditor.dispatchCommand(
-              INSERT_HORIZONTAL_RULE_COMMAND,
-              undefined,
-            );
-          }}
-          className=" toolbar-item">
-          <i className="icon !mr-0 horizontal-rule" />
-        </button>
-        {" "}
+        {blockType !== 'code' && (
+          <button
+            type="button"
+            onClick={() => {
+              activeEditor.dispatchCommand(
+                INSERT_HORIZONTAL_RULE_COMMAND,
+                undefined,
+              );
+            }}
+            className="toolbar-item">
+            <i className="icon horizontal-rule !mr-0" />
+          </button>
+        )}
 
-        {/* {
-          blockType !== 'code' &&
+        {canViewerSeeInsertDropdown && blockType !== 'code' && (
           <>
-            <TextFormatter editor={editor} setIsLinkEditMode={setIsLinkEditMode} />
-
-          </>
-        } */}
-        {/* {
-          blockType !== 'code' &&
-          <>
-            <div className="flex gap-1">
-              <DropdownColorPicker
-                disabled={!isEditable}
-                buttonClassName="toolbar-item color-picker flex-1"
-                buttonAriaLabel="Formatting text color"
-                buttonIconClassName="icon font-color"
-                color={fontColor}
-                currentColor={currentFontColor}
-                setContextColor={setCurrentFontColor}
-                // buttonLabel="Font Color"min-w-36
-                onChange={onFontColorSelect}
-                title="text color"
-              />
-              <DropdownColorPicker
-                disabled={!isEditable}
-                buttonClassName="toolbar-item color-picker flex-1"
-                buttonAriaLabel="Formatting background color"
-                buttonIconClassName="icon bg-color"
-                color={bgColor}
-                currentColor={currentBgColor}
-                setContextColor={setCurrentBgColor}
-                // buttonLabel="Bg Color"
-                onChange={onBgColorSelect}
-                title="bg color"
-              />
-            </div>
-          </>
-        } */}
-
-
-
-
-        {canViewerSeeInsertDropdown && (
-          <>
-
             <DropDown
               disabled={!isEditable}
               buttonClassName="toolbar-item spaced"
@@ -424,21 +288,22 @@ export default function ToolbarPlugin({
           </>
         )}
 
-
-        <button
-          type="button"
-          onClick={() => {
-            showModal('Insert Columns Layout', (onClose) => (
-              <InsertLayoutDialog
-                activeEditor={activeEditor}
-                onClose={onClose}
-              />
-            ));
-          }}
-          className="item toolbar-item">
-          <i className="icon columns" />
-          <span className="text ">Columns Layout</span>
-        </button>
+        {blockType !== 'code' && (
+          <button
+            type="button"
+            onClick={() => {
+              showModal('Insert Columns Layout', (onClose) => (
+                <InsertLayoutDialog
+                  activeEditor={activeEditor}
+                  onClose={onClose}
+                />
+              ));
+            }}
+            className="item toolbar-item">
+            <i className="icon columns" />
+            <span className="text">Columns Layout</span>
+          </button>
+        )}
 
         <ContentResizer />
       </div>

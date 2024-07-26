@@ -42,6 +42,7 @@ import UndoRedoButtonGroup from '../../endo-redo';
 import TextAlignmentDropdown from '../../text-alignment-dropdown';
 import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
 import useToolbar from './useToolbar';
+import { INSERT_COLLAPSIBLE_COMMAND } from '../CollapsiblePlugin';
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -268,7 +269,7 @@ export default function ToolbarPlugin({
             <DropDown
               disabled={!isEditable}
               buttonClassName="toolbar-item spaced"
-              buttonLabel="Image"
+              buttonLabel="Insert"
               buttonAriaLabel="Insert Image"
               buttonIconClassName="icon plus">
               <DropDownItem
@@ -284,6 +285,18 @@ export default function ToolbarPlugin({
                 <i className="icon image" />
                 <span className="text">Image</span>
               </DropDownItem>
+
+              <DropDownItem
+                  onClick={() => {
+                    editor.dispatchCommand(
+                      INSERT_COLLAPSIBLE_COMMAND,
+                      undefined,
+                    );
+                  }}
+                  className="item">
+                  <i className="icon caret-right" />
+                  <span className="text">Collapsible container</span>
+                </DropDownItem>
             </DropDown>
           </>
         )}

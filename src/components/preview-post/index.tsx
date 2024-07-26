@@ -21,6 +21,9 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
 import PreviewToolBar from '../editor-panel/preview-toolbar';
 import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
+import { CollapsibleTitleNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleTitleNode';
+import { CollapsibleContainerNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContainerNode';
+import { CollapsibleContentNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContentNode';
 
 interface HeadingInfo {
     content: string;
@@ -80,7 +83,10 @@ const BlogPost = () => {
             ImageNode,
             LayoutContainerNode,
             LayoutItemNode,
-            BgQuoteNode
+            BgQuoteNode,
+            CollapsibleContentNode,
+            CollapsibleContainerNode,
+            CollapsibleTitleNode
         ],
         onError(error: Error) {
             console.error(error);

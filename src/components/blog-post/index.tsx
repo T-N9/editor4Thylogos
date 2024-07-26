@@ -18,6 +18,9 @@ import TextPreview from '../editor-panel/text-preview/TextPreview';
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
 import Image from 'next/image';
 import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
+import { CollapsibleContentNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContentNode';
+import { CollapsibleContainerNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContainerNode';
+import { CollapsibleTitleNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleTitleNode';
 
 interface BlogPostProps {
     title: string;
@@ -46,7 +49,10 @@ const BlogPost = ({ title, slug, author, date, image, editorState, contentSize }
             ImageNode,
             LayoutContainerNode,
             LayoutItemNode,
-            BgQuoteNode
+            BgQuoteNode,
+            CollapsibleContentNode,
+            CollapsibleContainerNode,
+            CollapsibleTitleNode
         ],
         onError(error: Error) {
             console.error(error);

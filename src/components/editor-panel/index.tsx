@@ -21,6 +21,9 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { ToolbarProvider } from '@/context/ToolbarStateContext';
 import { BgQuoteNode } from './nodes/bgQuote-node';
+import { CollapsibleTitleNode } from './plugins/CollapsiblePlugin/CollapsibleTitleNode';
+import { CollapsibleContainerNode } from './plugins/CollapsiblePlugin/CollapsibleContainerNode';
+import { CollapsibleContentNode } from './plugins/CollapsiblePlugin/CollapsibleContentNode';
 
 const EditorPanel = () => {
   const {
@@ -49,7 +52,10 @@ const EditorPanel = () => {
       ImageNode,
       LayoutContainerNode,
       LayoutItemNode,
-      BgQuoteNode
+      BgQuoteNode,
+      CollapsibleContentNode,
+      CollapsibleContainerNode,
+      CollapsibleTitleNode
     ],
     onError(error: Error) {
       console.error(error);

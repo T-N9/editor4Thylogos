@@ -31,6 +31,7 @@ import PreviewToolBar from '../preview-toolbar';
 import ImagesPlugin from '../plugins/ImagesPlugin';
 import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
 import TableOfContent from '../table-of-content';
+import CollapsiblePlugin from '../plugins/CollapsiblePlugin';
 
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
@@ -167,6 +168,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
           <AutoFocusPlugin />
           <TabFocusPlugin />
           <HorizontalRulePlugin />
+          <CollapsiblePlugin/>
           {/* <TreeViewPlugin /> */}
           <LayoutPlugin />
           <TableOfContent />

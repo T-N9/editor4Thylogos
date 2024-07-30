@@ -3,7 +3,7 @@ import { LexicalComposer } from '@lexical/react/LexicalComposer'
 
 
 /* Nodes */
-import { LinkNode } from '@lexical/link'
+import { AutoLinkNode,LinkNode } from '@lexical/link'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
 import { ImageNode } from '../editor-panel/nodes/image-node';
@@ -21,6 +21,9 @@ import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
 import { CollapsibleContentNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContentNode';
 import { CollapsibleContainerNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContainerNode';
 import { CollapsibleTitleNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleTitleNode';
+import { TweetNode } from '../editor-panel/nodes/tweet-node/TweetNode';
+import { YouTubeNode } from '../editor-panel/nodes/youtube-node/YouTubeNode';
+import { FigmaNode } from '../editor-panel/nodes/figma-node';
 
 interface BlogPostProps {
     title: string;
@@ -52,7 +55,11 @@ const BlogPost = ({ title, slug, author, date, image, editorState, contentSize }
             BgQuoteNode,
             CollapsibleContentNode,
             CollapsibleContainerNode,
-            CollapsibleTitleNode
+            CollapsibleTitleNode,
+            TweetNode,
+            YouTubeNode,
+            AutoLinkNode,
+            FigmaNode
         ],
         onError(error: Error) {
             console.error(error);

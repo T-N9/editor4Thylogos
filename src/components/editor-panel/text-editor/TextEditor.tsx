@@ -32,6 +32,10 @@ import ImagesPlugin from '../plugins/ImagesPlugin';
 import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
 import TableOfContent from '../table-of-content';
 import CollapsiblePlugin from '../plugins/CollapsiblePlugin';
+import AutoEmbedPlugin from '../plugins/AutoEmbedPlugin';
+import TwitterPlugin from '../plugins/TwitterPlugin';
+import YouTubePlugin from '../plugins/YouTubePlugin';
+import FigmaPlugin from '../plugins/FigmaPlugin';
 
 function Placeholder() {
     return <div className="editor-placeholder">Enter some rich text...</div>;
@@ -172,6 +176,10 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
           {/* <TreeViewPlugin /> */}
           <LayoutPlugin />
           <TableOfContent />
+          <AutoEmbedPlugin/>
+          <TwitterPlugin/>
+          <YouTubePlugin/>
+          <FigmaPlugin/>
 
           {floatingAnchorElem && !isSmallWidthViewport && (
             <>

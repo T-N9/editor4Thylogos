@@ -7,7 +7,7 @@ const usePreviewToolbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const handleClickPreview = () => {
-    console.log({pathname});
+    // console.log({pathname});
     if (pathname === '/preview') {
       setIsPreviewMode(false);
       router.push('/upload');

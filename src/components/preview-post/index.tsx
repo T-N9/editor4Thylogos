@@ -2,7 +2,7 @@
 import React from 'react';
 
 /* Nodes */
-import { LinkNode } from '@lexical/link'
+import { AutoLinkNode ,LinkNode } from '@lexical/link'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
 import { ImageNode } from '../editor-panel/nodes/image-node';
@@ -24,6 +24,9 @@ import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
 import { CollapsibleTitleNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleTitleNode';
 import { CollapsibleContainerNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContainerNode';
 import { CollapsibleContentNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContentNode';
+import { YouTubeNode } from '../editor-panel/nodes/youtube-node/YouTubeNode';
+import { TweetNode } from '../editor-panel/nodes/tweet-node/TweetNode';
+import { FigmaNode } from '../editor-panel/nodes/figma-node';
 
 interface HeadingInfo {
     content: string;
@@ -86,7 +89,11 @@ const BlogPost = () => {
             BgQuoteNode,
             CollapsibleContentNode,
             CollapsibleContainerNode,
-            CollapsibleTitleNode
+            CollapsibleTitleNode,
+            TweetNode,
+            YouTubeNode,
+            AutoLinkNode,
+            FigmaNode
         ],
         onError(error: Error) {
             console.error(error);

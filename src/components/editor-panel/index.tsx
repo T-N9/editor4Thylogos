@@ -1,7 +1,7 @@
 'use client'
 
 /* Nodes */
-import { LinkNode } from '@lexical/link'
+import { AutoLinkNode,LinkNode } from '@lexical/link'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
 import { ImageNode } from './nodes/image-node';
@@ -24,6 +24,9 @@ import { BgQuoteNode } from './nodes/bgQuote-node';
 import { CollapsibleTitleNode } from './plugins/CollapsiblePlugin/CollapsibleTitleNode';
 import { CollapsibleContainerNode } from './plugins/CollapsiblePlugin/CollapsibleContainerNode';
 import { CollapsibleContentNode } from './plugins/CollapsiblePlugin/CollapsibleContentNode';
+import { YouTubeNode } from './nodes/youtube-node/YouTubeNode';
+import { TweetNode } from './nodes/tweet-node/TweetNode';
+import { FigmaNode } from './nodes/figma-node';
 
 const EditorPanel = () => {
   const {
@@ -55,7 +58,11 @@ const EditorPanel = () => {
       BgQuoteNode,
       CollapsibleContentNode,
       CollapsibleContainerNode,
-      CollapsibleTitleNode
+      CollapsibleTitleNode,
+      TweetNode,
+      YouTubeNode,
+      AutoLinkNode,
+      FigmaNode
     ],
     onError(error: Error) {
       console.error(error);

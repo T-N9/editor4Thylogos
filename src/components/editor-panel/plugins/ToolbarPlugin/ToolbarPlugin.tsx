@@ -11,8 +11,8 @@ import {
   CODE_LANGUAGE_FRIENDLY_NAME_MAP,
   getLanguageFriendlyName,
 } from '@lexical/code';
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {mergeRegister} from '@lexical/utils';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { mergeRegister } from '@lexical/utils';
 import {
   $getNodeByKey,
   $getSelection,
@@ -23,19 +23,19 @@ import {
   KEY_MODIFIER_COMMAND,
   SELECTION_CHANGE_COMMAND,
 } from 'lexical';
-import DropDown, {DropDownItem} from '../../../ui/DropDown';
-import {InsertImageDialog} from '../ImagesPlugin';
+import DropDown, { DropDownItem } from '../../../ui/DropDown';
+import { InsertImageDialog } from '../ImagesPlugin';
+import { EmbedConfigs } from '../AutoEmbedPlugin';
+import { $patchStyleText } from '@lexical/selection';
 
-import {$patchStyleText} from '@lexical/selection';
-
-import {TOGGLE_LINK_COMMAND} from '@lexical/link';
-import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
-import {Dispatch, useCallback, useEffect} from 'react';
+import { TOGGLE_LINK_COMMAND } from '@lexical/link';
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
+import { Dispatch, useCallback, useEffect } from 'react';
 
 /* Utils */
-import {sanitizeUrl} from '@/utils/url';
+import { sanitizeUrl } from '@/utils/url';
 
-import {useToolbarContext} from '@/context/ToolbarStateContext';
+import { useToolbarContext } from '@/context/ToolbarStateContext';
 import BlockFormatDropDown from '../../block-format-dropdown';
 import ContentResizer from '../../content-resizer';
 import UndoRedoButtonGroup from '../../endo-redo';
@@ -43,6 +43,7 @@ import TextAlignmentDropdown from '../../text-alignment-dropdown';
 import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
 import useToolbar from './useToolbar';
 import { INSERT_COLLAPSIBLE_COMMAND } from '../CollapsiblePlugin';
+import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin';
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -62,7 +63,7 @@ export default function ToolbarPlugin({
 }) {
   const [editor] = useLexicalComposerContext();
 
-  const {canViewerSeeInsertDropdown, blockTypeToBlockName, $updateToolbar} =
+  const { canViewerSeeInsertDropdown, blockTypeToBlockName, $updateToolbar } =
     useToolbar(editor);
 
   const {
@@ -120,7 +121,7 @@ export default function ToolbarPlugin({
             $patchStyleText(selection, styles);
           }
         },
-        skipHistoryStack ? {tag: 'historic'} : {},
+        skipHistoryStack ? { tag: 'historic' } : {},
       );
     },
     [activeEditor],
@@ -146,7 +147,7 @@ export default function ToolbarPlugin({
 
   useEffect(() => {
     return mergeRegister(
-      editor.registerUpdateListener(({editorState}) => {
+      editor.registerUpdateListener(({ editorState }) => {
         editorState.read(() => {
           $updateToolbar();
         });
@@ -183,7 +184,7 @@ export default function ToolbarPlugin({
       KEY_MODIFIER_COMMAND,
       (payload) => {
         const event: KeyboardEvent = payload;
-        const {code, ctrlKey, metaKey} = event;
+        const { code, ctrlKey, metaKey } = event;
 
         if (code === 'KeyK' && (ctrlKey || metaKey)) {
           event.preventDefault();
@@ -287,16 +288,30 @@ export default function ToolbarPlugin({
               </DropDownItem>
 
               <DropDownItem
+                onClick={() => {
+                  editor.dispatchCommand(
+                    INSERT_COLLAPSIBLE_COMMAND,
+                    undefined,
+                  );
+                }}
+                className="item">
+                <i className="icon caret-right" />
+                <span className="text">Collapsible container</span>
+              </DropDownItem>
+              {EmbedConfigs.map((embedConfig) => (
+                <DropDownItem
+                  key={embedConfig.type}
                   onClick={() => {
-                    editor.dispatchCommand(
-                      INSERT_COLLAPSIBLE_COMMAND,
-                      undefined,
+                    activeEditor.dispatchCommand(
+                      INSERT_EMBED_COMMAND,
+                      embedConfig.type,
                     );
                   }}
                   className="item">
-                  <i className="icon caret-right" />
-                  <span className="text">Collapsible container</span>
+                  {embedConfig.icon}
+                  <span className="text">{embedConfig.contentName}</span>
                 </DropDownItem>
+              ))}
             </DropDown>
           </>
         )}

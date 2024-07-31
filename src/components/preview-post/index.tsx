@@ -17,6 +17,11 @@ import { render } from 'dom-serializer';
 import { useEditorState } from '@/context/EditorStateContext';
 import TextPreview from '../editor-panel/text-preview/TextPreview';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import {
+    TableCellNode,
+    TableNode,
+    TableRowNode,
+  } from '@lexical/table';
 
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
 import PreviewToolBar from '../editor-panel/preview-toolbar';
@@ -93,7 +98,10 @@ const BlogPost = () => {
             TweetNode,
             YouTubeNode,
             AutoLinkNode,
-            FigmaNode
+            FigmaNode,
+            TableNode,
+            TableRowNode,
+            TableCellNode,
         ],
         onError(error: Error) {
             console.error(error);

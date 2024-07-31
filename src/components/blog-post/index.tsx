@@ -1,7 +1,6 @@
 'use client'
 import { LexicalComposer } from '@lexical/react/LexicalComposer'
 
-
 /* Nodes */
 import { AutoLinkNode,LinkNode } from '@lexical/link'
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -13,6 +12,11 @@ import { LayoutContainerNode } from '../editor-panel/nodes/layout-node/LayoutCon
 import { LayoutItemNode } from '../editor-panel/nodes/layout-node/LayoutItemNode';
 
 import { useEditorState } from '@/context/EditorStateContext';
+import {
+    TableCellNode,
+    TableNode,
+    TableRowNode,
+  } from '@lexical/table';
 import TextPreview from '../editor-panel/text-preview/TextPreview';
 
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
@@ -59,7 +63,10 @@ const BlogPost = ({ title, slug, author, date, image, editorState, contentSize }
             TweetNode,
             YouTubeNode,
             AutoLinkNode,
-            FigmaNode
+            FigmaNode,
+            TableNode,
+            TableRowNode,
+            TableCellNode
         ],
         onError(error: Error) {
             console.error(error);

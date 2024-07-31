@@ -9,6 +9,11 @@ import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
 import { LayoutContainerNode } from './nodes/layout-node/LayoutContainerNode';
 import { LayoutItemNode } from './nodes/layout-node/LayoutItemNode';
+import {
+  TableCellNode,
+  TableNode,
+  TableRowNode,
+} from '@lexical/table';
 
 /* Components */
 import { Controller } from 'react-hook-form';
@@ -62,7 +67,10 @@ const EditorPanel = () => {
       TweetNode,
       YouTubeNode,
       AutoLinkNode,
-      FigmaNode
+      FigmaNode,
+      TableNode,
+      TableRowNode,
+      TableCellNode
     ],
     onError(error: Error) {
       console.error(error);

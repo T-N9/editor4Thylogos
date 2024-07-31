@@ -44,6 +44,7 @@ import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
 import useToolbar from './useToolbar';
 import { INSERT_COLLAPSIBLE_COMMAND } from '../CollapsiblePlugin';
 import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin';
+import { InsertTableDialog } from '../TablePlugin';
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -312,9 +313,23 @@ export default function ToolbarPlugin({
                   <span className="text">{embedConfig.contentName}</span>
                 </DropDownItem>
               ))}
+              <DropDownItem
+                onClick={() => {
+                  showModal('Insert Table', (onClose) => (
+                    <InsertTableDialog
+                      activeEditor={activeEditor}
+                      onClose={onClose}
+                    />
+                  ));
+                }}
+                className="item">
+                <i className="icon table" />
+                <span className="text">Table</span>
+              </DropDownItem>
             </DropDown>
           </>
         )}
+
 
         {blockType !== 'code' && (
           <button

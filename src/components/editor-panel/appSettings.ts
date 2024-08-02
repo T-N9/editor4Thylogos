@@ -6,10 +6,10 @@
  *
  */
 
-const hostName = window.location.hostname;
-export const isDevPlayground: boolean =
-  hostName !== 'playground.lexical.dev' &&
-  hostName !== 'lexical-playground.vercel.app';
+import { CAN_USE_DOM } from "@/shared/canUseDOM";
+
+const hostName = CAN_USE_DOM && window.location.hostname;
+export const isDevPlayground: boolean = CAN_USE_DOM && hostName !== 'playground.lexical.dev' && hostName !== 'lexical-playground.vercel.app';
 
 export const DEFAULT_SETTINGS = {
   disableBeforeInput: false,

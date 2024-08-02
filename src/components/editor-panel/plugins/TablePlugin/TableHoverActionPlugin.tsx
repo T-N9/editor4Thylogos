@@ -1,3 +1,4 @@
+'use client'
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -6,7 +7,7 @@
  *
  */
 
-import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $getTableColumnIndexFromTableCellNode,
   $getTableRowIndexFromTableCellNode,
@@ -18,13 +19,14 @@ import {
   TableNode,
   TableRowNode,
 } from '@lexical/table';
-import {$findMatchingParent, mergeRegister} from '@lexical/utils';
-import {$getNearestNodeFromDOMNode, NodeKey} from 'lexical';
-import {useEffect, useRef, useState} from 'react';
+import { $findMatchingParent, mergeRegister } from '@lexical/utils';
+import { $getNearestNodeFromDOMNode, NodeKey } from 'lexical';
+import { useEffect, useRef, useState } from 'react';
 import * as React from 'react';
-import {createPortal} from 'react-dom';
+import { createPortal } from 'react-dom';
 
-import {useDebounce} from '../CodeActionMenuPlugin/utils';
+import { useDebounce } from '../CodeActionMenuPlugin/utils';
+import { CAN_USE_DOM } from '@/shared/canUseDOM';
 
 const BUTTON_WIDTH_PX = 20;
 
@@ -44,7 +46,7 @@ function TableHoverActionsContainer({
 
   const debouncedOnMouseMove = useDebounce(
     (event: MouseEvent) => {
-      const {isOutside, tableDOMNode} = getMouseInfo(event);
+      const { isOutside, tableDOMNode } = getMouseInfo(event);
 
       if (isOutside) {
         setShownRow(false);
@@ -104,7 +106,7 @@ function TableHoverActionsContainer({
           height: tableElemHeight,
         } = (tableDOMElement as HTMLTableElement).getBoundingClientRect();
 
-        const {y: editorElemY} = anchorElem.getBoundingClientRect();
+        const { y: editorElemY } = anchorElem.getBoundingClientRect();
 
         if (hoveredRowNode) {
           setShownColumn(false);
@@ -121,7 +123,7 @@ function TableHoverActionsContainer({
           setPosition({
             height: tableElemHeight,
             left: tableElemRight + 5,
-            top: tableElemY - editorElemY +35,
+            top: tableElemY - editorElemY + 35,
             width: BUTTON_WIDTH_PX,
           });
         }
@@ -132,7 +134,7 @@ function TableHoverActionsContainer({
   );
 
   useEffect(() => {
-    if (!shouldListenMouseMove) {
+    if (typeof document === 'undefined' || !shouldListenMouseMove) {
       return;
     }
 
@@ -171,7 +173,7 @@ function TableHoverActionsContainer({
           });
         },
         // @ts-expect-error
-        {skipInitialization: false},
+        { skipInitialization: false },
       ),
     );
   }, [editor]);
@@ -199,14 +201,14 @@ function TableHoverActionsContainer({
       {isShownRow && (
         <button
           className={'PlaygroundEditorTheme__tableAddRows'}
-          style={{...position}}
+          style={{ ...position }}
           onClick={() => insertAction(true)}
         />
       )}
       {isShownColumn && (
         <button
           className={'PlaygroundEditorTheme__tableAddColumns'}
-          style={{...position}}
+          style={{ ...position }}
           onClick={() => insertAction(false)}
         />
       )}
@@ -236,17 +238,20 @@ function getMouseInfo(event: MouseEvent): {
       target.closest<HTMLElement>('div.TableCellResizer__resizer')
     );
 
-    return {isOutside, tableDOMNode};
+    return { isOutside, tableDOMNode };
   } else {
-    return {isOutside: true, tableDOMNode: null};
+    return { isOutside: true, tableDOMNode: null };
   }
 }
 
 export default function TableHoverActionsPlugin({
-  anchorElem = document.body,
+  anchorElem = typeof document !== 'undefined' ? document.body : null,
 }: {
-  anchorElem?: HTMLElement;
+  anchorElem?: HTMLElement | null;
 }): React.ReactPortal | null {
+  if (!anchorElem) {
+    return null;
+  }
   return createPortal(
     <TableHoverActionsContainer anchorElem={anchorElem} />,
     anchorElem,

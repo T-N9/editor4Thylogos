@@ -1,3 +1,4 @@
+'use client'
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -664,7 +665,7 @@ function TableCellActionMenuContainer({
     const menu = menuButtonRef.current;
     const selection = $getSelection();
     const nativeSelection = window.getSelection();
-    const activeElement = document.activeElement;
+    const activeElement = typeof document !== 'undefined' && document.activeElement;
 
     if (selection == null || menu == null) {
       setTableMenuCellNode(null);
@@ -777,13 +778,16 @@ function TableCellActionMenuContainer({
 }
 
 export default function TableActionMenuPlugin({
-  anchorElem = document.body,
+  anchorElem = typeof document !== 'undefined' ? document.body : null,
   cellMerge = false,
 }: {
-  anchorElem?: HTMLElement;
+  anchorElem?: HTMLElement | null;
   cellMerge?: boolean;
 }): null | ReactPortal {
   const isEditable = useLexicalEditable();
+  if (!anchorElem) {
+    return null;
+  }
   return createPortal(
     isEditable ? (
       <TableCellActionMenuContainer

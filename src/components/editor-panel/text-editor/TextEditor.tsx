@@ -1,48 +1,47 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useLocalStorage } from 'react-use';
-import { CAN_USE_DOM } from '@/shared/canUseDOM';
 import { useEditorState } from '@/context/EditorStateContext';
+import { CAN_USE_DOM } from '@/shared/canUseDOM';
+import React, { useEffect, useState } from 'react';
+import { useLocalStorage } from 'react-use';
 
 /* Lexical Core */
-import { LexicalEditor, EditorState } from 'lexical';
 import { $generateHtmlFromNodes } from '@lexical/html';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
-import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
-import { ContentEditable } from '@lexical/react/LexicalContentEditable';
-import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
-import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { CheckListPlugin } from '@lexical/react/LexicalCheckListPlugin';
-import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable';
+import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
+import { ListPlugin } from '@lexical/react/LexicalListPlugin';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { EditorState, LexicalEditor } from 'lexical';
 
 /* Plugins */
-import ToolbarPlugin from '../plugins/ToolbarPlugin/ToolbarPlugin';
-import LinkPlugin from '../plugins/LinkPlugin';
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
+import AutoEmbedPlugin from '../plugins/AutoEmbedPlugin';
+import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
+import CollapsiblePlugin from '../plugins/CollapsiblePlugin';
 import DraggableBlockPlugin from '../plugins/DraggableBlockPlugin';
+import FigmaPlugin from '../plugins/FigmaPlugin';
 import FloatingLinkEditorPlugin from '../plugins/FloatingLinkEditorPlugin/FloatingLinkEditorPlugin';
 import FloatingTextFormatToolbarPlugin from '../plugins/FloatingTextFormatToolbarPlugin/FloatingTextFormatToolbarPlugin';
-import CodeActionMenuPlugin from '../plugins/CodeActionMenuPlugin';
-import TabFocusPlugin from '../plugins/TabFocusPlugin';
-import PreviewToolBar from '../preview-toolbar';
 import ImagesPlugin from '../plugins/ImagesPlugin';
 import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
-import TableOfContent from '../table-of-content';
-import CollapsiblePlugin from '../plugins/CollapsiblePlugin';
-import AutoEmbedPlugin from '../plugins/AutoEmbedPlugin';
+import LinkPlugin from '../plugins/LinkPlugin';
+import TabFocusPlugin from '../plugins/TabFocusPlugin';
+import TableCellActionMenuPlugin from '../plugins/TablePlugin/TableActionMenuPlugin';
+import TableCellResizer from '../plugins/TablePlugin/TableCellResizer';
+import TableHoverActionsPlugin from '../plugins/TablePlugin/TableHoverActionPlugin';
+import ToolbarPlugin from '../plugins/ToolbarPlugin/ToolbarPlugin';
 import TwitterPlugin from '../plugins/TwitterPlugin';
 import YouTubePlugin from '../plugins/YouTubePlugin';
-import FigmaPlugin from '../plugins/FigmaPlugin';
-import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
-import TableCellActionMenuPlugin from '../plugins/TablePlugin/TableActionMenuPlugin';
-import TableHoverActionsPlugin from '../plugins/TablePlugin/TableHoverActionPlugin';
-import TableCellResizer from '../plugins/TablePlugin/TableCellResizer';
+import PreviewToolBar from '../preview-toolbar';
+import TableOfContent from '../table-of-content';
 
 import { useSettings } from '@/context/SettingsContext';
-import TableCellResizerPlugin from '../plugins/TablePlugin/TableCellResizer';
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;

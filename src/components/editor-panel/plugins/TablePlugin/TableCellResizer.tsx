@@ -1,3 +1,4 @@
+'use client'
 /**
  * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
@@ -303,7 +304,7 @@ function TableCellResizer({editor}: {editor: LexicalEditor}): JSX.Element {
           throw new Error('TableCellResizer: Expected active cell.');
         }
 
-        if (mouseStartPosRef.current) {
+        if (mouseStartPosRef.current && typeof document !== 'undefined') {
           const {x, y} = mouseStartPosRef.current;
 
           if (activeCell === null) {
@@ -440,7 +441,7 @@ export default function TableCellResizerPlugin(): null | ReactPortal {
 
   return useMemo(
     () =>
-      isEditable
+      isEditable && typeof document !== 'undefined'
         ? createPortal(<TableCellResizer editor={editor} />, document.body)
         : null,
     [editor, isEditable],

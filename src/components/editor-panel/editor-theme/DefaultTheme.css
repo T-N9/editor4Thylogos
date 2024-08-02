@@ -375,7 +375,7 @@
 .TableCellResizer__resizer {
   position: absolute;
   background-color: rgba(40, 140, 255, 0.064);
-  z-index: 1000 !important;
+  z-index: 100 !important;
 }
 
 .PlaygroundEditorTheme__tableAddColumns:after {

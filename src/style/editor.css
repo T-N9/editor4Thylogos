@@ -139,6 +139,26 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'ThitSar';
+  src: url('/fonts/ThitSar-Thin.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ThitSar';
+  src: url('/fonts/ThitSar-Regular.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ThitSar';
+  src: url('/fonts/ThitSar-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
 
 
 button {

@@ -49,6 +49,7 @@ const FONT_FAMILY_OPTIONS: {
     { info: [`Indie Flower`, 'Indie Flower'], type: BlockTypeOptions.WRITING },
     { info: ['Noto Sans JP', 'Noto Sans JP'], lang: LanguageOptions.JP },
     { info: ['Noto Serif JP', 'Noto Serif JP'], lang: LanguageOptions.JP, type: BlockTypeOptions.WRITING },
+    { info: [`ThitSar`, 'ThitSar'], lang: LanguageOptions.MM, type: BlockTypeOptions.WRITING },
   ];
 
 const FONT_SIZE_OPTIONS: [string, string][] = [

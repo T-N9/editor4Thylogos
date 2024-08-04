@@ -45,6 +45,7 @@ import useToolbar from './useToolbar';
 import { INSERT_COLLAPSIBLE_COMMAND } from '../CollapsiblePlugin';
 import { INSERT_EMBED_COMMAND } from '@lexical/react/LexicalAutoEmbedPlugin';
 import { InsertTableDialog } from '../TablePlugin';
+import FontPicker from '../../font-picker/FontPicker';
 const LowPriority = 1;
 
 export function dropDownActiveClass(active: boolean) {
@@ -74,6 +75,7 @@ export default function ToolbarPlugin({
     rootType,
     selectedElementKey,
     toolbarRef,
+    fontFamily,
     setCanUndo,
     setCanRedo,
     isLink,
@@ -207,7 +209,7 @@ export default function ToolbarPlugin({
 
   return (
     <div
-      className="toolbar mx-auto flex max-w-[825px] flex-1 items-start justify-between overflow-hidden shadow-md"
+      className="toolbar mx-auto flex w-fit flex-1 items-start justify-between overflow-hidden shadow-md"
       ref={toolbarRef}>
       <div className="flex flex-wrap gap-3">
         <UndoRedoButtonGroup editor={editor} />
@@ -222,6 +224,14 @@ export default function ToolbarPlugin({
             />
           </>
         )}
+        {blockType !== 'code' &&
+          <FontPicker
+            disabled={!isEditable}
+            style={'font-family'}
+            value={fontFamily}
+            editor={activeEditor}
+          />
+        }
 
         {blockType === 'code' && (
           <DropDown
@@ -326,28 +336,23 @@ export default function ToolbarPlugin({
                 <i className="icon table" />
                 <span className="text">Table</span>
               </DropDownItem>
+
+              <DropDownItem
+                onClick={() => {
+                  showModal('Insert Columns Layout', (onClose) => (
+                    <InsertLayoutDialog
+                      activeEditor={activeEditor}
+                      onClose={onClose}
+                    />
+                  ));
+                }}
+                className="item">
+                <i className="icon columns" />
+                <span className="text">Columns Layout</span>
+              </DropDownItem>
             </DropDown>
           </>
         )}
-
-
-        {blockType !== 'code' && (
-          <button
-            type="button"
-            onClick={() => {
-              showModal('Insert Columns Layout', (onClose) => (
-                <InsertLayoutDialog
-                  activeEditor={activeEditor}
-                  onClose={onClose}
-                />
-              ));
-            }}
-            className="item toolbar-item">
-            <i className="icon columns" />
-            <span className="text">Columns Layout</span>
-          </button>
-        )}
-
         <ContentResizer />
       </div>
       {modal}

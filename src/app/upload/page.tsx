@@ -10,6 +10,8 @@ const Upload = () => {
   return (
     <>
       <EditorPanel />
+
+      {/* <Script src="https://unpkg.com/spacingjs" strategy='afterInteractive' /> */}
     </>
   )
 }

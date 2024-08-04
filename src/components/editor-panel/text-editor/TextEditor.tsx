@@ -32,8 +32,6 @@ import ImagesPlugin from '../plugins/ImagesPlugin';
 import { LayoutPlugin } from '../plugins/LayoutPlugin/LayoutPlugin';
 import LinkPlugin from '../plugins/LinkPlugin';
 import TabFocusPlugin from '../plugins/TabFocusPlugin';
-import TableCellActionMenuPlugin from '../plugins/TablePlugin/TableActionMenuPlugin';
-import TableCellResizer from '../plugins/TablePlugin/TableCellResizer';
 import TableHoverActionsPlugin from '../plugins/TablePlugin/TableHoverActionPlugin';
 import ToolbarPlugin from '../plugins/ToolbarPlugin/ToolbarPlugin';
 import TwitterPlugin from '../plugins/TwitterPlugin';
@@ -42,6 +40,15 @@ import PreviewToolBar from '../preview-toolbar';
 import TableOfContent from '../table-of-content';
 
 import { useSettings } from '@/context/SettingsContext';
+import dynamic from 'next/dynamic';
+
+const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
+  loading: () => <p>Loading Table Cell Resizer</p>,
+})
+
+const TableCellActionMenuPlugin = dynamic(() => import('../plugins/TablePlugin/TableActionMenuPlugin'), {
+  loading: () => <p>Loading Table Cell Action Menu Plugin</p>,
+})
 
 function Placeholder() {
   return <div className="editor-placeholder">Enter some rich text...</div>;
@@ -161,7 +168,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         setIsLinkEditMode={setIsLinkEditMode}
         setIsPreviewMode={setIsPreviewMode}
       />
-      <div
+      <section
         className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
         <RichTextPlugin
           contentEditable={
@@ -178,10 +185,12 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
           hasCellMerge={tableCellMerge}
           hasCellBackgroundColor={tableCellBackgroundColor}
         />
+
         <TableCellResizer />
         <TableHoverActionsPlugin />
         <TableCellActionMenuPlugin />
         <TableHoverActionsPlugin />
+
         <PreviewToolBar />
         <ImagesPlugin />
         <LinkPlugin />
@@ -193,7 +202,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         <TabFocusPlugin />
         <HorizontalRulePlugin />
         <CollapsiblePlugin />
-        {/* <TreeViewPlugin /> */}
         <LayoutPlugin />
         <TableOfContent />
         <AutoEmbedPlugin />
@@ -225,7 +233,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
           onChange={onChange}
           setEditorState={setEditorState}
         />
-      </div>
+      </section>
     </>
   );
 };

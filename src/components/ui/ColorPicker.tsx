@@ -153,17 +153,21 @@ export default function ColorPicker({
       style={{ width: WIDTH }}
       ref={innerDivRef}>
 
-      <div className='flex flex-wrap mb-4'>
-        {
-          gradientColors.map((group, index) => {
-            const gradientColors = group.join(', ');
-            return <button onClick={() => handleGradientClick(gradientColors)} key={index} style={{
-               backgroundImage: `linear-gradient(to right, ${gradientColors})`
-            }} className='inline-block w-12 h-5'>
-            </button>
-          })
-        }
-      </div>
+      {
+        title === "bg color" &&
+        <div className='flex gap-1 flex-wrap mb-4'>
+          {
+            gradientColors.map((group, index) => {
+              const gradientColors = group.join(', ');
+              return <button onClick={() => handleGradientClick(gradientColors)} key={index} style={{
+                backgroundImage: `linear-gradient(to right, ${gradientColors})`
+              }} className='inline-block w-12 h-5 rounded border'>
+              </button>
+            })
+          }
+        </div>
+      }
+
       <TextInput label="Hex" onChange={onSetHex} value={inputColor} />
       <div className="color-picker-basic-color">
         {basicColors.map((basicColor) => (

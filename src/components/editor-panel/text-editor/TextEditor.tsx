@@ -188,7 +188,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
 
         <TableCellResizer />
         <TableHoverActionsPlugin />
-        <TableCellActionMenuPlugin />
         <TableHoverActionsPlugin />
 
         <PreviewToolBar />

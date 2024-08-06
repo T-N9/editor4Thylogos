@@ -40,6 +40,7 @@ const useFromData = () => {
       setImagePreview(localizedFormState.image);
       setIsSlugModified(false);
       setIsSummaryModified(false);
+      setTags(localizedFormState.tags);
     }
   }, []);
 

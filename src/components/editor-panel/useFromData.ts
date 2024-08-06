@@ -4,6 +4,15 @@ import {useCallback, useEffect, useState} from 'react';
 import {useEditorState} from '@/context/EditorStateContext';
 import {useForm} from 'react-hook-form';
 import {debounce} from 'lodash-es';
+import {useLocalStorage} from 'react-use';
+
+export interface LocalFormState {
+  title: string;
+  slug: string;
+  image: string;
+  tags: string[];
+  summary: string;
+}
 
 const useFromData = () => {
   const {editorState, isPreviewMode, setEditorState, setIsPreviewMode} =
@@ -14,10 +23,27 @@ const useFromData = () => {
   const [isSummaryModified, setIsSummaryModified] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  
-  const featureImage = watch("feature-image");
+  const [localizedFormState, setLocalizedFormState] =
+  useLocalStorage<LocalFormState | null>('my-form-state-key', null);
+
+  const featureImage = watch('feature-image');
 
   const watchAllFields = watch();
+
+
+
+  useEffect(() => {
+    if(localizedFormState) {
+      setValue('title', localizedFormState.title);
+      setValue('slug', localizedFormState.slug);
+      setValue('image', localizedFormState.image);
+      setValue('tags', localizedFormState.tags);
+      setValue('summary', localizedFormState.summary);
+      setImagePreview(localizedFormState.image);
+      setIsSlugModified(false);
+      setIsSummaryModified(false);
+    }
+  },[])
 
   const addTag = (tag: string) => {
     if (tag && !tags.includes(tag)) {
@@ -90,11 +116,7 @@ const useFromData = () => {
   const onSubmit = (data: any) => {
     console.log('Submitted data:', data);
     console.log(JSON.parse(contextEditorState.editorState));
-    const texts = extractTextFromParagraphs(
-      JSON.parse(contextEditorState.editorState).root,
-    );
 
-    console.log(texts.join(''));
   };
 
   useEffect(() => {
@@ -104,12 +126,27 @@ const useFromData = () => {
       );
 
       setValue('summary', texts.join(''));
-
-      console.log(texts.join(''));
     }
-
-    console.log({watchAllFields});
   }, [contextEditorState]);
+
+
+
+  const title = watch('title');
+  const slug = watch('slug');
+  const featureImageL = watch('feature-image');
+  const tagsL = watch('tags');
+  const summary = watch('summary');
+
+  useEffect(() => {
+    setLocalizedFormState({
+      title: title,
+      slug: slug,
+      image: featureImageL,
+      tags: tagsL,
+      summary: summary,
+    });
+    // console.log({watchAllFields});
+  }, [title, slug, featureImageL, tagsL, summary]);
 
   useEffect(() => {
     setValue('content', JSON.stringify(contextEditorState));

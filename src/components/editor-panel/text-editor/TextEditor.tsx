@@ -87,7 +87,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
       if (localizedEditorState) {
         // console.log('Set Editor State')
         // console.log({localizedEditorState});
-        const initialEditorState = editor.parseEditorState(localizedEditorState.editorState)
+        const initialEditorState = editor?.parseEditorState(localizedEditorState.editorState)
         setEditorState({ editorState: localizedEditorState.editorState, contentSize: localizedEditorState.contentSize })
         editor.setEditorState(initialEditorState)
       }

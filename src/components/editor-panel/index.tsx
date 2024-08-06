@@ -161,11 +161,8 @@ const InnerEditorPanel = ({
                     className="w-full border-l px-4 py-1 text-base outline-none"
                     placeholder="Enter Tags"
                     value={field.value.join(', ')}
-                    // onChange={(e) => {
-                    //   const value = e.target.value;
-                    //   const newTags = value.split(',').map(tag => tag.trim());
-                    //   setTags(newTags);
-                    // }}
+                    onChange={(e) => {
+                    }}
                     // onBlur={() => setValue('tags', tags)}
                     required
                   />

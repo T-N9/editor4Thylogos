@@ -78,14 +78,14 @@
   font-size: 3rem;
   font-weight: 700;
   margin: 0;
-  line-height: 50px;
+  line-height: 66px;
 }
 
 .PlaygroundEditorTheme__h2 {
   font-size: 2.75rem;
   font-weight: 700;
   margin: 0;
-  line-height: 50px;
+  line-height: 60px;
 }
 
 .PlaygroundEditorTheme__h3 {
@@ -106,14 +106,14 @@
   font-size: 1.65rem;
   font-weight: 700;
   margin: 0;
-  line-height: 50px;
+  line-height: 40px;
 }
 
 .PlaygroundEditorTheme__h6 {
   font-size: 1.35rem;
   font-weight: 700;
   margin: 0;
-  line-height: 50px;
+  line-height: 30px;
 }
 
 /* Styles for tablets and smaller screens */

@@ -155,7 +155,7 @@ function TableOfContentsList({
                         }
                     </button>
                     <div className="table-of-contents shadow border-r-4 border-gray-600">
-                        <h1 className='font-bold text-gray-300'>Table of Contents</h1>
+                        <h1 className='font-bold text-gray-300'>In this article</h1>
                         <ul className="headings">
                             {tableOfContents.map(([key, text, tag], index) => {
                                 return (

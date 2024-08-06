@@ -112,7 +112,7 @@ function LazyImage({
     onError: () => void;
 }): JSX.Element {
     // useSuspenseImage(src);
-    console.log({ width, height, maxWidth });
+    // console.log({ width, height, maxWidth });
 
     return (
         <>

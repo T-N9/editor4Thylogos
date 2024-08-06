@@ -24,16 +24,14 @@ const useFromData = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [localizedFormState, setLocalizedFormState] =
-  useLocalStorage<LocalFormState | null>('my-form-state-key', null);
+    useLocalStorage<LocalFormState | null>('my-form-state-key', null);
 
   const featureImage = watch('feature-image');
 
   const watchAllFields = watch();
 
-
-
   useEffect(() => {
-    if(localizedFormState) {
+    if (localizedFormState) {
       setValue('title', localizedFormState.title);
       setValue('slug', localizedFormState.slug);
       setValue('image', localizedFormState.image);
@@ -43,7 +41,7 @@ const useFromData = () => {
       setIsSlugModified(false);
       setIsSummaryModified(false);
     }
-  },[])
+  }, []);
 
   const addTag = (tag: string) => {
     if (tag && !tags.includes(tag)) {
@@ -93,30 +91,35 @@ const useFromData = () => {
     version: number;
   };
 
-  const extractTextFromParagraphs = (node: Child | Root): string[] => {
-    let texts: string[] = [];
+  const extractTextFromParagraphs = (node: Child | Root): string => {
+    let textArray: string[] = [];
 
     if (node.type === 'paragraph' && node.children) {
       for (const child of node.children) {
         if (child.type === 'text' && child.text) {
-          texts.push(child.text);
+          textArray.push(child.text);
         }
       }
     }
 
     if (node.children) {
       for (const child of node.children) {
-        texts = texts.concat(extractTextFromParagraphs(child));
+        textArray = textArray.concat(extractTextFromParagraphs(child));
       }
     }
 
-    return texts;
+    if(textArray.join('').length > 600) {
+      return (textArray.join('').slice(0, 600))
+    }else {
+      textArray.join('')
+    }
+
+    return textArray.join('');
   };
 
   const onSubmit = (data: any) => {
     console.log('Submitted data:', data);
     console.log(JSON.parse(contextEditorState.editorState));
-
   };
 
   useEffect(() => {
@@ -125,11 +128,9 @@ const useFromData = () => {
         JSON.parse(contextEditorState.editorState).root,
       );
 
-      setValue('summary', texts.join(''));
+      setValue('summary', texts);
     }
   }, [contextEditorState]);
-
-
 
   const title = watch('title');
   const slug = watch('slug');

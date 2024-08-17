@@ -1,5 +1,5 @@
 'use client';
-
+import { useEffect, useState } from 'react';
 /* Nodes */
 import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -28,11 +28,16 @@ import { CollapsibleContentNode } from './plugins/CollapsiblePlugin/CollapsibleC
 import { YouTubeNode } from './nodes/youtube-node/YouTubeNode';
 import { TweetNode } from './nodes/tweet-node/TweetNode';
 import { FigmaNode } from './nodes/figma-node';
+import { fetchAllImages, uploadImage } from '@/lib/firebase';
+import Image from 'next/image';
+import { FileUploader } from "react-drag-drop-files";
 
 const EditorPanel = () => {
   const {
     editorState,
   } = useFromData();
+
+
 
   const initialConfig = {
     namespace: 'My Lexical Board',
@@ -88,29 +93,44 @@ const InnerEditorPanel = ({
     onSubmit,
     setIsPreviewMode,
     editorState,
+    imageUrls,
+    isUseExistingImage,
     setEditorState,
     handleTitle,
     handleSlug,
     handleTagClick,
     removeTag,
+    handleUploadImage,
     setTags,
+    imageFile,
     imagePreview,
     setImagePreview,
     featureImage,
     setValue,
     handleSummary,
-    tags
+    handleClearImage,
+    handleClickUseExistingImage,
+    handleClickChooseImage,
+    handleImageFileDrop,
+    tags,
+    tagData,
+    setImageFile
   } = useFromData();
+
+
 
   return (
     <ToolbarProvider editor={editor}>
       <main
         className={`editor-shell mx-auto mt-8 flex max-w-[1300px] justify-center rounded-sm py-8 lg:w-[1300px] 2xl:w-[1440px] 2xl:max-w-[1440px] ${isPreviewMode ? 'previewing inline-block' : 'flex'} relative flex-col justify-center gap-2 font-normal leading-7 text-gray-800`}>
+
+        {/* <ImageUpload />
+        <ImageGallery/> */}
         <form
           className="blog-form-panel mb-80 space-y-4"
           onSubmit={handleSubmit(onSubmit)}>
           <div className="mx-auto max-w-[845px] space-y-4">
-            <button type="submit">Submit</button>
+            <button type="submit" className='bg-blue-500 rounded-md px-6 py-2 text-white float-right'>Submit</button>
             <Controller
               name="title"
               control={control}
@@ -151,69 +171,152 @@ const InnerEditorPanel = ({
                 );
               }}
             />
+
             <Controller
               name="tags"
               control={control}
               defaultValue={[]}
               render={({ field }) => (
                 <div>
-                  <input
-                    className="w-full border-l px-4 py-1 text-base outline-none"
-                    placeholder="Enter Tags"
-                    value={field.value.join(', ')}
-                    onChange={(e) => {
-                    }}
-                    // onBlur={() => setValue('tags', tags)}
-                    required
-                  />
-                  <div className='flex gap-1'>
-                    {['Music', 'Programming', 'Teaching'].map((tag) => (
-                      <span
-                        key={tag}
-                        className='p-1 shadow cursor-pointer rounded'
-                        onClick={() => handleTagClick(tag)}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+
                   {/* Selected Tags */}
-                  <div>
-                    {tags.map((tag: any) => (
+                  <div className='relative'>
+                    <input
+                      className="w-full border-l text-transparent px-4 py-2 text-base outline-none"
+                      // placeholder="Enter Tags"
+                      value={field.value.join(', ')}
+                      onChange={(e) => {
+                      }}
+                      // onBlur={() => setValue('tags', tags)}
+                      required
+                    />
+                    <div className='absolute top-1/2 -translate-y-1/2 left-4 right-0 flex gap-2 flex-wrap'>
+                      {
+                        tags.length > 0 ? tags?.map((tag: any) => (
+                          <span
+                            key={tag}
+                            className='py-1 px-3 text-sm flex gap-1 bg-slate-200 shadow rounded-full text-slate-700 hover:text-gray-600 cursor-pointer'
+                            onClick={() => removeTag(tag)}
+                          >
+                            {tag}
+                            <button className='text-red-500'>
+                              &times;
+                            </button>
+                          </span>
+                        ))
+                          :
+                          <span className='text-gray-400'>Select Tags</span>
+                      }
+                    </div>
+                  </div>
+
+                  <div className='flex gap-2 mt-1'>
+                    {tagData.map((tag) => (
                       <span
-                        key={tag}
-                        className='p-1 text-gray-400 hover:text-gray-600 cursor-pointer'
-                        onClick={() => removeTag(tag)}
+                        key={tag.id}
+                        className='p-1 shadow cursor-pointer rounded'
+                        onClick={() => handleTagClick(tag.tagName)}
                       >
-                        {tag}
-                        <button>
-                          &times;
-                        </button>
+                        {tag.tagName}
                       </span>
                     ))}
                   </div>
                 </div>
               )}
             />
-            <Controller
-              name="feature-image"
-              control={control}
-              defaultValue={null}
-              render={({ field }) => (
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={(e) => {
-                    const files = e.target.files;
-                    if (files && files[0]) {
-                      setImagePreview(URL.createObjectURL(files[0]));
-                      setValue('image', files);
-                    }
+
+            {/* Feature Images */}
+            <div className='relative space-x-2 w-1/2'>
+              {imagePreview && <button onClick={handleClearImage} type='button' className='rounded-full h-8 w-8 flex justify-center items-center text-white absolute -top-2 -right-2 bg-red-500'>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                </svg>
+
+              </button>}
+
+              {!imagePreview && <FileUploader handleChange={handleImageFileDrop} />}
+              <Controller
+                name="feature-image"
+                control={control}
+                defaultValue={null}
+                render={({ field }) => (
+                  <>
+                    <label className={imagePreview ? 'hidden' : 'cursor-pointer px-4 py-3 bg-gray-200 rounded'} htmlFor="image-upload">Upload New Image</label>
+                    <input
+                      className='hidden'
+                      type="file"
+                      id='image-upload'
+                      accept="image/*"
+                      onChange={async (e: React.ChangeEvent<HTMLInputElement>) => {
+                        const files = e.target.files;
+                        if (files && files[0]) {
+                          setImagePreview(URL.createObjectURL(files[0]));
+                          setImageFile(files[0]);
+
+                          console.log({ fileURL: URL.createObjectURL(files[0]), file: files[0] });
+                        }
+                      }}
+                    />
+                  </>
+                )}
+              />
+              {!imagePreview &&
+                <>
+                  <span>OR</span>
+                  <button onClick={handleClickUseExistingImage} type='button' className='cursor-pointer px-4 py-2 bg-gray-200 rounded'>Use Existing Image</button>
+                </>
+              }
+            </div>
+
+            {/* Feature Image Caption */}
+
+            {imagePreview &&
+              <>
+                <img className='w-1/2' src={imagePreview} alt="Preview" />
+                <Controller
+                  name="image-caption"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => {
+                    // const { ...otherFields } = field;
+                    return (
+                      <input
+                        {...field}
+                        className="w-full border-l px-4 py-1 text-base outline-none"
+                        placeholder="Enter caption or Alt text"
+                        required
+
+                        disabled={imagePreview === null}
+                      />
+                    );
                   }}
                 />
-              )}
-            />
-            {imagePreview && <img src={imagePreview} alt="Preview" />}
+                {
+                  !featureImage &&
+                  <button onClick={() => handleUploadImage(imageFile)} type='button' className='bg-gray-100 rounded shadow px-2'>Upload</button>
+                }
+
+              </>
+            }
+
+
+            {
+              isUseExistingImage &&
+              <div className='grid grid-cols-3 bg-gray-200 p-3 gap-3'>
+                {imageUrls.length > 0 ? (
+                  imageUrls.map((image, index) => (
+                    <div onClick={() => handleClickChooseImage(image.imageUrl, image.caption)} key={index} className='flex flex-col gap-2 cursor-pointer hover:bg-slate-50'>
+                      <Image width={100} height={50} src={image.imageUrl} alt={`Image ${index + 1}`} />
+                      <p>{image.caption}</p>
+                    </div>
+                  ))
+                ) : (
+                  <p>No images found.</p>
+                )}
+              </div>
+            }
+
+
           </div>
 
           <Controller

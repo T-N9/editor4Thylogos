@@ -5,6 +5,14 @@ import {useEditorState} from '@/context/EditorStateContext';
 import {useForm} from 'react-hook-form';
 import {debounce} from 'lodash-es';
 import {useLocalStorage} from 'react-use';
+import {
+  fetchAllImages,
+  fetchFeatureImages,
+  fetchTags,
+  uploadBlogItemData,
+  uploadImage,
+  uploadImageData,
+} from '@/lib/firebase';
 
 export interface LocalFormState {
   title: string;
@@ -12,6 +20,7 @@ export interface LocalFormState {
   image: string;
   tags: string[];
   summary: string;
+  imageCaption: string;
 }
 
 const useFromData = () => {
@@ -22,9 +31,15 @@ const useFromData = () => {
   const [isSlugModified, setIsSlugModified] = useState<boolean>(false);
   const [isSummaryModified, setIsSummaryModified] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
+  const [tagData, setTagData] = useState<{id: string; tagName: string}[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [localizedFormState, setLocalizedFormState] =
     useLocalStorage<LocalFormState | null>('my-form-state-key', null);
+  const [imageUrls, setImageUrls] = useState<
+    {caption: string; id: string; imageUrl: string}[]
+  >([]);
+  const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
 
   const featureImage = watch('feature-image');
 
@@ -34,18 +49,21 @@ const useFromData = () => {
     if (localizedFormState) {
       setValue('title', localizedFormState.title);
       setValue('slug', localizedFormState.slug);
-      setValue('image', localizedFormState.image);
+      setValue('feature-image', localizedFormState.image);
       setValue('tags', localizedFormState.tags);
       setValue('summary', localizedFormState.summary);
+      setValue('image-caption', localizedFormState.imageCaption);
       setImagePreview(localizedFormState.image);
       setIsSlugModified(false);
       setIsSummaryModified(false);
-      setTags(localizedFormState.tags);
+      setTags(localizedFormState.tags || []);
     }
+
+    handleGetAllTagsData();
   }, []);
 
   const addTag = (tag: string) => {
-    if (tag && !tags.includes(tag)) {
+    if (tag && !tags?.includes(tag)) {
       const newTags = [...tags, tag];
       setTags(newTags);
       setValue('tags', newTags); // Update the form value
@@ -109,18 +127,13 @@ const useFromData = () => {
       }
     }
 
-    if(textArray.join('').length > 600) {
-      return (textArray.join('').slice(0, 600))
-    }else {
-      textArray.join('')
+    if (textArray.join('').length > 600) {
+      return textArray.join('').slice(0, 600);
+    } else {
+      textArray.join('');
     }
 
     return textArray.join('');
-  };
-
-  const onSubmit = (data: any) => {
-    console.log('Submitted data:', data);
-    console.log(JSON.parse(contextEditorState.editorState));
   };
 
   useEffect(() => {
@@ -138,6 +151,7 @@ const useFromData = () => {
   const featureImageL = watch('feature-image');
   const tagsL = watch('tags');
   const summary = watch('summary');
+  const imageCaption = watch('image-caption');
 
   useEffect(() => {
     setLocalizedFormState({
@@ -146,9 +160,10 @@ const useFromData = () => {
       image: featureImageL,
       tags: tagsL,
       summary: summary,
+      imageCaption: imageCaption,
     });
     // console.log({watchAllFields});
-  }, [title, slug, featureImageL, tagsL, summary]);
+  }, [title, slug, featureImageL, tagsL, summary, imageCaption]);
 
   useEffect(() => {
     setValue('content', JSON.stringify(contextEditorState));
@@ -183,6 +198,78 @@ const useFromData = () => {
     setIsSummaryModified(true);
   };
 
+  const handleUploadImage = async (file: File | null) => {
+    console.log({imageCaption, file});
+    if (imageCaption !== undefined && imageCaption !== '' && file) {
+      try {
+        const imageUrl = await uploadImage(file);
+        uploadImageData(imageUrl, imageCaption);
+
+        setValue('feature-image', imageUrl);
+      } catch (error) {
+        console.error('Image upload failed:', error);
+      }
+    } else {
+      alert('Image Caption is required');
+    }
+  };
+
+  const directoryPath = 'feature-image-data/';
+
+  const handleGetAllImagesData = async () => {
+    try {
+      const allImageData = await fetchFeatureImages();
+      // console.log({allImageData});
+      setImageUrls(allImageData);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
+
+  const handleGetAllTagsData = async () => {
+    try {
+      const allTagData = await fetchTags();
+
+      setTagData(allTagData);
+    } catch (error) {}
+  };
+
+  const handleClearImage = () => {
+    setValue('feature-image', undefined);
+    setValue('image-caption', undefined);
+    setImagePreview(null);
+    setIsUseExistingImage(false);
+  };
+
+  const handleClickUseExistingImage = () => {
+    handleGetAllImagesData();
+    setIsUseExistingImage(true);
+  };
+
+  const handleClickChooseImage = (url: string, caption: string) => {
+    setValue('feature-image', url);
+    setValue('image-caption', caption);
+    setImagePreview(url);
+  };
+
+  const onSubmit = (data: any) => {
+    if (featureImageL !== undefined || imageCaption !== undefined) {
+      console.log('Submitted data:', data);
+      console.log(JSON.parse(contextEditorState.editorState));
+
+      uploadBlogItemData(data);
+    } else {
+      alert('Please select a feature image');
+    }
+  };
+
+  const handleImageFileDrop = (data: File) => {
+    const imageURL = URL.createObjectURL(data);
+    setImagePreview(imageURL);
+    setImageFile(data);
+    console.log({data});
+  };
+
   return {
     control,
     isPreviewMode,
@@ -191,8 +278,13 @@ const useFromData = () => {
     contextEditorState,
     tags,
     imagePreview,
+    tagData,
     setImagePreview,
     featureImage,
+    imageUrls,
+    isUseExistingImage,
+    imageFile,
+    handleUploadImage,
     handleSubmit,
     setValue,
     onSubmit,
@@ -204,6 +296,11 @@ const useFromData = () => {
     handleSlug,
     handleSummary,
     setTags,
+    handleClearImage,
+    handleClickUseExistingImage,
+    handleClickChooseImage,
+    handleImageFileDrop,
+    setImageFile
   };
 };
 

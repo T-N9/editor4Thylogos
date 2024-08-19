@@ -90,7 +90,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         <h1 style={{
                             fontFamily: 'Walone'
                         }} className='text-4xl leading-[3rem] lg:text-6xl font-bold text-slate-600 lg:leading-[6rem]'>{title}</h1>
-                        <div className='flex justify-between items-center'>
+                        <div className='flex justify-between items-center flex-wrap'>
                             <div className='flex flex-wrap gap-2'>
                                 {tags.map((tag) => (
                                     <span key={tag} className='inline-block text-base text-gray-600 bg-gray-200 px-2 py-0.5 rounded-sm'>{tag}</span>
@@ -98,7 +98,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                             </div>
 
                             <div>
-                                <p className='text-gray-400'>
+                                <p className='text-gray-400 text-sm'>
                                     {moment(new Date(createdAt.seconds * 1000)).format(
                                         "D MMM YYYY, h:mm a"
                                     )}

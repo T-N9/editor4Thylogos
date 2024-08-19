@@ -18,7 +18,7 @@ const useImageUpload = () => {
     const { editorState: contextEditorState } = useEditorState();
     const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-    const featureImage = watch('feature-image');
+    const featureImage = watch('featureImage');
 
 
 

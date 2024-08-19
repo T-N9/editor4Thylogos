@@ -1,17 +1,18 @@
 // lib/firebase.ts
 import {ref, uploadBytes, getDownloadURL, listAll} from 'firebase/storage';
 import {storage, db} from '../../firebaseConfig';
-import {collection, doc, getDocs, setDoc} from 'firebase/firestore';
+import {collection, doc, getDocs, query, setDoc, where} from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
-interface BlogItem {
+export interface BlogItem {
   title: string;
   slug: string;
   tags: string[];
-  'feature-image': string;
+  'featureImage': string;
   'image-captions': string;
   summary: string;
   content: string;
+  createdAt: Date;
 }
 
 export const uploadImage = async (file: File): Promise<string> => {
@@ -87,5 +88,56 @@ export const fetchTags = async () => {
   } catch (error) {
     console.error('Error fetching tags:', error);
     return [];
+  }
+};
+
+export const fetchAllBlogData = async () => {
+  const blogDataCollection = collection(db, 'blog-data');
+
+  try {
+    const querySnapshot = await getDocs(blogDataCollection);
+    const blogData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+    //  ...doc.data(),
+    title : doc.data().title,
+    image : doc.data().featureImage,
+    summary : doc.data().summary,
+    tags : doc.data().tags,
+    slug : doc.data().slug
+    }));
+    return blogData;
+  } catch (error) {
+    console.error('Error fetching blog data:', error);
+    return [];
+  }
+}
+
+export const fetchBlogDataBySlug = async (slug: string) => {
+  try {
+    const blogDataCollection = collection(db, "blog-data");
+    const q = query(blogDataCollection, where("slug", "==", slug));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+      return {
+        id: doc.id,
+        title : doc.data().title,
+        image : doc.data().featureImage,
+        summary : doc.data().summary,
+        tags : doc.data().tags,
+        slug : doc.data().slug,
+        content : doc.data().content,
+        featureImage : doc.data().featureImage,
+        imageCaption : doc.data().imageCaption,
+        createdAt : doc.data().createdAt,
+      };
+    } else {
+      console.log("No blog post found with the provided slug.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching blog data by slug:", error);
+    return null;
   }
 };

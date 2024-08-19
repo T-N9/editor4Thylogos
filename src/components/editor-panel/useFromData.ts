@@ -13,6 +13,7 @@ import {
   uploadImage,
   uploadImageData,
 } from '@/lib/firebase';
+import { serverTimestamp } from 'firebase/firestore';
 
 export interface LocalFormState {
   title: string;
@@ -41,7 +42,7 @@ const useFromData = () => {
   const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
 
-  const featureImage = watch('feature-image');
+  const featureImage = watch('featureImage');
 
   const watchAllFields = watch();
 
@@ -49,10 +50,10 @@ const useFromData = () => {
     if (localizedFormState) {
       setValue('title', localizedFormState.title);
       setValue('slug', localizedFormState.slug);
-      setValue('feature-image', localizedFormState.image);
+      setValue('featureImage', localizedFormState.image);
       setValue('tags', localizedFormState.tags);
       setValue('summary', localizedFormState.summary);
-      setValue('image-caption', localizedFormState.imageCaption);
+      setValue('imageCaption', localizedFormState.imageCaption);
       setImagePreview(localizedFormState.image);
       setIsSlugModified(false);
       setIsSummaryModified(false);
@@ -148,10 +149,10 @@ const useFromData = () => {
 
   const title = watch('title');
   const slug = watch('slug');
-  const featureImageL = watch('feature-image');
+  const featureImageL = watch('featureImage');
   const tagsL = watch('tags');
   const summary = watch('summary');
-  const imageCaption = watch('image-caption');
+  const imageCaption = watch('imageCaption');
 
   useEffect(() => {
     setLocalizedFormState({
@@ -205,7 +206,7 @@ const useFromData = () => {
         const imageUrl = await uploadImage(file);
         uploadImageData(imageUrl, imageCaption);
 
-        setValue('feature-image', imageUrl);
+        setValue('featureImage', imageUrl);
       } catch (error) {
         console.error('Image upload failed:', error);
       }
@@ -235,8 +236,8 @@ const useFromData = () => {
   };
 
   const handleClearImage = () => {
-    setValue('feature-image', undefined);
-    setValue('image-caption', undefined);
+    setValue('featureImage', undefined);
+    setValue('imageCaption', undefined);
     setImagePreview(null);
     setIsUseExistingImage(false);
   };
@@ -247,8 +248,8 @@ const useFromData = () => {
   };
 
   const handleClickChooseImage = (url: string, caption: string) => {
-    setValue('feature-image', url);
-    setValue('image-caption', caption);
+    setValue('featureImage', url);
+    setValue('imageCaption', caption);
     setImagePreview(url);
   };
 
@@ -257,7 +258,7 @@ const useFromData = () => {
       console.log('Submitted data:', data);
       console.log(JSON.parse(contextEditorState.editorState));
 
-      uploadBlogItemData(data);
+      uploadBlogItemData({...data, createdAt : serverTimestamp()});
     } else {
       alert('Please select a feature image');
     }

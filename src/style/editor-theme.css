@@ -49,3 +49,9 @@ div[readonly] .PlaygroundEditorTheme__layoutItem {
   background-color: #f3f3f3;
   border-radius: 0 10px 10px 0;
 }
+
+.image-caption a {
+  color: rgb(36, 105, 255);
+  text-decoration: underline;
+}
+

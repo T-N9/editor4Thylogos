@@ -31,7 +31,7 @@ const ImageUpload = () => {
                    const imageUrl = await uploadImage(files[0]);
       
                    // Set the image URL in form data
-                   setValue('feature-image', imageUrl);
+                   setValue('featureImage', imageUrl);
                    setImagePreview(imageUrl);
                  } catch (error) {
                    console.error('Image upload failed:', error);

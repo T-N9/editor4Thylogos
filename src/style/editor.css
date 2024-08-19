@@ -235,7 +235,7 @@ header h1 {
 }
 
 .editor-scroller {
-  background-color: #fff;
+  /* background-color: #fff; */
   min-height: 350px;
   border: 0;
   display: flex;

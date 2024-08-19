@@ -236,7 +236,7 @@ const InnerEditorPanel = ({
 
               {!imagePreview && <FileUploader handleChange={handleImageFileDrop} />}
               <Controller
-                name="feature-image"
+                name="featureImage"
                 control={control}
                 defaultValue={null}
                 render={({ field }) => (
@@ -274,7 +274,7 @@ const InnerEditorPanel = ({
               <>
                 <img className='w-1/2' src={imagePreview} alt="Preview" />
                 <Controller
-                  name="image-caption"
+                  name="imageCaption"
                   control={control}
                   defaultValue=""
                   render={({ field }) => {

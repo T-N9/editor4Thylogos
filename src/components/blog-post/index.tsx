@@ -86,10 +86,10 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 relative leading-7 font-normal justify-center`}>
                 <div className=''>
-                    <div className='max-w-[845px] lg:min-w-[845px] px-8 mx-auto flex flex-col gap-2'>
+                    <div className='max-w-[845px] lg:min-w-[845px] lg:px-8 mx-auto flex flex-col gap-2'>
                         <h1 style={{
                             fontFamily: 'Walone'
-                        }} className='text-6xl font-bold text-slate-600 leading-[6rem]'>{title}</h1>
+                        }} className='text-4xl leading-[3rem] lg:text-6xl font-bold text-slate-600 lg:leading-[6rem]'>{title}</h1>
                         <div className='flex justify-between items-center'>
                             <div className='flex flex-wrap gap-2'>
                                 {tags.map((tag) => (

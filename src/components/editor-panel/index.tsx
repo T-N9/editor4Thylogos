@@ -226,13 +226,8 @@ const InnerEditorPanel = ({
             />
 
             {/* Feature Images */}
-            <div className='relative space-x-2 w-1/2'>
-              {imagePreview && <button onClick={handleClearImage} type='button' className='rounded-full h-8 w-8 flex justify-center items-center text-white absolute -top-2 -right-2 bg-red-500'>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                </svg>
+            <div className='relative w-full space-x-2 flex justify-center items-center gap-4'>
 
-              </button>}
 
               {!imagePreview && <FileUploader handleChange={handleImageFileDrop} />}
               <Controller
@@ -241,7 +236,7 @@ const InnerEditorPanel = ({
                 defaultValue={null}
                 render={({ field }) => (
                   <>
-                    <label className={imagePreview ? 'hidden' : 'cursor-pointer px-4 py-3 bg-gray-200 rounded'} htmlFor="image-upload">Upload New Image</label>
+                    <label className={imagePreview ? 'hidden' : 'cursor-pointer hidden px-4 py-3 bg-gray-200 rounded'} htmlFor="image-upload">Upload New Image</label>
                     <input
                       className='hidden'
                       type="file"
@@ -271,8 +266,16 @@ const InnerEditorPanel = ({
             {/* Feature Image Caption */}
 
             {imagePreview &&
-              <>
-                <img className='w-1/2' src={imagePreview} alt="Preview" />
+              <div className='w-full flex flex-col items-center'>
+                <div className='w-1/2 relative'>
+                  <button onClick={handleClearImage} type='button' className='rounded-full h-8 w-8 flex justify-center items-center text-white absolute -top-2 -right-2 bg-red-500'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                  
+                  </button>
+                  <img className='w-full' src={imagePreview} alt="Preview" />
+                </div>
                 <Controller
                   name="imageCaption"
                   control={control}
@@ -282,7 +285,7 @@ const InnerEditorPanel = ({
                     return (
                       <input
                         {...field}
-                        className="w-full border-l px-4 py-1 text-base outline-none"
+                        className="w-full mt-2 border-l px-4 py-1 text-base outline-none"
                         placeholder="Enter caption or Alt text"
                         required
 
@@ -296,18 +299,18 @@ const InnerEditorPanel = ({
                   <button onClick={() => handleUploadImage(imageFile)} type='button' className='bg-gray-100 rounded shadow px-2'>Upload</button>
                 }
 
-              </>
+              </div>
             }
 
 
             {
-              isUseExistingImage &&
-              <div className='grid grid-cols-3 bg-gray-200 p-3 gap-3'>
+              isUseExistingImage && !imagePreview &&
+              <div className='grid grid-cols-3 bg-gray-100 rounded p-2 gap-3'>
                 {imageUrls.length > 0 ? (
                   imageUrls.map((image, index) => (
-                    <div onClick={() => handleClickChooseImage(image.imageUrl, image.caption)} key={index} className='flex flex-col gap-2 cursor-pointer hover:bg-slate-50'>
-                      <Image width={100} height={50} src={image.imageUrl} alt={`Image ${index + 1}`} />
-                      <p>{image.caption}</p>
+                    <div onClick={() => handleClickChooseImage(image.imageUrl, image.caption)} key={index} className='flex flex-col gap-2 p-2 cursor-pointer hover:bg-slate-50'>
+                      <Image width={200} height={100} src={image.imageUrl} alt={`Image ${index + 1}`} />
+                      <p>{image.caption.slice(0, 30)}</p>
                     </div>
                   ))
                 ) : (

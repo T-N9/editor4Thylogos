@@ -8,7 +8,7 @@ const BlogCatalogue = () => {
     const { blogData } = useBlogCatalogue();
 
     return (
-        <div>
+        <div className='flex flex-col gap-4'>
             {
                 blogData.map((blog, index) => (
                     <Link key={blog.id} href={`/blog/${blog.slug}`}>

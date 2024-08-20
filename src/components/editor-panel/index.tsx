@@ -16,7 +16,7 @@ import { Controller } from 'react-hook-form';
 import TextEditor from './text-editor/TextEditor';
 import TextPreview from './text-preview/TextPreview';
 /* Hooks */
-import useFromData from './useFromData';
+import useFromData from './useFormData';
 import ExampleTheme from './editor-theme/DefaultTheme';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';

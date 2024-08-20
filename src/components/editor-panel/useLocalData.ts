@@ -1,6 +1,6 @@
 import {useLocalStorage} from 'react-use';
 import {LocalEditorState} from './text-editor/TextEditor';
-import {LocalFormState} from './useFromData';
+import {LocalFormState} from './useFormData';
 
 const useLocalData = () => {
   const [localizedEditorState, setLocalizedEditorState] =

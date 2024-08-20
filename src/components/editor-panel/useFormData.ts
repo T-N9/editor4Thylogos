@@ -4,16 +4,14 @@ import {useCallback, useEffect, useState} from 'react';
 import {useEditorState} from '@/context/EditorStateContext';
 import {useForm} from 'react-hook-form';
 import {debounce} from 'lodash-es';
-import {useLocalStorage} from 'react-use';
 import {
-  fetchAllImages,
   fetchFeatureImages,
   fetchTags,
   uploadBlogItemData,
   uploadImage,
   uploadImageData,
 } from '@/lib/firebase';
-import { serverTimestamp } from 'firebase/firestore';
+import {serverTimestamp} from 'firebase/firestore';
 import useLocalData from './useLocalData';
 
 export interface LocalFormState {
@@ -42,7 +40,7 @@ const useFromData = () => {
   >([]);
   const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const { localizedFormState, setLocalizedFormState } = useLocalData()
+  const {localizedFormState, setLocalizedFormState} = useLocalData();
 
   const featureImage = watch('featureImage');
 
@@ -69,7 +67,7 @@ const useFromData = () => {
     if (tag && !tags?.includes(tag)) {
       const newTags = [...tags, tag];
       setTags(newTags);
-      setValue('tags', newTags); // Update the form value
+      setValue('tags', newTags);
     }
   };
 
@@ -80,7 +78,7 @@ const useFromData = () => {
   const removeTag = (tag: string) => {
     const newTags = tags.filter((t) => t !== tag);
     setTags(newTags);
-    setValue('tags', newTags); // Update the form value
+    setValue('tags', newTags);
   };
 
   type Child = {
@@ -141,13 +139,20 @@ const useFromData = () => {
 
   useEffect(() => {
     if (!isSummaryModified) {
-      const texts = extractTextFromParagraphs(
-        JSON.parse(contextEditorState.editorState).root,
-      );
+      const debouncedUpdate = debounce(() => {
+        const texts = extractTextFromParagraphs(
+          JSON.parse(contextEditorState.editorState).root,
+        );
+        setValue('summary', texts);
+      }, 500);
 
-      setValue('summary', texts);
+      debouncedUpdate();
+
+      return () => {
+        debouncedUpdate.cancel();
+      };
     }
-  }, [contextEditorState]);
+  }, [contextEditorState, isSummaryModified, debounce]);
 
   const title = watch('title');
   const slug = watch('slug');
@@ -165,7 +170,7 @@ const useFromData = () => {
       summary: summary,
       imageCaption: imageCaption,
     });
-    // console.log({watchAllFields});
+
   }, [title, slug, featureImageL, tagsL, summary, imageCaption]);
 
   useEffect(() => {
@@ -217,8 +222,6 @@ const useFromData = () => {
     }
   };
 
-  const directoryPath = 'feature-image-data/';
-
   const handleGetAllImagesData = async () => {
     try {
       const allImageData = await fetchFeatureImages();
@@ -260,7 +263,7 @@ const useFromData = () => {
       console.log('Submitted data:', data);
       console.log(JSON.parse(contextEditorState.editorState));
 
-      uploadBlogItemData({...data, createdAt : serverTimestamp()});
+      uploadBlogItemData({...data, createdAt: serverTimestamp()});
     } else {
       alert('Please select a feature image');
     }
@@ -303,7 +306,7 @@ const useFromData = () => {
     handleClickUseExistingImage,
     handleClickChooseImage,
     handleImageFileDrop,
-    setImageFile
+    setImageFile,
   };
 };
 

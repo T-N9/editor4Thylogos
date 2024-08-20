@@ -41,6 +41,7 @@ import TableOfContent from '../table-of-content';
 
 import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
+import useLocalData from '../useLocalData';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,
@@ -73,9 +74,12 @@ export interface LocalEditorState {
 
 const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditorState }) => {
   const [editor] = useLexicalComposerContext();
-  const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
-    LocalEditorState | null
-  >('my-editor-state-key', null)
+  // const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
+  //   LocalEditorState | null
+  // >('my-editor-state-key', null)
+
+  const { localizedEditorState, setLocalizedEditorState } = useLocalData();
+
   const [isFirstRender, setIsFirstRender] = useState(true)
 
 

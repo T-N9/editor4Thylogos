@@ -14,6 +14,7 @@ import {
   uploadImageData,
 } from '@/lib/firebase';
 import { serverTimestamp } from 'firebase/firestore';
+import useLocalData from './useLocalData';
 
 export interface LocalFormState {
   title: string;
@@ -34,13 +35,14 @@ const useFromData = () => {
   const [tags, setTags] = useState<string[]>([]);
   const [tagData, setTagData] = useState<{id: string; tagName: string}[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [localizedFormState, setLocalizedFormState] =
-    useLocalStorage<LocalFormState | null>('my-form-state-key', null);
+  // const [localizedFormState, setLocalizedFormState] =
+  //   useLocalStorage<LocalFormState | null>('my-form-state-key', null);
   const [imageUrls, setImageUrls] = useState<
     {caption: string; id: string; imageUrl: string}[]
   >([]);
   const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const { localizedFormState, setLocalizedFormState } = useLocalData()
 
   const featureImage = watch('featureImage');
 

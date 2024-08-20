@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use'
 import { LocalEditorState } from '../text-editor/TextEditor'
 import { initialData, useEditorState } from '@/context/EditorStateContext'
+import useLocalData from '../useLocalData';
 
 export const contentSizers = [
     { size: '625', text: 'X-small', icon: 'icon icon-cube-sm' },
@@ -14,9 +15,11 @@ export const contentSizers = [
 
 const ContentResizer = () => {
     const [currentSize, setCurrentSize] = useState<number>(0)
-    const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
-        LocalEditorState | null
-    >('my-editor-state-key', null);
+    // const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
+    //     LocalEditorState | null
+    // >('my-editor-state-key', null);
+
+    const {localizedEditorState, setLocalizedEditorState} = useLocalData();
     const { setEditorState } = useEditorState()
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import {usePathname} from 'next/navigation';
 /* Hooks */
 import {useEditorState} from '@/context/EditorStateContext';
 import {useForm} from 'react-hook-form';
-import {debounce} from 'lodash-es';
+import {debounce, isEqual} from 'lodash-es';
 import {
   fetchBlogDataBySlug,
   fetchFeatureImages,
@@ -19,7 +19,7 @@ import useLocalData from './useLocalData';
 export interface LocalFormState {
   title: string;
   slug: string;
-  image: string;
+  featureImage: string;
   tags: string[];
   summary: string;
   imageCaption: string;
@@ -48,6 +48,7 @@ const useFromData = () => {
   const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const {localizedFormState, setLocalizedFormState} = useLocalData();
+  const [isBlogDataUpdated, setIsBlogDataUpdated] = useState<boolean>(false);
 
   const featureImage = watch('featureImage');
 
@@ -58,14 +59,14 @@ const useFromData = () => {
 
   useEffect(() => {
     if (localizedFormState && !isUpdateRoute) {
-      console.log('useForm state upload');
+      // console.log('useForm state upload');
       setValue('title', localizedFormState.title);
       setValue('slug', localizedFormState.slug);
-      setValue('featureImage', localizedFormState.image);
+      setValue('featureImage', localizedFormState.featureImage);
       setValue('tags', localizedFormState.tags);
       setValue('summary', localizedFormState.summary);
       setValue('imageCaption', localizedFormState.imageCaption);
-      setImagePreview(localizedFormState.image);
+      setImagePreview(localizedFormState.featureImage);
       setIsSlugModified(false);
       setIsSummaryModified(false);
       setTags(localizedFormState.tags || []);
@@ -81,7 +82,7 @@ const useFromData = () => {
       setValue('tags', currentBlogData.tags);
       setValue('summary', currentBlogData.summary);
       setValue('imageCaption', currentBlogData.imageCaption);
-      console.log('set editor state api');
+      // console.log('set editor state api');
       setEditorState({
         editorState: JSON.parse(currentBlogData.content).editorState,
         contentSize: JSON.parse(currentBlogData.content).contentSize,
@@ -194,18 +195,52 @@ const useFromData = () => {
   const summary = watch('summary');
   const imageCaption = watch('imageCaption');
 
+  const watchedFormData = {
+    title: title,
+    slug: slug,
+    featureImage: featureImageL,
+    tags: tagsL,
+    summary: summary,
+    imageCaption: imageCaption,
+  };
+
   useEffect(() => {
     if (!isUpdateRoute) {
-      setLocalizedFormState({
-        title: title,
-        slug: slug,
-        image: featureImageL,
-        tags: tagsL,
-        summary: summary,
-        imageCaption: imageCaption,
-      });
+      setLocalizedFormState(watchedFormData);
     }
-  }, [title, slug, featureImageL, tagsL, summary, imageCaption]);
+
+    const formDataComp = {
+      title: currentBlogData?.title,
+      slug: currentBlogData?.slug,
+      featureImage: currentBlogData?.featureImage,
+      tags: currentBlogData?.tags,
+      summary: currentBlogData?.summary,
+      imageCaption: currentBlogData?.imageCaption,
+    };
+
+    const editorDataComp = currentBlogData && {
+      editorState: JSON.parse(currentBlogData?.content).editorState,
+      contentSize: JSON.parse(currentBlogData?.content).contentSize,
+    }
+
+    if (!isEqual(formDataComp, watchedFormData) || !isEqual(editorDataComp, contextEditorState)) {
+      // console.log('Changes Happened.');
+      setIsBlogDataUpdated(true);
+    } else {
+      // console.log('Back to Origin');
+      setIsBlogDataUpdated(false);
+    }
+
+    // console.log({contextEditorState, editorDataComp});
+  }, [
+    title,
+    slug,
+    featureImageL,
+    tagsL,
+    summary,
+    imageCaption,
+    currentBlogData,
+  ]);
 
   useEffect(() => {
     setValue('content', JSON.stringify(contextEditorState));
@@ -307,7 +342,7 @@ const useFromData = () => {
     const imageURL = URL.createObjectURL(data);
     setImagePreview(imageURL);
     setImageFile(data);
-    console.log({data});
+    // console.log({data});
   };
 
   return {
@@ -324,6 +359,7 @@ const useFromData = () => {
     imageUrls,
     isUseExistingImage,
     imageFile,
+    isBlogDataUpdated,
     handleUploadImage,
     handleSubmit,
     setValue,

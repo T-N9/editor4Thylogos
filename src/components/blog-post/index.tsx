@@ -28,13 +28,14 @@ import { CollapsibleTitleNode } from '../editor-panel/plugins/CollapsiblePlugin/
 import { TweetNode } from '../editor-panel/nodes/tweet-node/TweetNode';
 import { YouTubeNode } from '../editor-panel/nodes/youtube-node/YouTubeNode';
 import { FigmaNode } from '../editor-panel/nodes/figma-node';
+import Link from 'next/link';
 
 interface BlogPostProps {
     title: string;
     slug: string;
     image: string;
     imageCaption: string;
-    editorState: string; // Assuming editorState is a string containing JSON
+    editorState: string; 
     contentSize: number;
     tags: string[];
     createdAt: {
@@ -43,8 +44,6 @@ interface BlogPostProps {
     };
 }
 const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorState, contentSize }: BlogPostProps) => {
-
-    // const { setEditorState } = useEditorState();
 
     const initialConfig = {
         namespace: 'My Lexical Board',
@@ -103,12 +102,23 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                         "D MMM YYYY, h:mm a"
                                     )}
                                 </p>
-
                             </div>
                         </div>
 
-                        <Image className='w-screen mt-2 lg:w-full lg:h-[500px] h-[300px] md:h-[500px] object-cover' src={image} width={600} height={500} alt={title} />
-                        <div className='image-caption text-sm' dangerouslySetInnerHTML={{ __html: imageCaption }} ></div>
+                        <div className='flex gap-2 items-center'>
+                            <Link href={'/'}>
+                                <span className='text-sm'>Blog</span>
+                            </Link>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+
+                            <span className='text-xs text-blue-400'>{title}</span>
+                        </div>
+
+                        <Image className='w-screen mt-2 lg:w-full lg:h-[500px] h-[200px] md:h-[500px] object-cover' src={image} width={600} height={500} alt={title} />
+                        <div className='image-caption text-xs text-gray-400 lg:text-sm' dangerouslySetInnerHTML={{ __html: imageCaption }} ></div>
                     </div>
                     <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
                 </div>

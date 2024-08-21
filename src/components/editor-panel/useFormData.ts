@@ -1,10 +1,12 @@
 import {useCallback, useEffect, useState} from 'react';
+import {usePathname} from 'next/navigation';
 
 /* Hooks */
 import {useEditorState} from '@/context/EditorStateContext';
 import {useForm} from 'react-hook-form';
 import {debounce} from 'lodash-es';
 import {
+  fetchBlogDataBySlug,
   fetchFeatureImages,
   fetchTags,
   uploadBlogItemData,
@@ -24,10 +26,14 @@ export interface LocalFormState {
 }
 
 const useFromData = () => {
-  const {editorState, isPreviewMode, setEditorState, setIsPreviewMode} =
-    useEditorState();
+  const {
+    editorState: contextEditorState,
+    isPreviewMode,
+    setEditorState,
+    setIsPreviewMode,
+  } = useEditorState();
   const {control, handleSubmit, setValue, watch} = useForm();
-  const {editorState: contextEditorState} = useEditorState();
+  // const {editorState: contextEditorState} = useEditorState();
   const [isSlugModified, setIsSlugModified] = useState<boolean>(false);
   const [isSummaryModified, setIsSummaryModified] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
@@ -40,14 +46,31 @@ const useFromData = () => {
   >([]);
   const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const {localizedFormState, setLocalizedFormState} = useLocalData();
+  const {
+    localizedFormState,
+    setLocalizedFormState,
+  } = useLocalData();
 
   const featureImage = watch('featureImage');
 
+  const pathname = usePathname();
+  const isUpdateRoute = pathname.includes('/update');
+
   const watchAllFields = watch();
 
+  // const handleGetBlogData = async () => {
+  //   try {
+  //     let data = await fetchBlogDataBySlug(pathname.split('/')[2]);
+
+  //     return data;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
   useEffect(() => {
-    if (localizedFormState) {
+    if (localizedFormState && !isUpdateRoute) {
+      console.log('useForm state upload');
       setValue('title', localizedFormState.title);
       setValue('slug', localizedFormState.slug);
       setValue('featureImage', localizedFormState.image);
@@ -58,6 +81,32 @@ const useFromData = () => {
       setIsSlugModified(false);
       setIsSummaryModified(false);
       setTags(localizedFormState.tags || []);
+    } else if(isUpdateRoute) {
+      console.log(pathname.split('/')[2]);
+      const blogData = fetchBlogDataBySlug(pathname.split('/')[2]);
+      blogData.then((data) => {
+        // console.log('useForm state upload');
+        // console.log({blogData: data});
+
+        setValue('title', data?.title);
+        setValue('slug', data?.slug);
+        setValue('featureImage', data?.image);
+        setValue('tags', data?.tags);
+        setValue('summary', data?.summary);
+        setValue('imageCaption', data?.imageCaption);
+        console.log('set editor state api');
+        setEditorState({
+          editorState: JSON.parse(data?.content).editorState,
+          contentSize: JSON.parse(data?.content).contentSize,
+        });
+        setValue('content', JSON.parse(data?.content));
+        setIsSlugModified(false);
+        setIsSummaryModified(false);
+        setTags(data?.tags || []);
+        setImagePreview(data?.image);
+
+        // console.log({CONTENT: JSON.parse(data?.content)});
+      });
     }
 
     handleGetAllTagsData();
@@ -162,15 +211,16 @@ const useFromData = () => {
   const imageCaption = watch('imageCaption');
 
   useEffect(() => {
-    setLocalizedFormState({
-      title: title,
-      slug: slug,
-      image: featureImageL,
-      tags: tagsL,
-      summary: summary,
-      imageCaption: imageCaption,
-    });
-
+    if (!isUpdateRoute) {
+      setLocalizedFormState({
+        title: title,
+        slug: slug,
+        image: featureImageL,
+        tags: tagsL,
+        summary: summary,
+        imageCaption: imageCaption,
+      });
+    }
   }, [title, slug, featureImageL, tagsL, summary, imageCaption]);
 
   useEffect(() => {
@@ -280,11 +330,11 @@ const useFromData = () => {
     control,
     isPreviewMode,
     watchAllFields,
-    editorState,
     contextEditorState,
     tags,
     imagePreview,
     tagData,
+    isUpdateRoute,
     setImagePreview,
     featureImage,
     imageUrls,

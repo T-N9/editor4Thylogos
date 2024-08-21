@@ -34,10 +34,8 @@ import { FileUploader } from "react-drag-drop-files";
 
 const EditorPanel = () => {
   const {
-    editorState,
+    contextEditorState: editorState,
   } = useFromData();
-
-
 
   const initialConfig = {
     namespace: 'My Lexical Board',
@@ -92,7 +90,7 @@ const InnerEditorPanel = ({
     isPreviewMode,
     onSubmit,
     setIsPreviewMode,
-    editorState,
+    contextEditorState: editorState,
     imageUrls,
     isUseExistingImage,
     setEditorState,
@@ -102,6 +100,7 @@ const InnerEditorPanel = ({
     removeTag,
     handleUploadImage,
     setTags,
+    isUpdateRoute,
     imageFile,
     imagePreview,
     setImagePreview,
@@ -117,7 +116,7 @@ const InnerEditorPanel = ({
     setImageFile
   } = useFromData();
 
-
+  console.log({ current:editorState });
 
   return (
     <ToolbarProvider editor={editor}>
@@ -130,7 +129,7 @@ const InnerEditorPanel = ({
           className="blog-form-panel mb-80 space-y-4"
           onSubmit={handleSubmit(onSubmit)}>
           <div className="mx-auto max-w-[845px] space-y-4">
-            <button type="submit" className='bg-blue-500 rounded-md px-6 py-2 text-white float-right'>Submit</button>
+            <button type="submit" className='bg-blue-500 rounded-md px-6 py-2 text-white float-right'>{isUpdateRoute ? 'Update' : 'Submit'}</button>
             <Controller
               name="title"
               control={control}
@@ -272,7 +271,7 @@ const InnerEditorPanel = ({
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
-                  
+
                   </button>
                   <img className='w-full' src={imagePreview} alt="Preview" />
                 </div>

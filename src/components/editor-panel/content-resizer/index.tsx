@@ -19,7 +19,7 @@ const ContentResizer = () => {
     //     LocalEditorState | null
     // >('my-editor-state-key', null);
 
-    const {localizedEditorState, setLocalizedEditorState} = useLocalData();
+    const { localizedEditorState, setLocalizedEditorState, isUpdateRoute } = useLocalData();
     const { setEditorState } = useEditorState()
 
     useEffect(() => {
@@ -43,10 +43,13 @@ const ContentResizer = () => {
                             key={index}
                             onClick={() => {
                                 // console.log({size, index});
-                                setLocalizedEditorState((prevState) => ({
-                                    editorState: prevState?.editorState ?? initialData,
-                                    contentSize: index,
-                                }));
+                                if (!isUpdateRoute) {
+                                    setLocalizedEditorState((prevState) => ({
+                                        editorState: prevState?.editorState ?? initialData,
+                                        contentSize: index,
+                                    }));
+                                }
+
                                 setEditorState({
                                     editorState: localizedEditorState?.editorState ?? initialData,
                                     contentSize: index,

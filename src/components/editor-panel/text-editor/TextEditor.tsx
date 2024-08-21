@@ -42,6 +42,7 @@ import TableOfContent from '../table-of-content';
 import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
 import useLocalData from '../useLocalData';
+import { fetchBlogDataBySlug } from '@/lib/firebase';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,
@@ -78,7 +79,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
   //   LocalEditorState | null
   // >('my-editor-state-key', null)
 
-  const { localizedEditorState, setLocalizedEditorState } = useLocalData();
+  const { localizedEditorState, setLocalizedEditorState, isUpdateRoute, pathname  } = useLocalData();
 
   const [isFirstRender, setIsFirstRender] = useState(true)
 
@@ -88,22 +89,34 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
     if (isFirstRender) {
       setIsFirstRender(false)
 
-      if (localizedEditorState) {
-        // console.log('Set Editor State')
+      if (localizedEditorState && !isUpdateRoute) {
+
+        console.log('Set Editor State Local upload')
         // console.log({localizedEditorState});
         const initialEditorState = editor?.parseEditorState(localizedEditorState.editorState)
         setEditorState({ editorState: localizedEditorState.editorState, contentSize: localizedEditorState.contentSize })
         editor.setEditorState(initialEditorState)
+      } else if(isUpdateRoute) {
+        const blogData = fetchBlogDataBySlug(pathname.split('/')[2]);
+        blogData.then((data) => {
+          console.log({ state : JSON.parse(data?.content)});
+          editor.setEditorState(editor?.parseEditorState(JSON.parse(data?.content).editorState))
+        })
       }
+
+
     }
   }, [isFirstRender, localizedEditorState?.editorState, editor, localizedEditorState, setEditorState])
 
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {
-      setLocalizedEditorState((prevState) => ({
-        editorState: JSON.stringify(editorState.toJSON()),
-        contentSize: prevState?.contentSize ?? 1,
-      }));
+      if(!isUpdateRoute){
+        setLocalizedEditorState((prevState) => ({
+          editorState: JSON.stringify(editorState.toJSON()),
+          contentSize: prevState?.contentSize ?? 1,
+        }));
+      }
+      
       onChange(editorState, editor);
     });
   }, [editor, onChange, setLocalizedEditorState]);
@@ -126,6 +139,8 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
       setFloatingAnchorElem(_floatingAnchorElem);
     }
   };
+
+  // console.log({editorState});
 
   const apiContent = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ဗမာပြည်ကွန်မြူနစ်ပါတီရဲ့ အရှေ့မြောက်စစ်ဒေသ ကို ရင်ဆိုင်ဖို့ ဖွဲ့စည်းခဲ့တဲ့ လားရှိုးက တိုင်းစစ်ဌာနချုပ်ဟာ နှစ်ပေါင်း ငါးဆယ်ကျော်အတွင်း အကြီးမားဆုံးခြိမ်းခြောက် ခံနေရပါတယ်။","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"အရှေ့မြောက်တိုင်းစစ်ဌာနချုပ်(ရမခ) က တချိန်ကရခဲ့တဲ့ အောင်ပွဲတွေကို စစ်သားစာရေးဆရာတွေက စာအုပ်တွေထုတ်ရုံမက ဝါဒဖြန့်ရုပ်ရှင်တွေပါ တခမ်းတနား ရိုက်ခဲ့ကြပါသေးတယ်။","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
 
@@ -151,7 +166,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
   const onChange = (onChangeEditorState: EditorState, editor: LexicalEditor) => {
     const editorStateJSON = onChangeEditorState.toJSON();
     setEditorState({ editorState: JSON.stringify(editorStateJSON), contentSize: editorState.contentSize });
-    // console.log({ editorData: JSON.stringify(editorStateJSON)});
+    console.log({ editorData: JSON.stringify(editorStateJSON) });
     editor.update(() => {
       const raw = $generateHtmlFromNodes(editor, null)
       // console.log({ rawHtml: raw })

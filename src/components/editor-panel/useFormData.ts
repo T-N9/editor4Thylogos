@@ -31,6 +31,7 @@ const useFromData = () => {
     isPreviewMode,
     setEditorState,
     setIsPreviewMode,
+    currentBlogData,
   } = useEditorState();
   const {control, handleSubmit, setValue, watch} = useForm();
   // const {editorState: contextEditorState} = useEditorState();
@@ -46,10 +47,7 @@ const useFromData = () => {
   >([]);
   const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const {
-    localizedFormState,
-    setLocalizedFormState,
-  } = useLocalData();
+  const {localizedFormState, setLocalizedFormState} = useLocalData();
 
   const featureImage = watch('featureImage');
 
@@ -57,16 +55,6 @@ const useFromData = () => {
   const isUpdateRoute = pathname.includes('/update');
 
   const watchAllFields = watch();
-
-  // const handleGetBlogData = async () => {
-  //   try {
-  //     let data = await fetchBlogDataBySlug(pathname.split('/')[2]);
-
-  //     return data;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
 
   useEffect(() => {
     if (localizedFormState && !isUpdateRoute) {
@@ -81,36 +69,32 @@ const useFromData = () => {
       setIsSlugModified(false);
       setIsSummaryModified(false);
       setTags(localizedFormState.tags || []);
-    } else if(isUpdateRoute) {
-      console.log(pathname.split('/')[2]);
-      const blogData = fetchBlogDataBySlug(pathname.split('/')[2]);
-      blogData.then((data) => {
-        // console.log('useForm state upload');
-        // console.log({blogData: data});
-
-        setValue('title', data?.title);
-        setValue('slug', data?.slug);
-        setValue('featureImage', data?.image);
-        setValue('tags', data?.tags);
-        setValue('summary', data?.summary);
-        setValue('imageCaption', data?.imageCaption);
-        console.log('set editor state api');
-        setEditorState({
-          editorState: JSON.parse(data?.content).editorState,
-          contentSize: JSON.parse(data?.content).contentSize,
-        });
-        setValue('content', JSON.parse(data?.content));
-        setIsSlugModified(false);
-        setIsSummaryModified(false);
-        setTags(data?.tags || []);
-        setImagePreview(data?.image);
-
-        // console.log({CONTENT: JSON.parse(data?.content)});
-      });
     }
-
     handleGetAllTagsData();
   }, []);
+
+  useEffect(() => {
+    if (isUpdateRoute && currentBlogData) {
+      setValue('title', currentBlogData.title);
+      setValue('slug', currentBlogData.slug);
+      setValue('featureImage', currentBlogData.featureImage);
+      setValue('tags', currentBlogData.tags);
+      setValue('summary', currentBlogData.summary);
+      setValue('imageCaption', currentBlogData.imageCaption);
+      console.log('set editor state api');
+      setEditorState({
+        editorState: JSON.parse(currentBlogData.content).editorState,
+        contentSize: JSON.parse(currentBlogData.content).contentSize,
+      });
+      setValue('content', JSON.parse(currentBlogData.content));
+      setIsSlugModified(false);
+      setIsSummaryModified(false);
+      setTags(currentBlogData.tags || []);
+      setImagePreview(currentBlogData.featureImage);
+
+      // console.log({CONTENT: JSON.parse(data?.content)});
+    }
+  }, [currentBlogData]);
 
   const addTag = (tag: string) => {
     if (tag && !tags?.includes(tag)) {

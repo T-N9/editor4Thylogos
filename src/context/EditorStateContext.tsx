@@ -1,4 +1,5 @@
 'use client';
+import { BlogItem } from '@/lib/firebase';
 // EditorStateContext.tsx
 import React, {
   createContext,
@@ -26,6 +27,7 @@ interface EditorStateContextProps {
   isContentShown: boolean;
   currentFontColor: string;
   currentBgColor: string;
+  currentBlogData : BlogItem | null
 
   /* actions */
   setEditorState: (state: ContextEditorState) => void;
@@ -34,6 +36,7 @@ interface EditorStateContextProps {
   setIsContentShown: (state: boolean) => void;
   setCurrentFontColor : (state: string) => void;
   setCurrentBgColor :(state : string) => void;
+  setCurrentBlogData : (state : BlogItem | null) => void;
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(
@@ -69,6 +72,7 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
   const [isContentShown, setIsContentShown] = useState<boolean>(false);
   const [ currentFontColor, setCurrentFontColor] = useState<string>('');
   const [ currentBgColor, setCurrentBgColor] = useState<string>('');
+  const [ currentBlogData, setCurrentBlogData] = useState<BlogItem | null>(null);
 
   return (
     <EditorStateContext.Provider
@@ -76,6 +80,8 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
         editorState,
         isPreviewMode,
         htmlData,
+        currentBlogData,
+        setCurrentBlogData,
 
         isContentShown,
         setEditorState,

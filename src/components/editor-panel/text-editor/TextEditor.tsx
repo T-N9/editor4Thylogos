@@ -78,6 +78,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
   // const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
   //   LocalEditorState | null
   // >('my-editor-state-key', null)
+  const { currentBlogData, setCurrentBlogData } = useEditorState();
 
   const { localizedEditorState, setLocalizedEditorState, isUpdateRoute, pathname  } = useLocalData();
 
@@ -99,7 +100,9 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
       } else if(isUpdateRoute) {
         const blogData = fetchBlogDataBySlug(pathname.split('/')[2]);
         blogData.then((data) => {
-          console.log({ state : JSON.parse(data?.content)});
+          // console.log({ state : JSON.parse(data?.content)});
+          setCurrentBlogData(data);
+          setEditorState({ editorState: JSON.parse(data?.content).editorState, contentSize: JSON.parse(data?.content).contentSize })
           editor.setEditorState(editor?.parseEditorState(JSON.parse(data?.content).editorState))
         })
       }
@@ -144,7 +147,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
 
   const apiContent = '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"ဗမာပြည်ကွန်မြူနစ်ပါတီရဲ့ အရှေ့မြောက်စစ်ဒေသ ကို ရင်ဆိုင်ဖို့ ဖွဲ့စည်းခဲ့တဲ့ လားရှိုးက တိုင်းစစ်ဌာနချုပ်ဟာ နှစ်ပေါင်း ငါးဆယ်ကျော်အတွင်း အကြီးမားဆုံးခြိမ်းခြောက် ခံနေရပါတယ်။","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"အရှေ့မြောက်တိုင်းစစ်ဌာနချုပ်(ရမခ) က တချိန်ကရခဲ့တဲ့ အောင်ပွဲတွေကို စစ်သားစာရေးဆရာတွေက စာအုပ်တွေထုတ်ရုံမက ဝါဒဖြန့်ရုပ်ရှင်တွေပါ တခမ်းတနား ရိုက်ခဲ့ကြပါသေးတယ်။","type":"text","version":1}],"direction":"ltr","format":"start","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
 
-  const { isContentShown, setHtmlData, setIsContentShown } = useEditorState();
+  const { isContentShown, setHtmlData, setIsContentShown, currentBlogData, setCurrentBlogData } = useEditorState();
 
   useEffect(() => {
     const updateViewPortWidth = () => {

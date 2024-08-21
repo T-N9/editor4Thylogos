@@ -8,8 +8,8 @@ export interface BlogItem {
   title: string;
   slug: string;
   tags: string[];
-  'featureImage': string;
-  'image-captions': string;
+  featureImage: string;
+  imageCaption: string;
   summary: string;
   content: string;
   createdAt: Date;

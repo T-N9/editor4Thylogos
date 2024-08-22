@@ -130,7 +130,9 @@ const InnerEditorPanel = ({
           className="blog-form-panel mb-80 space-y-4"
           onSubmit={handleSubmit(onSubmit)}>
           <div className="mx-auto max-w-[845px] space-y-4">
-            <button disabled={isUpdateRoute && !isBlogDataUpdated} type="submit" className={`bg-blue-500 rounded-md px-6 py-2 text-white float-right ${isUpdateRoute && !isBlogDataUpdated && 'opacity-50'}`}>{isUpdateRoute ? 'Publish Changes' : 'Publish Article'}</button>
+            <div className='bg-gray-100 shadow fixed w-[300px] right-0 top-0 z-50 px-5 py-2'>
+              <button disabled={isUpdateRoute && !isBlogDataUpdated} type="submit" className={`bg-blue-500 rounded-md px-6 py-2 text-white float-right ${isUpdateRoute && !isBlogDataUpdated && 'opacity-50'}`}>{isUpdateRoute ? 'Publish Changes' : 'Publish Article'}</button>
+            </div>
             <Controller
               name="title"
               control={control}

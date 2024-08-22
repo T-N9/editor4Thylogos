@@ -119,7 +119,7 @@ const InnerEditorPanel = ({
     handleSummary,
     handleClearImage,
     handleClickUseExistingImage,
-    handleClickChooseImage,
+    handleSelectImage,
     handleImageFileDrop,
     handleDeleteBlogItem,
     handleUnpublishBlogItem,
@@ -367,7 +367,7 @@ const InnerEditorPanel = ({
               <div className='grid grid-cols-3 bg-gray-100 rounded p-2 gap-3'>
                 {imageUrls.length > 0 ? (
                   imageUrls.map((image, index) => (
-                    <div onClick={() => handleClickChooseImage(image.imageUrl, image.caption)} key={index} className='flex flex-col gap-2 p-2 cursor-pointer hover:bg-slate-50'>
+                    <div onClick={() => handleSelectImage(image.imageUrl, image.caption)} key={index} className='flex flex-col gap-2 p-2 cursor-pointer hover:bg-slate-50'>
                       <Image width={200} height={100} src={image.imageUrl} alt={`Image ${index + 1}`} />
                       <p>{image.caption.slice(0, 30)}</p>
                     </div>

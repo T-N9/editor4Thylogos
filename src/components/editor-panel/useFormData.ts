@@ -28,6 +28,36 @@ export interface LocalFormState {
   imageCaption: string;
 }
 
+type Child = {
+  children?: Child[];
+  altText?: string;
+  caption?: {editorState: {root: Child}};
+  height?: number;
+  maxWidth?: number;
+  showCaption?: boolean;
+  src?: string;
+  type: string;
+  version: number;
+  width?: number;
+  direction?: string | null;
+  format?: string;
+  indent?: number;
+  textFormat?: number;
+  detail?: number;
+  mode?: string;
+  style?: string;
+  text?: string;
+};
+
+type Root = {
+  children: Child[];
+  direction: string;
+  format: string;
+  indent: number;
+  type: string;
+  version: number;
+};
+
 const useFromData = () => {
   const {
     editorState: contextEditorState,
@@ -36,66 +66,74 @@ const useFromData = () => {
     setIsPreviewMode,
     currentBlogData,
   } = useEditorState();
+
   const {control, handleSubmit, setValue, watch} = useForm();
-  const [isSlugModified, setIsSlugModified] = useState<boolean>(false);
-  const [isSummaryModified, setIsSummaryModified] = useState<boolean>(false);
+
+  const [isSlugModified, setIsSlugModified] = useState(false);
+  const [isSummaryModified, setIsSummaryModified] = useState(false);
   const [tags, setTags] = useState<string[]>([]);
   const [tagData, setTagData] = useState<{id: string; tagName: string}[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageUrls, setImageUrls] = useState<
     {caption: string; id: string; imageUrl: string}[]
   >([]);
-  const [isUseExistingImage, setIsUseExistingImage] = useState<boolean>(false);
+  const [isUseExistingImage, setIsUseExistingImage] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const {localizedFormState, setLocalizedFormState} = useLocalData();
-  const [isBlogDataUpdated, setIsBlogDataUpdated] = useState<boolean>(false);
-
-  const featureImage = watch('featureImage');
+  const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);
 
   const pathname = usePathname();
   const isUpdateRoute = pathname.includes('/update');
 
   const watchAllFields = watch();
+  const title = watch('title');
+  const slug = watch('slug');
+  const featureImage = watch('featureImage');
+  const tagsL = watch('tags');
+  const summary = watch('summary');
+  const imageCaption = watch('imageCaption');
+
+  // Consolidated watched form data into one object
+  const watchedFormData = {
+    title,
+    slug,
+    featureImage,
+    tags: tagsL,
+    summary,
+    imageCaption,
+  };
 
   useEffect(() => {
     if (localizedFormState && !isUpdateRoute) {
-      // console.log('useForm state upload');
-      setValue('title', localizedFormState.title);
-      setValue('slug', localizedFormState.slug);
-      setValue('featureImage', localizedFormState.featureImage);
-      setValue('tags', localizedFormState.tags);
-      setValue('summary', localizedFormState.summary);
-      setValue('imageCaption', localizedFormState.imageCaption);
-      setImagePreview(localizedFormState.featureImage);
-      setIsSlugModified(false);
-      setIsSummaryModified(false);
-      setTags(localizedFormState.tags || []);
+      setFormValues(localizedFormState);
     }
     handleGetAllTagsData();
   }, []);
 
   useEffect(() => {
     if (isUpdateRoute && currentBlogData) {
-      setValue('title', currentBlogData.title);
-      setValue('slug', currentBlogData.slug);
-      setValue('featureImage', currentBlogData.featureImage);
-      setValue('tags', currentBlogData.tags);
-      setValue('summary', currentBlogData.summary);
-      setValue('imageCaption', currentBlogData.imageCaption);
-      // console.log('set editor state api');
+      setFormValues(currentBlogData);
       setEditorState({
         editorState: JSON.parse(currentBlogData.content).editorState,
         contentSize: JSON.parse(currentBlogData.content).contentSize,
       });
-      setValue('content', JSON.parse(currentBlogData.content));
-      setIsSlugModified(false);
-      setIsSummaryModified(false);
       setTags(currentBlogData.tags || []);
       setImagePreview(currentBlogData.featureImage);
-
-      // console.log({CONTENT: JSON.parse(data?.content)});
     }
   }, [currentBlogData]);
+
+  // Simplified form value setting function
+  const setFormValues = (data: any) => {
+    setValue('title', data.title);
+    setValue('slug', data.slug);
+    setValue('featureImage', data.featureImage);
+    setValue('tags', data.tags);
+    setValue('summary', data.summary);
+    setValue('imageCaption', data.imageCaption);
+    setIsSlugModified(false);
+    setIsSummaryModified(false);
+    setTags(data.tags || []);
+  };
 
   const addTag = (tag: string) => {
     if (tag && !tags?.includes(tag)) {
@@ -115,70 +153,12 @@ const useFromData = () => {
     setValue('tags', newTags);
   };
 
-  type Child = {
-    children?: Child[];
-    altText?: string;
-    caption?: {editorState: {root: Child}};
-    height?: number;
-    maxWidth?: number;
-    showCaption?: boolean;
-    src?: string;
-    type: string;
-    version: number;
-    width?: number;
-    direction?: string | null;
-    format?: string;
-    indent?: number;
-    textFormat?: number;
-    detail?: number;
-    mode?: string;
-    style?: string;
-    text?: string;
-  };
-
-  type Root = {
-    children: Child[];
-    direction: string;
-    format: string;
-    indent: number;
-    type: string;
-    version: number;
-  };
-
-  const extractTextFromParagraphs = (node: Child | Root): string => {
-    let textArray: string[] = [];
-
-    if (node.type === 'paragraph' && node.children) {
-      for (const child of node.children) {
-        if (child.type === 'text' && child.text) {
-          textArray.push(child.text);
-        }
-      }
-    }
-
-    if (node.children) {
-      for (const child of node.children) {
-        textArray = textArray.concat(extractTextFromParagraphs(child));
-      }
-    }
-
-    if (textArray.join('').length > 600) {
-      return textArray.join('').slice(0, 600);
-    } else {
-      textArray.join('');
-    }
-
-    return textArray.join('');
-  };
-
+  // Debounced summary update
   useEffect(() => {
-    // if (!isSummaryModified) {
     const debouncedUpdate = debounce(() => {
       const texts = extractTextFromParagraphs(
         JSON.parse(contextEditorState.editorState).root,
       );
-
-      console.log({texts});
       setValue('summary', texts);
     }, 500);
 
@@ -187,25 +167,9 @@ const useFromData = () => {
     return () => {
       debouncedUpdate.cancel();
     };
-    // }
-  }, [contextEditorState, isSummaryModified, debounce]);
+  }, [contextEditorState]);
 
-  const title = watch('title');
-  const slug = watch('slug');
-  const featureImageL = watch('featureImage');
-  const tagsL = watch('tags');
-  const summary = watch('summary');
-  const imageCaption = watch('imageCaption');
-
-  const watchedFormData = {
-    title: title,
-    slug: slug,
-    featureImage: featureImageL,
-    tags: tagsL,
-    summary: summary,
-    imageCaption: imageCaption,
-  };
-
+  // Synchronize localized form state if not updating
   useEffect(() => {
     if (!isUpdateRoute) {
       setLocalizedFormState(watchedFormData);
@@ -229,18 +193,14 @@ const useFromData = () => {
       !isEqual(formDataComp, watchedFormData) ||
       !isEqual(editorDataComp, contextEditorState)
     ) {
-      // console.log('Changes Happened.');
       setIsBlogDataUpdated(true);
     } else {
-      // console.log('Back to Origin');
       setIsBlogDataUpdated(false);
     }
-
-    // console.log({contextEditorState, editorDataComp});
   }, [
     title,
     slug,
-    featureImageL,
+    featureImage,
     tagsL,
     summary,
     imageCaption,
@@ -249,129 +209,156 @@ const useFromData = () => {
 
   useEffect(() => {
     setValue('content', JSON.stringify(contextEditorState));
-  }, [contextEditorState, setValue]);
+  }, [contextEditorState]);
 
-  const generateSlug = () => {
-    const slug = watch('title')
-      .toLowerCase()
-      .replace(/[^\w\s]/gi, '')
-      .replace(/\s+/g, '-');
-    setValue('slug', slug);
-  };
+  // Extract text from paragraph nodes
+  const extractTextFromParagraphs = (node: any): string => {
+    let textArray: string[] = [];
 
-  const debouncedGenerateSlug = useCallback(
-    debounce(() => {
-      generateSlug();
-    }, 500),
-    [],
-  );
-
-  const handleTitle = () => {
-    if (!isSlugModified) {
-      debouncedGenerateSlug();
-    }
-  };
-
-  const handleSlug = () => {
-    setIsSlugModified(true);
-  };
-
-  const handleSummary = () => {
-    setIsSummaryModified(true);
-  };
-
-  const handleUploadImage = async (file: File | null) => {
-    console.log({imageCaption, file});
-    if (imageCaption !== undefined && imageCaption !== '' && file) {
-      try {
-        const imageUrl = await uploadImage(file);
-        uploadImageData(imageUrl, imageCaption);
-
-        setValue('featureImage', imageUrl);
-      } catch (error) {
-        console.error('Image upload failed:', error);
+    if (node.type === 'paragraph' && node.children) {
+      for (const child of node.children) {
+        if (child.type === 'text' && child.text) {
+          textArray.push(child.text);
+        }
       }
-    } else {
-      alert('Image Caption is required');
     }
+
+    if (node.children) {
+      for (const child of node.children) {
+        textArray = textArray.concat(extractTextFromParagraphs(child));
+      }
+    }
+
+    return textArray.join('').slice(0, 600);
   };
 
-  const handleGetAllImagesData = async () => {
+  // Generate slug based on title
+const generateSlug = () => {
+  const slug = watch('title')
+    .toLowerCase()
+    .replace(/[^\w\s]/gi, '') // Remove non-alphanumeric characters
+    .replace(/\s+/g, '-'); // Replace spaces with hyphens
+  setValue('slug', slug);
+};
+
+// Debounced slug generation
+const debouncedGenerateSlug = useCallback(debounce(generateSlug, 500), [generateSlug]);
+
+// Handle title input changes
+const handleTitle = () => {
+  if (!isSlugModified) {
+    debouncedGenerateSlug();
+  }
+};
+
+// Mark slug as modified
+const handleSlug = () => {
+  setIsSlugModified(true);
+};
+
+// Mark summary as modified
+const handleSummary = () => {
+  setIsSummaryModified(true);
+};
+
+// Handle image upload
+const handleUploadImage = async (file: File | null) => {
+  if (imageCaption && file) {
     try {
-      const allImageData = await fetchFeatureImages();
-      // console.log({allImageData});
-      setImageUrls(allImageData);
+      const imageUrl = await uploadImage(file);
+      await uploadImageData(imageUrl, imageCaption);
+      setValue('featureImage', imageUrl);
     } catch (error) {
-      console.error('Error fetching images:', error);
+      console.error('Image upload failed:', error);
     }
-  };
+  } else {
+    alert('Image Caption is required');
+  }
+};
 
-  const handleGetAllTagsData = async () => {
-    try {
-      const allTagData = await fetchTags();
+// Fetch all image data
+const handleGetAllImagesData = async () => {
+  try {
+    const allImageData = await fetchFeatureImages();
+    setImageUrls(allImageData);
+  } catch (error) {
+    console.error('Error fetching images:', error);
+  }
+};
 
-      setTagData(allTagData);
-    } catch (error) {}
-  };
+// Fetch all tag data
+const handleGetAllTagsData = async () => {
+  try {
+    const allTagData = await fetchTags();
+    setTagData(allTagData);
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+  }
+};
 
-  const handleClearImage = () => {
-    setValue('featureImage', undefined);
-    setValue('imageCaption', undefined);
-    setImagePreview(null);
-    setIsUseExistingImage(false);
-  };
+// Clear the selected image
+const handleClearImage = () => {
+  setValue('featureImage', null);
+  setValue('imageCaption', '');
+  setImagePreview(null);
+  setIsUseExistingImage(false);
+};
 
-  const handleClickUseExistingImage = () => {
-    handleGetAllImagesData();
-    setIsUseExistingImage(true);
-  };
+// Show existing images
+const handleClickUseExistingImage = () => {
+  handleGetAllImagesData();
+  setIsUseExistingImage(true);
+};
 
-  const handleClickChooseImage = (url: string, caption: string) => {
-    setValue('featureImage', url);
-    setValue('imageCaption', caption);
-    setImagePreview(url);
-  };
+// Select an image from the existing images
+const handleSelectImage = (url: string, caption: string) => {
+  setValue('featureImage', url);
+  setValue('imageCaption', caption);
+  setImagePreview(url);
+};
 
-  const onSubmit = (data: any) => {
-    if (featureImageL !== undefined || imageCaption !== undefined) {
-      // console.log('Submitted data:', data);
-      // console.log(JSON.parse(contextEditorState.editorState));
-      if (isUpdateRoute && currentBlogData?.id) {
-        updateBlogItemData(currentBlogData.id, data);
-      } else {
-        uploadBlogItemData({...data, createdAt: serverTimestamp()});
-      }
+// Submit form data
+const onSubmit = (data: any) => {
+  if (featureImage) {
+    if (isUpdateRoute && currentBlogData?.id) {
+      updateBlogItemData(currentBlogData.id, data);
     } else {
-      alert('Please select a feature image');
+      uploadBlogItemData({ ...data, createdAt: serverTimestamp() });
     }
-  };
+  } else {
+    alert('Please select a feature image');
+  }
+};
 
-  const handleDeleteBlogItem = () => {
-    if (currentBlogData?.id) {
-      deleteBlogItemData(currentBlogData?.id);
-    }
-  };
+// Delete a blog item
+const handleDeleteBlogItem = () => {
+  if (currentBlogData?.id) {
+    deleteBlogItemData(currentBlogData.id);
+  }
+};
 
-  const handleUnpublishBlogItem = () => {
-    if (currentBlogData?.id) {
-      unpublishedBlogItemData(currentBlogData?.id, currentBlogData);
-    }
-  };
+// Unpublish a blog item
+const handleUnpublishBlogItem = () => {
+  if (currentBlogData?.id) {
+    unpublishedBlogItemData(currentBlogData.id, currentBlogData);
+  }
+};
 
-  const handleDraftBlogItem = () => {
-    draftBlogItemData({
-      ...watchedFormData,
-      content: JSON.stringify(contextEditorState),
-      createdAt: new Date(),
-    });
-  };
+// Save blog item as a draft
+const handleDraftBlogItem = () => {
+  draftBlogItemData({
+    ...watchedFormData,
+    content: JSON.stringify(contextEditorState),
+    createdAt: new Date(),
+  });
+};
 
-  const handleImageFileDrop = (data: File) => {
-    const imageURL = URL.createObjectURL(data);
-    setImagePreview(imageURL);
-    setImageFile(data);
-    // console.log({data});
-  };
+// Handle file drop for image upload
+const handleImageFileDrop = (file: File) => {
+  const imageURL = URL.createObjectURL(file);
+  setImagePreview(imageURL);
+  setImageFile(file);
+};
 
   return {
     control,
@@ -387,7 +374,7 @@ const useFromData = () => {
     isBlogDataUpdated,
     featureImage,
     imageUrls,
-    
+
     setValue,
     setImagePreview,
     setTags,
@@ -406,7 +393,7 @@ const useFromData = () => {
     handleSummary,
     handleClearImage,
     handleClickUseExistingImage,
-    handleClickChooseImage,
+    handleSelectImage,
     handleImageFileDrop,
     handleDeleteBlogItem,
     handleUnpublishBlogItem,

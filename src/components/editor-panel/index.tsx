@@ -31,6 +31,7 @@ import { FigmaNode } from './nodes/figma-node';
 import { fetchAllImages, uploadImage } from '@/lib/firebase';
 import Image from 'next/image';
 import { FileUploader } from "react-drag-drop-files";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 
 const EditorPanel = () => {
   const {
@@ -81,6 +82,8 @@ const EditorPanel = () => {
   );
 };
 
+
+
 const InnerEditorPanel = ({
 }: any) => {
   const [editor] = useLexicalComposerContext();
@@ -112,12 +115,35 @@ const InnerEditorPanel = ({
     handleClickUseExistingImage,
     handleClickChooseImage,
     handleImageFileDrop,
+    handleDraftBlogItem,
     tags,
     tagData,
-    setImageFile
+    setImageFile,
+    handleDeleteBlogItem,
+    handleUnpublishBlogItem
   } = useFromData();
 
   // console.log({ current:editorState });
+  const dropDownItemsForUpdate = [
+    {
+      key: "unpublish",
+      label: "Unpublish",
+      event: handleUnpublishBlogItem
+    },
+    {
+      key: "delete",
+      label: "Delete",
+      event: handleDeleteBlogItem
+    }
+  ];
+
+  const dropDownItemsForUpload = [
+    {
+      key: "draft",
+      label: "Save as draft",
+      event: handleDraftBlogItem
+    },
+  ];
 
   return (
     <ToolbarProvider editor={editor}>
@@ -130,8 +156,37 @@ const InnerEditorPanel = ({
           className="blog-form-panel mb-80 space-y-4"
           onSubmit={handleSubmit(onSubmit)}>
           <div className="mx-auto max-w-[845px] space-y-4">
-            <div className='bg-gray-100 shadow fixed w-[300px] right-0 top-0 z-50 px-5 py-2'>
-              <button disabled={isUpdateRoute && !isBlogDataUpdated} type="submit" className={`bg-blue-500 rounded-md px-6 py-2 text-white float-right ${isUpdateRoute && !isBlogDataUpdated && 'opacity-50'}`}>{isUpdateRoute ? 'Publish Changes' : 'Publish Article'}</button>
+            <div className='bg-gray-50 rounded flex gap-2 justify-center items-center shadow fixed w-[200px] right-0 top-0 z-50 px-5 py-2'>
+              <Button disabled={isUpdateRoute && !isBlogDataUpdated} type="submit" className={`bg-blue-500 rounded-md px-6 py-2 text-white float-right ${isUpdateRoute && !isBlogDataUpdated && 'cursor-not-allowed select-none opacity-50'}`}>{isUpdateRoute ? 'Publish Changes' : 'Publish Article'}
+              </Button>
+
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    isIconOnly
+                    color='default'
+                    variant="bordered"
+                    type='button'
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                    </svg>
+
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Dynamic Actions" items={isUpdateRoute ? dropDownItemsForUpdate : dropDownItemsForUpload}>
+                  {(item) => (
+                    <DropdownItem
+                      key={item.key}
+                      color={item.key === "delete" ? "danger" : "default"}
+                      className={item.key === "delete" ? "text-danger" : ""}
+                      onClick={item.event}
+                    >
+                      {item.label}
+                    </DropdownItem>
+                  )}
+                </DropdownMenu>
+              </Dropdown>
             </div>
             <Controller
               name="title"

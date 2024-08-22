@@ -1,7 +1,7 @@
 // lib/firebase.ts
 import {ref, uploadBytes, getDownloadURL, listAll} from 'firebase/storage';
 import {storage, db} from '../../firebaseConfig';
-import {collection, doc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore';
+import {collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
 const uuid = uuidv4();
@@ -57,6 +57,38 @@ export const updateBlogItemData = async (id : string , blog: BlogItem) => {
     console.error('Error storing blog data:', error);
   }
 };
+
+export const deleteBlogItemData = async (id: string) => {
+  const docRef = doc(db, "blog-data", id);
+
+  try {
+    await deleteDoc(docRef);
+    alert("Document successfully deleted!");
+  } catch (error) {
+    console.error("Error deleting document: ", error);
+  }
+}
+
+export const unpublishedBlogItemData = async (id: string, blog: BlogItem) => {
+  try {
+    const docRef = doc(db, 'unpublished-blog-data', id);
+    await deleteBlogItemData(id);
+    await setDoc(docRef, blog );
+    alert('Blog data unpublish successfully!');
+  } catch (error) {
+    console.error('Error storing blog data:', error);
+  }
+}
+
+export const draftBlogItemData = async (blog: BlogItem) => {
+  try {
+    const docRef = doc(db, 'drafted-blog-data', blog.title + uuid.split('-')[1]);
+    await setDoc(docRef, blog);
+    alert('Blog data draft successfully!');
+  } catch (error) {
+    console.error('Error storing blog data:', error);
+  }
+}
 
 export const fetchAllImages = async (
   directoryPath: string,

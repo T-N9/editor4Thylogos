@@ -6,9 +6,12 @@ import {useEditorState} from '@/context/EditorStateContext';
 import {useForm} from 'react-hook-form';
 import {debounce, isEqual} from 'lodash-es';
 import {
+  deleteBlogItemData,
+  draftBlogItemData,
   fetchBlogDataBySlug,
   fetchFeatureImages,
   fetchTags,
+  unpublishedBlogItemData,
   updateBlogItemData,
   uploadBlogItemData,
   uploadImage,
@@ -16,6 +19,7 @@ import {
 } from '@/lib/firebase';
 import {serverTimestamp} from 'firebase/firestore';
 import useLocalData from './useLocalData';
+import { blogData } from '@/data/blog-post';
 
 export interface LocalFormState {
   title: string;
@@ -304,6 +308,7 @@ const useFromData = () => {
     }
   };
 
+
   const handleGetAllTagsData = async () => {
     try {
       const allTagData = await fetchTags();
@@ -346,6 +351,22 @@ const useFromData = () => {
     }
   };
 
+  const handleDeleteBlogItem = () => {
+    if(currentBlogData?.id){
+      deleteBlogItemData(currentBlogData?.id)
+    }
+  } 
+
+  const handleUnpublishBlogItem = () => {
+    if(currentBlogData?.id){
+      unpublishedBlogItemData(currentBlogData?.id, currentBlogData)
+    }
+  }
+
+  const handleDraftBlogItem = () => {
+      draftBlogItemData({...watchedFormData, content : JSON.stringify(contextEditorState), createdAt : new Date})
+  }
+
   const handleImageFileDrop = (data: File) => {
     const imageURL = URL.createObjectURL(data);
     setImagePreview(imageURL);
@@ -368,6 +389,7 @@ const useFromData = () => {
     isUseExistingImage,
     imageFile,
     isBlogDataUpdated,
+    handleDraftBlogItem,
     handleUploadImage,
     handleSubmit,
     setValue,
@@ -384,6 +406,8 @@ const useFromData = () => {
     handleClickUseExistingImage,
     handleClickChooseImage,
     handleImageFileDrop,
+    handleDeleteBlogItem,
+    handleUnpublishBlogItem,
     setImageFile,
   };
 };

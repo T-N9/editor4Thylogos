@@ -6,12 +6,12 @@ import { Button } from '@nextui-org/react';
 
 const BlogCatalogue = () => {
 
-    const { blogData } = useBlogCatalogue();
+    const { fetchedBlogData } = useBlogCatalogue();
 
     return (
         <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
             {
-                blogData.map((blog, index) => (
+                fetchedBlogData?.map((blog, index) => (
                     <div key={index} className='relative border p-3 rounded-md'>
                         <Link href={`/update/${blog.slug}`}>
                             <Button isIconOnly size='sm' className='absolute right-2 top-2 bg-blue-500'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#fff" className="size-4">
@@ -19,8 +19,7 @@ const BlogCatalogue = () => {
                             </svg>
                             </Button>
                         </Link>
-                        <Link key={blog.id} href={`/blog/${blog.slug}`}>
-
+                        <Link href={`/blog/${blog.slug}`}>
                             <div key={index}>
                                 <h1 className='text-4xl'>{blog.title}</h1>
                                 <p className='my-5 line-clamp-3'>{blog.summary}...</p>

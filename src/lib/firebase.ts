@@ -1,12 +1,22 @@
 // lib/firebase.ts
 import {ref, uploadBytes, getDownloadURL, listAll} from 'firebase/storage';
 import {storage, db} from '../../firebaseConfig';
-import {collection, deleteDoc, doc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore';
-import { v4 as uuidv4 } from 'uuid';
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from 'firebase/firestore';
+import {v4 as uuidv4} from 'uuid';
+import { ThumbnailBlogItem } from '@/components/blog-catalogue/useBlogCatalogue';
 
 const uuid = uuidv4();
 export interface BlogItem {
-  id?: string,
+  id?: string;
   title: string;
   slug: string;
   tags: string[];
@@ -25,7 +35,6 @@ export const uploadImage = async (file: File): Promise<string> => {
 };
 
 export const uploadImageData = async (fileURL: string, caption: string) => {
-
   try {
     const docRef = doc(db, 'feature-image-data', uuid.split('-')[1]);
     await setDoc(docRef, {
@@ -48,7 +57,7 @@ export const uploadBlogItemData = async (blog: BlogItem) => {
   }
 };
 
-export const updateBlogItemData = async (id : string , blog: BlogItem) => {
+export const updateBlogItemData = async (id: string, blog: BlogItem) => {
   try {
     const docRef = doc(db, 'blog-data', id);
     await updateDoc(docRef, {...blog});
@@ -59,36 +68,40 @@ export const updateBlogItemData = async (id : string , blog: BlogItem) => {
 };
 
 export const deleteBlogItemData = async (id: string) => {
-  const docRef = doc(db, "blog-data", id);
+  const docRef = doc(db, 'blog-data', id);
 
   try {
     await deleteDoc(docRef);
-    alert("Document successfully deleted!");
+    alert('Document successfully deleted!');
   } catch (error) {
-    console.error("Error deleting document: ", error);
+    console.error('Error deleting document: ', error);
   }
-}
+};
 
 export const unpublishedBlogItemData = async (id: string, blog: BlogItem) => {
   try {
     const docRef = doc(db, 'unpublished-blog-data', id);
     await deleteBlogItemData(id);
-    await setDoc(docRef, blog );
+    await setDoc(docRef, blog);
     alert('Blog data unpublish successfully!');
   } catch (error) {
     console.error('Error storing blog data:', error);
   }
-}
+};
 
 export const draftBlogItemData = async (blog: BlogItem) => {
   try {
-    const docRef = doc(db, 'drafted-blog-data', blog.title + uuid.split('-')[1]);
+    const docRef = doc(
+      db,
+      'drafted-blog-data',
+      blog.title + uuid.split('-')[1],
+    );
     await setDoc(docRef, blog);
     alert('Blog data draft successfully!');
   } catch (error) {
     console.error('Error storing blog data:', error);
   }
-}
+};
 
 export const fetchAllImages = async (
   directoryPath: string,
@@ -135,55 +148,54 @@ export const fetchTags = async () => {
   }
 };
 
-export const fetchAllBlogData = async () => {
+export const fetchAllBlogData = async () :Promise<ThumbnailBlogItem[]> => {
   const blogDataCollection = collection(db, 'blog-data');
 
   try {
     const querySnapshot = await getDocs(blogDataCollection);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
-    //  ...doc.data(),
-    title : doc.data().title,
-    image : doc.data().featureImage,
-    summary : doc.data().summary,
-    tags : doc.data().tags,
-    slug : doc.data().slug
+      title : doc.data().title,
+      image: doc.data().featureImage,
+      summary: doc.data().summary,
+      tags: doc.data().tags,
+      slug: doc.data().slug,
     }));
     return blogData;
   } catch (error) {
     console.error('Error fetching blog data:', error);
     return [];
   }
-}
+};
 
 export const fetchBlogDataBySlug = async (slug: string) => {
   try {
-    const blogDataCollection = collection(db, "blog-data");
-    const q = query(blogDataCollection, where("slug", "==", slug));
+    const blogDataCollection = collection(db, 'blog-data');
+    const q = query(blogDataCollection, where('slug', '==', slug));
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
 
-      console.log({fetchedId : doc.id,});
+      // console.log({fetchedId: doc.id});
       return {
         id: doc.id,
-        title : doc.data().title,
-        image : doc.data().featureImage,
-        summary : doc.data().summary,
-        tags : doc.data().tags,
-        slug : doc.data().slug,
-        content : doc.data().content,
-        featureImage : doc.data().featureImage,
-        imageCaption : doc.data().imageCaption,
-        createdAt : doc.data().createdAt,
+        title: doc.data().title,
+        image: doc.data().featureImage,
+        summary: doc.data().summary,
+        tags: doc.data().tags,
+        slug: doc.data().slug,
+        content: doc.data().content,
+        featureImage: doc.data().featureImage,
+        imageCaption: doc.data().imageCaption,
+        createdAt: doc.data().createdAt,
       };
     } else {
-      console.log("No blog post found with the provided slug.");
+      console.log('No blog post found with the provided slug.');
       return null;
     }
   } catch (error) {
-    console.error("Error fetching blog data by slug:", error);
+    console.error('Error fetching blog data by slug:', error);
     return null;
   }
 };

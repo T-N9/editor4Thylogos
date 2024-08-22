@@ -212,7 +212,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
         <TableHoverActionsPlugin />
         <TableHoverActionsPlugin />
 
-        <PreviewToolBar />
+        {/* <PreviewToolBar /> */}
         <ImagesPlugin />
         <LinkPlugin />
         <ListPlugin />

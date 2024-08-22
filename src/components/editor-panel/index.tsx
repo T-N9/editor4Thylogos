@@ -88,39 +88,41 @@ const InnerEditorPanel = ({
 }: any) => {
   const [editor] = useLexicalComposerContext();
   const {
-    control,
-    handleSubmit,
-    isPreviewMode,
-    onSubmit,
-    setIsPreviewMode,
+
     contextEditorState: editorState,
-    imageUrls,
+
+    control,
+    isPreviewMode,
+    tags,
+    imagePreview,
+    tagData,
+    isUpdateRoute,
     isUseExistingImage,
+    imageFile,
+    isBlogDataUpdated,
+    featureImage,
+    imageUrls,
+
+    setImagePreview,
+    setIsPreviewMode,
     setEditorState,
-    handleTitle,
-    handleSlug,
+    setImageFile,
+
+    handleDraftBlogItem,
+    handleUploadImage,
+    handleSubmit,
+    onSubmit,
     handleTagClick,
     removeTag,
-    handleUploadImage,
-    setTags,
-    isBlogDataUpdated,
-    isUpdateRoute,
-    imageFile,
-    imagePreview,
-    setImagePreview,
-    featureImage,
-    setValue,
+    handleTitle,
+    handleSlug,
     handleSummary,
     handleClearImage,
     handleClickUseExistingImage,
     handleClickChooseImage,
     handleImageFileDrop,
-    handleDraftBlogItem,
-    tags,
-    tagData,
-    setImageFile,
     handleDeleteBlogItem,
-    handleUnpublishBlogItem
+    handleUnpublishBlogItem,
   } = useFromData();
 
   // console.log({ current:editorState });

@@ -8,7 +8,6 @@ import {debounce, isEqual} from 'lodash-es';
 import {
   deleteBlogItemData,
   draftBlogItemData,
-  fetchBlogDataBySlug,
   fetchFeatureImages,
   fetchTags,
   unpublishedBlogItemData,
@@ -19,7 +18,6 @@ import {
 } from '@/lib/firebase';
 import {serverTimestamp} from 'firebase/firestore';
 import useLocalData from './useLocalData';
-import { blogData } from '@/data/blog-post';
 
 export interface LocalFormState {
   title: string;
@@ -39,14 +37,11 @@ const useFromData = () => {
     currentBlogData,
   } = useEditorState();
   const {control, handleSubmit, setValue, watch} = useForm();
-  // const {editorState: contextEditorState} = useEditorState();
   const [isSlugModified, setIsSlugModified] = useState<boolean>(false);
   const [isSummaryModified, setIsSummaryModified] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
   const [tagData, setTagData] = useState<{id: string; tagName: string}[]>([]);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  // const [localizedFormState, setLocalizedFormState] =
-  //   useLocalStorage<LocalFormState | null>('my-form-state-key', null);
   const [imageUrls, setImageUrls] = useState<
     {caption: string; id: string; imageUrl: string}[]
   >([]);
@@ -178,20 +173,20 @@ const useFromData = () => {
 
   useEffect(() => {
     // if (!isSummaryModified) {
-      const debouncedUpdate = debounce(() => {
-        const texts = extractTextFromParagraphs(
-          JSON.parse(contextEditorState.editorState).root,
-        );
+    const debouncedUpdate = debounce(() => {
+      const texts = extractTextFromParagraphs(
+        JSON.parse(contextEditorState.editorState).root,
+      );
 
-        console.log({texts});
-        setValue('summary', texts);
-      }, 500);
+      console.log({texts});
+      setValue('summary', texts);
+    }, 500);
 
-      debouncedUpdate();
+    debouncedUpdate();
 
-      return () => {
-        debouncedUpdate.cancel();
-      };
+    return () => {
+      debouncedUpdate.cancel();
+    };
     // }
   }, [contextEditorState, isSummaryModified, debounce]);
 
@@ -228,9 +223,12 @@ const useFromData = () => {
     const editorDataComp = currentBlogData && {
       editorState: JSON.parse(currentBlogData?.content).editorState,
       contentSize: JSON.parse(currentBlogData?.content).contentSize,
-    }
+    };
 
-    if (!isEqual(formDataComp, watchedFormData) || !isEqual(editorDataComp, contextEditorState)) {
+    if (
+      !isEqual(formDataComp, watchedFormData) ||
+      !isEqual(editorDataComp, contextEditorState)
+    ) {
       // console.log('Changes Happened.');
       setIsBlogDataUpdated(true);
     } else {
@@ -308,7 +306,6 @@ const useFromData = () => {
     }
   };
 
-
   const handleGetAllTagsData = async () => {
     try {
       const allTagData = await fetchTags();
@@ -339,33 +336,35 @@ const useFromData = () => {
     if (featureImageL !== undefined || imageCaption !== undefined) {
       // console.log('Submitted data:', data);
       // console.log(JSON.parse(contextEditorState.editorState));
-      if(isUpdateRoute && currentBlogData?.id) {
-        updateBlogItemData(currentBlogData.id, data )
-      }else {
+      if (isUpdateRoute && currentBlogData?.id) {
+        updateBlogItemData(currentBlogData.id, data);
+      } else {
         uploadBlogItemData({...data, createdAt: serverTimestamp()});
       }
-
-
     } else {
       alert('Please select a feature image');
     }
   };
 
   const handleDeleteBlogItem = () => {
-    if(currentBlogData?.id){
-      deleteBlogItemData(currentBlogData?.id)
+    if (currentBlogData?.id) {
+      deleteBlogItemData(currentBlogData?.id);
     }
-  } 
+  };
 
   const handleUnpublishBlogItem = () => {
-    if(currentBlogData?.id){
-      unpublishedBlogItemData(currentBlogData?.id, currentBlogData)
+    if (currentBlogData?.id) {
+      unpublishedBlogItemData(currentBlogData?.id, currentBlogData);
     }
-  }
+  };
 
   const handleDraftBlogItem = () => {
-      draftBlogItemData({...watchedFormData, content : JSON.stringify(contextEditorState), createdAt : new Date})
-  }
+    draftBlogItemData({
+      ...watchedFormData,
+      content: JSON.stringify(contextEditorState),
+      createdAt: new Date(),
+    });
+  };
 
   const handleImageFileDrop = (data: File) => {
     const imageURL = URL.createObjectURL(data);
@@ -383,32 +382,34 @@ const useFromData = () => {
     imagePreview,
     tagData,
     isUpdateRoute,
-    setImagePreview,
-    featureImage,
-    imageUrls,
     isUseExistingImage,
     imageFile,
     isBlogDataUpdated,
+    featureImage,
+    imageUrls,
+    
+    setValue,
+    setImagePreview,
+    setTags,
+    setIsPreviewMode,
+    setEditorState,
+    setImageFile,
+
     handleDraftBlogItem,
     handleUploadImage,
     handleSubmit,
-    setValue,
     onSubmit,
-    setIsPreviewMode,
-    setEditorState,
     handleTagClick,
     removeTag,
     handleTitle,
     handleSlug,
     handleSummary,
-    setTags,
     handleClearImage,
     handleClickUseExistingImage,
     handleClickChooseImage,
     handleImageFileDrop,
     handleDeleteBlogItem,
     handleUnpublishBlogItem,
-    setImageFile,
   };
 };
 

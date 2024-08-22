@@ -1,10 +1,12 @@
 // lib/firebase.ts
 import {ref, uploadBytes, getDownloadURL, listAll} from 'firebase/storage';
 import {storage, db} from '../../firebaseConfig';
-import {collection, doc, getDocs, query, setDoc, where} from 'firebase/firestore';
+import {collection, doc, getDocs, query, setDoc, updateDoc, where} from 'firebase/firestore';
 import { v4 as uuidv4 } from 'uuid';
 
+const uuid = uuidv4();
 export interface BlogItem {
+  id?: string,
   title: string;
   slug: string;
   tags: string[];
@@ -23,7 +25,7 @@ export const uploadImage = async (file: File): Promise<string> => {
 };
 
 export const uploadImageData = async (fileURL: string, caption: string) => {
-  const uuid = uuidv4();
+
   try {
     const docRef = doc(db, 'feature-image-data', uuid.split('-')[1]);
     await setDoc(docRef, {
@@ -38,9 +40,19 @@ export const uploadImageData = async (fileURL: string, caption: string) => {
 
 export const uploadBlogItemData = async (blog: BlogItem) => {
   try {
-    const docRef = doc(db, 'blog-data', blog.title);
+    const docRef = doc(db, 'blog-data', blog.title + uuid.split('-')[1]);
     await setDoc(docRef, blog);
     alert('Blog data stored successfully!');
+  } catch (error) {
+    console.error('Error storing blog data:', error);
+  }
+};
+
+export const updateBlogItemData = async (id : string , blog: BlogItem) => {
+  try {
+    const docRef = doc(db, 'blog-data', id);
+    await updateDoc(docRef, {...blog});
+    alert('Blog data updated successfully!');
   } catch (error) {
     console.error('Error storing blog data:', error);
   }
@@ -120,6 +132,8 @@ export const fetchBlogDataBySlug = async (slug: string) => {
 
     if (!querySnapshot.empty) {
       const doc = querySnapshot.docs[0];
+
+      console.log({fetchedId : doc.id,});
       return {
         id: doc.id,
         title : doc.data().title,

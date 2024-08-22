@@ -9,6 +9,7 @@ import {
   fetchBlogDataBySlug,
   fetchFeatureImages,
   fetchTags,
+  updateBlogItemData,
   uploadBlogItemData,
   uploadImage,
   uploadImageData,
@@ -172,11 +173,13 @@ const useFromData = () => {
   };
 
   useEffect(() => {
-    if (!isSummaryModified) {
+    // if (!isSummaryModified) {
       const debouncedUpdate = debounce(() => {
         const texts = extractTextFromParagraphs(
           JSON.parse(contextEditorState.editorState).root,
         );
+
+        console.log({texts});
         setValue('summary', texts);
       }, 500);
 
@@ -185,7 +188,7 @@ const useFromData = () => {
       return () => {
         debouncedUpdate.cancel();
       };
-    }
+    // }
   }, [contextEditorState, isSummaryModified, debounce]);
 
   const title = watch('title');
@@ -329,10 +332,15 @@ const useFromData = () => {
 
   const onSubmit = (data: any) => {
     if (featureImageL !== undefined || imageCaption !== undefined) {
-      console.log('Submitted data:', data);
-      console.log(JSON.parse(contextEditorState.editorState));
+      // console.log('Submitted data:', data);
+      // console.log(JSON.parse(contextEditorState.editorState));
+      if(isUpdateRoute && currentBlogData?.id) {
+        updateBlogItemData(currentBlogData.id, data )
+      }else {
+        uploadBlogItemData({...data, createdAt: serverTimestamp()});
+      }
 
-      uploadBlogItemData({...data, createdAt: serverTimestamp()});
+
     } else {
       alert('Please select a feature image');
     }

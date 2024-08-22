@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import Image from 'next/image';
 /* Nodes */
 import { AutoLinkNode, LinkNode } from '@lexical/link';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
@@ -14,7 +14,6 @@ import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
 /* Components */
 import { Controller } from 'react-hook-form';
 import TextEditor from './text-editor/TextEditor';
-import TextPreview from './text-preview/TextPreview';
 /* Hooks */
 import useFromData from './useFormData';
 import ExampleTheme from './editor-theme/DefaultTheme';
@@ -28,8 +27,7 @@ import { CollapsibleContentNode } from './plugins/CollapsiblePlugin/CollapsibleC
 import { YouTubeNode } from './nodes/youtube-node/YouTubeNode';
 import { TweetNode } from './nodes/tweet-node/TweetNode';
 import { FigmaNode } from './nodes/figma-node';
-import { fetchAllImages, uploadImage } from '@/lib/firebase';
-import Image from 'next/image';
+
 import { FileUploader } from "react-drag-drop-files";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
 
@@ -88,7 +86,6 @@ const InnerEditorPanel = ({
 }: any) => {
   const [editor] = useLexicalComposerContext();
   const {
-
     contextEditorState: editorState,
 
     control,

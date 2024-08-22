@@ -1,5 +1,5 @@
 import {useCallback, useEffect, useState} from 'react';
-import {usePathname} from 'next/navigation';
+import {usePathname, useRouter} from 'next/navigation';
 
 /* Hooks */
 import {useEditorState} from '@/context/EditorStateContext';
@@ -8,6 +8,7 @@ import {debounce, isEqual} from 'lodash-es';
 import {
   deleteBlogItemData,
   draftBlogItemData,
+  fetchAllBlogData,
   fetchFeatureImages,
   fetchTags,
   unpublishedBlogItemData,
@@ -18,6 +19,7 @@ import {
 } from '@/lib/firebase';
 import {serverTimestamp} from 'firebase/firestore';
 import useLocalData from './useLocalData';
+import { toast } from 'sonner'
 
 export interface LocalFormState {
   title: string;
@@ -65,6 +67,7 @@ const useFromData = () => {
     setEditorState,
     setIsPreviewMode,
     currentBlogData,
+    setFetchedBlogData
   } = useEditorState();
 
   const {control, handleSubmit, setValue, watch} = useForm();
@@ -83,6 +86,7 @@ const useFromData = () => {
   const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);
 
   const pathname = usePathname();
+  const router = useRouter();
   const isUpdateRoute = pathname.includes('/update');
 
   const watchAllFields = watch();
@@ -233,132 +237,161 @@ const useFromData = () => {
   };
 
   // Generate slug based on title
-const generateSlug = () => {
-  const slug = watch('title')
-    .toLowerCase()
-    .replace(/[^\w\s]/gi, '') // Remove non-alphanumeric characters
-    .replace(/\s+/g, '-'); // Replace spaces with hyphens
-  setValue('slug', slug);
-};
+  const generateSlug = () => {
+    const slug = watch('title')
+      .toLowerCase()
+      .replace(/[^\w\s]/gi, '') // Remove non-alphanumeric characters
+      .replace(/\s+/g, '-'); // Replace spaces with hyphens
+    setValue('slug', slug);
+  };
 
-// Debounced slug generation
-const debouncedGenerateSlug = useCallback(debounce(generateSlug, 500), [generateSlug]);
+  // Debounced slug generation
+  const debouncedGenerateSlug = useCallback(debounce(generateSlug, 500), [
+    generateSlug,
+  ]);
 
-// Handle title input changes
-const handleTitle = () => {
-  if (!isSlugModified) {
-    debouncedGenerateSlug();
-  }
-};
-
-// Mark slug as modified
-const handleSlug = () => {
-  setIsSlugModified(true);
-};
-
-// Mark summary as modified
-const handleSummary = () => {
-  setIsSummaryModified(true);
-};
-
-// Handle image upload
-const handleUploadImage = async (file: File | null) => {
-  if (imageCaption && file) {
-    try {
-      const imageUrl = await uploadImage(file);
-      await uploadImageData(imageUrl, imageCaption);
-      setValue('featureImage', imageUrl);
-    } catch (error) {
-      console.error('Image upload failed:', error);
+  // Handle title input changes
+  const handleTitle = () => {
+    if (!isSlugModified) {
+      debouncedGenerateSlug();
     }
-  } else {
-    alert('Image Caption is required');
-  }
-};
+  };
 
-// Fetch all image data
-const handleGetAllImagesData = async () => {
-  try {
-    const allImageData = await fetchFeatureImages();
-    setImageUrls(allImageData);
-  } catch (error) {
-    console.error('Error fetching images:', error);
-  }
-};
+  // Mark slug as modified
+  const handleSlug = () => {
+    setIsSlugModified(true);
+  };
 
-// Fetch all tag data
-const handleGetAllTagsData = async () => {
-  try {
-    const allTagData = await fetchTags();
-    setTagData(allTagData);
-  } catch (error) {
-    console.error('Error fetching tags:', error);
-  }
-};
+  // Mark summary as modified
+  const handleSummary = () => {
+    setIsSummaryModified(true);
+  };
 
-// Clear the selected image
-const handleClearImage = () => {
-  setValue('featureImage', null);
-  setValue('imageCaption', '');
-  setImagePreview(null);
-  setIsUseExistingImage(false);
-};
-
-// Show existing images
-const handleClickUseExistingImage = () => {
-  handleGetAllImagesData();
-  setIsUseExistingImage(true);
-};
-
-// Select an image from the existing images
-const handleSelectImage = (url: string, caption: string) => {
-  setValue('featureImage', url);
-  setValue('imageCaption', caption);
-  setImagePreview(url);
-};
-
-// Submit form data
-const onSubmit = (data: any) => {
-  if (featureImage) {
-    if (isUpdateRoute && currentBlogData?.id) {
-      updateBlogItemData(currentBlogData.id, data);
+  // Handle image upload
+  const handleUploadImage = async (file: File | null) => {
+    if (imageCaption && file) {
+      try {
+        const imageUrl = await uploadImage(file);
+        await uploadImageData(imageUrl, imageCaption);
+        setValue('featureImage', imageUrl);
+      } catch (error) {
+        console.error('Image upload failed:', error);
+      }
     } else {
-      uploadBlogItemData({ ...data, createdAt: serverTimestamp() });
+      alert('Image Caption is required');
     }
-  } else {
-    alert('Please select a feature image');
-  }
-};
+  };
 
-// Delete a blog item
-const handleDeleteBlogItem = () => {
-  if (currentBlogData?.id) {
-    deleteBlogItemData(currentBlogData.id);
-  }
-};
+  // Fetch all image data
+  const handleGetAllImagesData = async () => {
+    try {
+      const allImageData = await fetchFeatureImages();
+      setImageUrls(allImageData);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
 
-// Unpublish a blog item
-const handleUnpublishBlogItem = () => {
-  if (currentBlogData?.id) {
-    unpublishedBlogItemData(currentBlogData.id, currentBlogData);
-  }
-};
+  // Fetch all tag data
+  const handleGetAllTagsData = async () => {
+    try {
+      const allTagData = await fetchTags();
+      setTagData(allTagData);
+    } catch (error) {
+      console.error('Error fetching tags:', error);
+    }
+  };
 
-// Save blog item as a draft
-const handleDraftBlogItem = () => {
-  draftBlogItemData({
-    ...watchedFormData,
-    content: JSON.stringify(contextEditorState),
-    createdAt: new Date(),
-  });
-};
+  // Clear the selected image
+  const handleClearImage = () => {
+    setValue('featureImage', null);
+    setValue('imageCaption', '');
+    setImagePreview(null);
+    setIsUseExistingImage(false);
+  };
 
-// Handle file drop for image upload
-const handleImageFileDrop = (file: File) => {
-  const imageURL = URL.createObjectURL(file);
-  setImagePreview(imageURL);
-  setImageFile(file);
-};
+  // Show existing images
+  const handleClickUseExistingImage = () => {
+    handleGetAllImagesData();
+    setIsUseExistingImage(true);
+  };
+
+  // Select an image from the existing images
+  const handleSelectImage = (url: string, caption: string) => {
+    setValue('featureImage', url);
+    setValue('imageCaption', caption);
+    setImagePreview(url);
+  };
+
+  const handleFetchAllBlogData = async () => {
+    console.log('Fetching all blog data');
+    try {
+      const allBlogData = await fetchAllBlogData();
+      setFetchedBlogData(allBlogData);
+      router.push('/');
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
+
+  // Submit form data
+  const onSubmit = async (data: any) => {
+    if (featureImage) {
+      let success = false;
+  
+      if (isUpdateRoute && currentBlogData?.id) {
+        success = await updateBlogItemData(currentBlogData.id, data);
+      } else {
+        success = await uploadBlogItemData({ ...data, createdAt: serverTimestamp() });
+      }
+  
+      if (success) {
+        toast.success('Article updated successfully');
+        handleFetchAllBlogData()
+        // You can redirect or perform other actions here if needed
+      } else {
+        alert('Failed to submit blog item. Please try again.');
+      }
+    } else {
+      alert('Please select a feature image');
+    }
+  };
+
+  // Delete a blog item
+  const handleDeleteBlogItem = async() => {
+    if (currentBlogData?.id) {
+      let isSuccess = false;
+      isSuccess = await deleteBlogItemData(currentBlogData.id);
+
+      if (isSuccess) {
+        toast.success('Article is deleted.');
+        handleFetchAllBlogData();
+      }
+    }
+  };
+
+  // Unpublish a blog item
+  const handleUnpublishBlogItem = () => {
+    if (currentBlogData?.id) {
+      unpublishedBlogItemData(currentBlogData.id, currentBlogData);
+    }
+  };
+
+  // Save blog item as a draft
+  const handleDraftBlogItem = () => {
+    draftBlogItemData({
+      ...watchedFormData,
+      content: JSON.stringify(contextEditorState),
+      createdAt: new Date(),
+    });
+  };
+
+  // Handle file drop for image upload
+  const handleImageFileDrop = (file: File) => {
+    const imageURL = URL.createObjectURL(file);
+    setImagePreview(imageURL);
+    setImageFile(file);
+  };
 
   return {
     control,

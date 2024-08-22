@@ -8,6 +8,8 @@ import { EditorStateProvider } from "../context/EditorStateContext";
 import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/components/navigation/NavBar";
 
+import { Toaster } from 'sonner'
+
 export const metadata: Metadata = {
   title: "TN Lexical Editor",
   description: "A custom editor modified on top of Lexical Editor of Meta.",
@@ -25,6 +27,7 @@ export default function RootLayout({
           <EditorStateProvider>
             <NavBar/>
             {children}
+            <Toaster />
           </EditorStateProvider>
         </NextUIProvider>
       </body>

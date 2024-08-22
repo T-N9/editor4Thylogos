@@ -47,33 +47,39 @@ export const uploadImageData = async (fileURL: string, caption: string) => {
   }
 };
 
-export const uploadBlogItemData = async (blog: BlogItem) => {
+export const uploadBlogItemData = async (blog: BlogItem): Promise<boolean> => {
   try {
     const docRef = doc(db, 'blog-data', blog.title + uuid.split('-')[1]);
     await setDoc(docRef, blog);
-    alert('Blog data stored successfully!');
+    // alert('Blog data stored successfully!');
+    return true;
   } catch (error) {
     console.error('Error storing blog data:', error);
+    return false;
   }
 };
 
-export const updateBlogItemData = async (id: string, blog: BlogItem) => {
+export const updateBlogItemData = async (id: string, blog: BlogItem):Promise<boolean> => {
   try {
     const docRef = doc(db, 'blog-data', id);
     await updateDoc(docRef, {...blog});
-    alert('Blog data updated successfully!');
+    // alert('Blog data updated successfully!');
+    return true;
   } catch (error) {
     console.error('Error storing blog data:', error);
+    return false;
   }
 };
 
-export const deleteBlogItemData = async (id: string) => {
+export const deleteBlogItemData = async (id: string):Promise<boolean> => {
   const docRef = doc(db, 'blog-data', id);
 
   try {
     await deleteDoc(docRef);
-    alert('Document successfully deleted!');
+    // alert('Document successfully deleted!');
+    return true;
   } catch (error) {
+    return false;
     console.error('Error deleting document: ', error);
   }
 };

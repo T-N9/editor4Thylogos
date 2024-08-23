@@ -16,7 +16,7 @@ const BlogCatalogue = () => {
             {pathname.includes('/manage') && (
               <>
                 <Button
-                  href={`/blog/${blog.slug}`}
+                  href={`/notes/${blog.slug}`}
                   as={Link}
                   type="button"
                   isIconOnly
@@ -91,7 +91,7 @@ const BlogCatalogue = () => {
                 </div>
               </div>
               :
-              <Link href={`/blog/${blog.slug}`}>
+              <Link href={`/notes/${blog.slug}`}>
                 <div className='group'>
                   <h1 className="text-2xl group-hover:underline decoration-indigo-600 underline-offset-2 md:text-3xl font-bold text-gray-900 transition-all duration-300 dark:text-white">
                     {blog.title}

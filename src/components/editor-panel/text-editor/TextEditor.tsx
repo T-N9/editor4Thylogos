@@ -42,7 +42,7 @@ import TableOfContent from '../table-of-content';
 import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
 import useLocalData from '../useLocalData';
-import { fetchBlogDataBySlug, fetchDraftedBlogData, fetchDraftedBlogDataBySlug, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
+import { fetchBlogDataBySlug, fetchDraftedBlogData, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,

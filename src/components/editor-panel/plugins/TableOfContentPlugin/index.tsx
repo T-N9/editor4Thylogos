@@ -143,20 +143,20 @@ function TableOfContentsList({
                 <aside className={`${!isContentShown ? 'transform translate-x-60' : 'translate-x-0'} fixed right-0 transform  top-1/2 -translate-y-1/2 flex z-50 items-start duration-300`}>
                     <button type='button' className='inline-block py-2 px-2 rounded-md rounded-tr-none rounded-br-none bg-gray-100 shadow' onClick={() => setIsContentShown(!isContentShown)}>
                         {
-                            isContentShown ?
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-4 text-gray-500">
+                            !isContentShown ?
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#4f46e5" className="size-4 text-indigo-600">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
                                 </svg>
 
                                 :
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#545454" className="size-4 text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#4f46e5" className="size-4 text-indigo-600">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
                                 </svg>
                         }
                     </button>
-                    <div className="table-of-contents shadow border-r-4 border-gray-600">
-                        <h1 className='font-bold text-gray-300'>In this article</h1>
-                        <ul className="headings">
+                    <div className="table-of-contents shadow border-r-4 border-indigo-600">
+                        <h1 className='font-bold text-indigo-300'>In this article</h1>
+                        <ul className="headings flex flex-col gap-2">
                             {tableOfContents.map(([key, text, tag], index) => {
                                 return (
                                     <div
@@ -169,7 +169,7 @@ function TableOfContentsList({
                                             className={indent(tag)}
                                             tabIndex={0}>
                                             <li
-                                                className={`normal-heading ${selectedKey === key ? 'selected-heading' : ''
+                                                className={`normal-heading hover:!text-indigo-800 ${selectedKey === key ? 'selected-heading' : ''
                                                     }
                                     `}>
                                                 {('' + text).length > 27

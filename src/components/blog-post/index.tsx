@@ -132,14 +132,23 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
 
                         {imageCaption && (
                             <div
-                                className="text-xs text-center image-caption text-gray-500 dark:text-gray-400 lg:text-sm"
+                                className="text-xs text-center image-caption -mt-2 text-gray-500 dark:text-gray-400 lg:text-sm"
                                 dangerouslySetInnerHTML={{ __html: imageCaption }}
                             ></div>
                         )}
                     </div>
 
+                    <div className='flex justify-center relative items-center mt-2'>
+                        <span className='w-[1px] h-8 bg-indigo-400'>
 
-                    <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
+                            
+                        </span>
+                        <span className='w-2 h-2 absolute bottom-0 rounded-full bg-indigo-400'></span>
+                    </div>
+
+                    <div className='-mt-5'>
+                        <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
+                    </div>
                 </div>
             </main>
         </LexicalComposer>

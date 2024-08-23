@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../../firebaseConfig";
 import { useRouter } from "next/navigation";
 import { Button } from "@nextui-org/react";
+import Cookies from "js-cookie";
 
 export default function LogoutButton() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      Cookies.remove('authToken');
       router.push('/log-in'); // Redirect to login page after logging out
     } catch (error) {
       console.error("Error logging out:", error);

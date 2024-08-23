@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../../../firebaseConfig";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 interface IFormInput {
   email: string;
@@ -15,21 +16,27 @@ export default function Login() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const router = useRouter();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push('/manage'); // Redirect if the user is already logged in
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       router.push('/manage'); // Redirect if the user is already logged in
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
 
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
     try {
-      await signInWithEmailAndPassword(auth, data.email, data.password);
-      router.push('/manage'); // Redirect to a dashboard or any other page after successful login
+      const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+      const idToken = await userCredential.user.getIdToken();
+
+      // Store the token in a cookie
+      Cookies.set('authToken', idToken, { expires: 1, secure: true, sameSite: 'strict' }); // 1 day expiration
+      
+      router.push('/manage'); // Redirect to the manage page after login
     } catch (error) {
-      setLoginError("Failed to log in. Please check your credentials and try again.");
+      console.error('Error logging in:', error);
+      // Handle error (e.g., show error message)
     }
   };
 

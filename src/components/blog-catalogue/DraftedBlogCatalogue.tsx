@@ -3,6 +3,7 @@ import React from 'react'
 import useBlogCatalogue from './useBlogCatalogue'
 import Link from 'next/link';
 import { Button } from '@nextui-org/react';
+import moment from 'moment';
 
 const DraftedBlogCatalogue = () => {
 
@@ -20,17 +21,26 @@ const DraftedBlogCatalogue = () => {
                             </svg>
                             </Button>
                         }
-                        
+
                         <div key={index}>
                             <h1 className='text-4xl'>{blog.title ? blog.title : 'Untitled'}</h1>
                             <p className='my-5 line-clamp-3'>{blog.summary}...</p>
 
-                            <div>
-                                {
-                                    blog.tags.map((tag, index) => {
-                                        return <span className='bg-gray-100 px-2 py-1 rounded-full' key={index} style={{ marginRight: '5px' }}>{tag}</span>
-                                    })
-                                }
+                            <div className='flex justify-between items-center flex-wrap'>
+                                <div>
+                                    {
+                                        blog.tags.map((tag, index) => {
+                                            return <span className='bg-gray-100 px-2 py-1 rounded-full' key={index} style={{ marginRight: '5px' }}>{tag}</span>
+                                        })
+                                    }
+                                </div>
+                                <div className='text-slate-500'>
+
+                                    {moment(new Date(blog.createdAt.seconds * 1000)).format(
+                                        "D MMM YYYY, h:mm a"
+                                    )}
+
+                                </div>
                             </div>
                         </div>
 

@@ -83,12 +83,12 @@ export const updateDraftedBlogItemData = async (
 ): Promise<boolean> => {
   try {
     const docRef = doc(db, 'drafted-blog-data', id);
-    if(blog.title){
-      await updateDoc(docRef, {id: blog.title+uuid.split('-')[1] ,...blog});
-    }else {
+    if (blog.title) {
+      await updateDoc(docRef, {id: blog.title + uuid.split('-')[1], ...blog});
+    } else {
       await updateDoc(docRef, {blog});
     }
-    
+
     // alert('Blog data updated successfully!');
     return true;
   } catch (error) {
@@ -180,7 +180,7 @@ export const draftBlogItemData = async (blog: BlogItem): Promise<boolean> => {
       'drafted-blog-data',
       blog.title ? blog.title + uuid.split('-')[1] : uuid.split('-')[1],
     );
-    await setDoc(docRef, {id : blog.title + uuid.split('-')[1], ...blog});
+    await setDoc(docRef, {id: blog.title + uuid.split('-')[1], ...blog});
     return true;
     // alert('Blog data draft successfully!');
   } catch (error) {
@@ -238,7 +238,10 @@ export const fetchAllBlogData = async (): Promise<ThumbnailBlogItem[]> => {
   const blogDataCollection = collection(db, 'blog-data');
 
   try {
-    const blogDataQuery = query(blogDataCollection, orderBy('createdAt', 'desc'));
+    const blogDataQuery = query(
+      blogDataCollection,
+      orderBy('createdAt', 'desc'),
+    );
     const querySnapshot = await getDocs(blogDataQuery);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -247,6 +250,7 @@ export const fetchAllBlogData = async (): Promise<ThumbnailBlogItem[]> => {
       summary: doc.data().summary,
       tags: doc.data().tags,
       slug: doc.data().slug,
+      createdAt: doc.data().createdAt,
     }));
     return blogData;
   } catch (error) {
@@ -261,7 +265,10 @@ export const fetchAllUnpublishedBlogData = async (): Promise<
   const blogDataCollection = collection(db, 'unpublished-blog-data');
 
   try {
-    const blogDataQuery = query(blogDataCollection, orderBy('createdAt', 'desc'));
+    const blogDataQuery = query(
+      blogDataCollection,
+      orderBy('createdAt', 'desc'),
+    );
     const querySnapshot = await getDocs(blogDataQuery);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -270,6 +277,7 @@ export const fetchAllUnpublishedBlogData = async (): Promise<
       summary: doc.data().summary,
       tags: doc.data().tags,
       slug: doc.data().slug,
+      createdAt: doc.data().createdAt,
     }));
     return blogData;
   } catch (error) {
@@ -284,7 +292,10 @@ export const fetchAllDraftedBlogData = async (): Promise<
   const blogDataCollection = collection(db, 'drafted-blog-data');
 
   try {
-    const blogDataQuery = query(blogDataCollection, orderBy('createdAt', 'desc'));
+    const blogDataQuery = query(
+      blogDataCollection,
+      orderBy('createdAt', 'desc'),
+    );
     const querySnapshot = await getDocs(blogDataQuery);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
@@ -293,6 +304,7 @@ export const fetchAllDraftedBlogData = async (): Promise<
       summary: doc.data().summary,
       tags: doc.data().tags,
       slug: doc.data().slug,
+      createdAt: doc.data().createdAt,
     }));
     return blogData;
   } catch (error) {
@@ -365,12 +377,16 @@ export const fetchUnpublishedBlogDataBySlug = async (slug: string) => {
   }
 };
 
-export const fetchDraftedBlogData = async (draftPara : string) => {
+export const fetchDraftedBlogData = async (draftPara: string) => {
   try {
     /* Fetch by Id part */
     if (draftPara.includes('?draft')) {
       // console.log('Fetch by Id',draftPara.split('/')[3].split('?')[0]);
-      const docRef = doc(db, 'drafted-blog-data', draftPara.split('/')[3].split('?')[0]);
+      const docRef = doc(
+        db,
+        'drafted-blog-data',
+        draftPara.split('/')[3].split('?')[0],
+      );
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
@@ -388,16 +404,17 @@ export const fetchDraftedBlogData = async (draftPara : string) => {
           imageCaption: doc.data()?.imageCaption,
           createdAt: doc.data()?.createdAt,
         };
-      }
-     else {
+      } else {
         console.log('No blog post found with the provided id.');
         return null;
       }
-    }
-     /* Fetch by Slug part */
-     else {
+    } else {
+    /* Fetch by Slug part */
       const blogDataCollection = collection(db, 'drafted-blog-data');
-      const q = query(blogDataCollection, where('slug', '==', draftPara.split('/')[3]));
+      const q = query(
+        blogDataCollection,
+        where('slug', '==', draftPara.split('/')[3]),
+      );
       const querySnapshot = await getDocs(q);
 
       if (!querySnapshot.empty) {
@@ -425,7 +442,7 @@ export const fetchDraftedBlogData = async (draftPara : string) => {
   }
 };
 
-export const deleteDraftedBlogData = async (draftPara : string) => {
+export const deleteDraftedBlogData = async (draftPara: string) => {
   const docRef = doc(db, 'drafted-blog-data', draftPara);
 
   try {
@@ -435,6 +452,5 @@ export const deleteDraftedBlogData = async (draftPara : string) => {
   } catch (error) {
     console.error('Error deleting document: ', error);
     return false;
-
   }
-}
+};

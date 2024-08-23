@@ -14,6 +14,10 @@ export interface ThumbnailBlogItem {
   summary: string;
   tags: string[];
   slug: string;
+  createdAt: {
+    seconds: number;
+    nanoseconds: number;
+  };
 }
 [];
 

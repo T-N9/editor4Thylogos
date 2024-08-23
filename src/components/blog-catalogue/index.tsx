@@ -2,10 +2,11 @@
 import React from 'react';
 import useBlogCatalogue from './useBlogCatalogue';
 import Link from 'next/link';
-import {Button} from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
+import moment from 'moment';
 
 const BlogCatalogue = () => {
-  const {pathname, fetchedBlogData} = useBlogCatalogue();
+  const { pathname, fetchedBlogData } = useBlogCatalogue();
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -68,17 +69,27 @@ const BlogCatalogue = () => {
               <h1 className="text-4xl">{blog.title}</h1>
               <p className="my-5 line-clamp-3">{blog.summary}...</p>
 
-              <div>
-                {blog.tags.map((tag, index) => {
-                  return (
-                    <span
-                      className="rounded-full bg-gray-100 px-2 py-1"
-                      key={index}
-                      style={{marginRight: '5px'}}>
-                      {tag}
-                    </span>
-                  );
-                })}
+              <div className='flex justify-between items-center flex-wrap'>
+                <div>
+                  {blog.tags.map((tag, index) => {
+                    return (
+                      <span
+                        className="rounded-full bg-gray-100 px-2 py-1"
+                        key={index}
+                        style={{ marginRight: '5px' }}>
+                        {tag}
+                      </span>
+                    );
+                  })}
+                </div>
+
+                <div className='text-slate-500'>
+
+                  {moment(new Date(blog.createdAt.seconds * 1000)).format(
+                    "D MMM YYYY, h:mm a"
+                  )}
+
+                </div>
               </div>
             </div>
           ) : (
@@ -87,17 +98,26 @@ const BlogCatalogue = () => {
                 <h1 className="text-4xl">{blog.title}</h1>
                 <p className="my-5 line-clamp-3">{blog.summary}...</p>
 
-                <div>
-                  {blog.tags.map((tag, index) => {
-                    return (
-                      <span
-                        className="rounded-full bg-gray-100 px-2 py-1"
-                        key={index}
-                        style={{marginRight: '5px'}}>
-                        {tag}
-                      </span>
-                    );
-                  })}
+                <div className='flex justify-between items-center flex-wrap'>
+                  <div>
+                    {blog.tags.map((tag, index) => {
+                      return (
+                        <span
+                          className="rounded-full bg-gray-100 px-2 py-1"
+                          key={index}
+                          style={{ marginRight: '5px' }}>
+                          {tag}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <div>
+                    <div className='text-slate-500'>
+                      {moment(new Date(blog.createdAt.seconds * 1000)).format(
+                        "D MMM YYYY, h:mm a"
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </Link>

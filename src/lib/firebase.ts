@@ -12,6 +12,7 @@ import {
   where,
   or,
   getDoc,
+  orderBy,
 } from 'firebase/firestore';
 import {v4 as uuidv4} from 'uuid';
 import {ThumbnailBlogItem} from '@/components/blog-catalogue/useBlogCatalogue';
@@ -237,7 +238,8 @@ export const fetchAllBlogData = async (): Promise<ThumbnailBlogItem[]> => {
   const blogDataCollection = collection(db, 'blog-data');
 
   try {
-    const querySnapshot = await getDocs(blogDataCollection);
+    const blogDataQuery = query(blogDataCollection, orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(blogDataQuery);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       title: doc.data().title,
@@ -259,7 +261,8 @@ export const fetchAllUnpublishedBlogData = async (): Promise<
   const blogDataCollection = collection(db, 'unpublished-blog-data');
 
   try {
-    const querySnapshot = await getDocs(blogDataCollection);
+    const blogDataQuery = query(blogDataCollection, orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(blogDataQuery);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       title: doc.data().title,
@@ -281,7 +284,8 @@ export const fetchAllDraftedBlogData = async (): Promise<
   const blogDataCollection = collection(db, 'drafted-blog-data');
 
   try {
-    const querySnapshot = await getDocs(blogDataCollection);
+    const blogDataQuery = query(blogDataCollection, orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(blogDataQuery);
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       title: doc.data().title,

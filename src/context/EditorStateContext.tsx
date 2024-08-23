@@ -7,7 +7,6 @@ import React, {
   useContext,
   useState,
   ReactNode,
-  useEffect,
 } from 'react';
 
 interface HeadingItem {
@@ -31,6 +30,7 @@ interface EditorStateContextProps {
   currentBlogData: BlogItem | null,
   fetchedBlogData: ThumbnailBlogItem[];
   fetchedUnpublishedBlogData: ThumbnailBlogItem[];
+  fetchedDraftedBlogData: ThumbnailBlogItem[];
 
   /* actions */
   setEditorState: (state: ContextEditorState) => void;
@@ -42,6 +42,7 @@ interface EditorStateContextProps {
   setCurrentBlogData: (state: BlogItem | null) => void;
   setFetchedBlogData: (state: ThumbnailBlogItem[]) => void;
   setFetchedUnpublishedBlogData: (state: ThumbnailBlogItem[]) => void;
+  setFetchedDraftedBlogData: (state: ThumbnailBlogItem[]) => void;
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(
@@ -80,6 +81,7 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
   const [currentBlogData, setCurrentBlogData] = useState<BlogItem | null>(null);
   const [fetchedBlogData, setFetchedBlogData] = useState<ThumbnailBlogItem[]>([]);
   const [fetchedUnpublishedBlogData, setFetchedUnpublishedBlogData] = useState<ThumbnailBlogItem[]>([]);
+  const [fetchedDraftedBlogData, setFetchedDraftedBlogData] = useState<ThumbnailBlogItem[]>([]);
 
   return (
     <EditorStateContext.Provider
@@ -91,8 +93,10 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
         setCurrentBlogData,
         fetchedBlogData,
         fetchedUnpublishedBlogData,
+        fetchedDraftedBlogData,
         setFetchedBlogData,
         setFetchedUnpublishedBlogData,
+        setFetchedDraftedBlogData,
 
         isContentShown,
         setEditorState,

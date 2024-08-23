@@ -9,12 +9,15 @@ import {
   deleteBlogItemData,
   draftBlogItemData,
   fetchAllBlogData,
+  fetchAllDraftedBlogData,
   fetchAllUnpublishedBlogData,
   fetchFeatureImages,
   fetchTags,
   publishBlogItemData,
+  publishDraftBlogItemData,
   unpublishedBlogItemData,
   updateBlogItemData,
+  updateDraftedBlogItemData,
   uploadBlogItemData,
   uploadImage,
   uploadImageData,
@@ -71,6 +74,7 @@ const useFromData = () => {
     currentBlogData,
     setFetchedBlogData,
     setFetchedUnpublishedBlogData,
+    setFetchedDraftedBlogData,
   } = useEditorState();
 
   const {control, handleSubmit, setValue, watch} = useForm();
@@ -90,10 +94,10 @@ const useFromData = () => {
     setLocalizedFormState,
     isUnpublishedRoute,
     isUpdateRoute,
+    isDraftedRoute,
   } = useLocalData();
   const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);
 
-  const pathname = usePathname();
   const router = useRouter();
 
   const watchAllFields = watch();
@@ -115,7 +119,12 @@ const useFromData = () => {
   };
 
   useEffect(() => {
-    if (localizedFormState && !isUpdateRoute) {
+    if (
+      localizedFormState &&
+      !isUpdateRoute &&
+      !isUnpublishedRoute &&
+      !isDraftedRoute
+    ) {
       setFormValues(localizedFormState);
     }
     handleGetAllTagsData();
@@ -124,7 +133,8 @@ const useFromData = () => {
   useEffect(() => {
     if (
       (isUpdateRoute && currentBlogData) ||
-      (isUnpublishedRoute && currentBlogData)
+      (isUnpublishedRoute && currentBlogData) ||
+      (isDraftedRoute && currentBlogData)
     ) {
       setFormValues(currentBlogData);
       setEditorState({
@@ -343,9 +353,12 @@ const useFromData = () => {
         // alert('fetching all unpublished blog data')
         const allUnpublishedBlogData = await fetchAllUnpublishedBlogData();
         setFetchedUnpublishedBlogData(allUnpublishedBlogData);
+        router.push('/manage');
+      } else if (isDraftedRoute) {
+        const allDraftedBlogData = await fetchAllDraftedBlogData();
+        setFetchedDraftedBlogData(allDraftedBlogData);
+        router.push('/manage/drafts');
       }
-
-      router.push('/manage');
     } catch (error) {
       console.error('Error fetching images:', error);
     }
@@ -360,6 +373,9 @@ const useFromData = () => {
         success = await updateBlogItemData(currentBlogData.id, data);
       } else if (isUnpublishedRoute && currentBlogData?.id) {
         success = await publishBlogItemData(currentBlogData.id, data);
+      } else if (isDraftedRoute && currentBlogData?.id) {
+        // console.log('draft upload', currentBlogData?.id);
+        success = await publishDraftBlogItemData(currentBlogData.id, data);
       } else {
         success = await uploadBlogItemData({
           ...data,
@@ -376,6 +392,28 @@ const useFromData = () => {
       }
     } else {
       alert('Please select a feature image');
+    }
+  };
+
+  const handleUpdateDraftedBlogData = async () => {
+    if (featureImage) {
+      let success = false;
+
+      if (isDraftedRoute && currentBlogData?.id) {
+        success = await updateDraftedBlogItemData(currentBlogData.id, {
+          ...watchedFormData,
+          content: JSON.stringify(contextEditorState),
+          createdAt: new Date(),
+        });
+      }
+
+      if (success) {
+        toast.success('Draft updated successfully');
+        handleFetchAllBlogData();
+        // You can redirect or perform other actions here if needed
+      } else {
+        alert('Failed to submit blog item. Please try again.');
+      }
     }
   };
 
@@ -404,18 +442,36 @@ const useFromData = () => {
       if (isSuccess) {
         handleFetchAllBlogData();
         toast.success('Article is unpublished.');
-
       }
     }
   };
 
   // Save blog item as a draft
-  const handleDraftBlogItem = () => {
-    draftBlogItemData({
-      ...watchedFormData,
-      content: JSON.stringify(contextEditorState),
-      createdAt: new Date(),
-    });
+  const handleDraftBlogItem = async () => {
+    let isSuccess = false;
+
+    try {
+      isSuccess = await draftBlogItemData({
+        title: watchedFormData.title ? watchedFormData.title : '',
+        slug: watchedFormData.slug ? watchedFormData.slug : '',
+        featureImage: watchedFormData.featureImage
+          ? watchedFormData.featureImage
+          : '',
+        tags: watchedFormData.tags ? watchedFormData.tags : [],
+        summary: watchedFormData.summary ? watchedFormData.summary : '',
+        imageCaption: watchedFormData.imageCaption
+          ? watchedFormData.imageCaption
+          : '',
+
+        content: JSON.stringify(contextEditorState),
+        createdAt: new Date(),
+      });
+
+      if (isSuccess) {
+        toast.success('Article saved as a draft.');
+        handleFetchAllBlogData();
+      }
+    } catch (error) {}
   };
 
   // Handle file drop for image upload
@@ -454,11 +510,26 @@ const useFromData = () => {
     },
   ];
 
+  const dropDownItemsForDrafts = [
+    {
+      key: 'draft',
+      label: 'Save current draft',
+      event: handleUpdateDraftedBlogData,
+    },
+    {
+      key: 'delete',
+      label: 'Delete',
+      event: handleDeleteBlogItem,
+    },
+  ];
+
   const consideredDropDownItems = () => {
     if (isUpdateRoute) {
       return dropDownItemsForUpdate;
     } else if (isUnpublishedRoute) {
       return dropDownItemsForUnpublished;
+    } else if (isDraftedRoute) {
+      return dropDownItemsForDrafts;
     } else {
       return dropDownItemsForUpload;
     }

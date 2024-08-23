@@ -42,7 +42,7 @@ import TableOfContent from '../table-of-content';
 import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
 import useLocalData from '../useLocalData';
-import { fetchBlogDataBySlug, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
+import { fetchBlogDataBySlug, fetchDraftedBlogData, fetchDraftedBlogDataBySlug, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,
@@ -80,7 +80,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
   // >('my-editor-state-key', null)
   const { currentBlogData, setCurrentBlogData } = useEditorState();
 
-  const { localizedEditorState, setLocalizedEditorState, isUpdateRoute,isUnpublishedRoute, pathname  } = useLocalData();
+  const { localizedEditorState, setLocalizedEditorState, isUpdateRoute, isUnpublishedRoute, pathname, isDraftedRoute } = useLocalData();
 
   const [isFirstRender, setIsFirstRender] = useState(true)
 
@@ -90,14 +90,14 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
     if (isFirstRender) {
       setIsFirstRender(false)
 
-      if (localizedEditorState && !isUpdateRoute && !isUnpublishedRoute) {
+      if (localizedEditorState && !isUpdateRoute && !isUnpublishedRoute && !isDraftedRoute) {
 
         console.log('Set Editor State Local upload')
         // console.log({localizedEditorState});
         const initialEditorState = editor?.parseEditorState(localizedEditorState.editorState)
         setEditorState({ editorState: localizedEditorState.editorState, contentSize: localizedEditorState.contentSize })
         editor.setEditorState(initialEditorState)
-      } else if(isUpdateRoute) {
+      } else if (isUpdateRoute) {
         const blogData = fetchBlogDataBySlug(pathname.split('/')[3]);
         blogData.then((data) => {
           // console.log({ state : JSON.parse(data?.content)});
@@ -105,8 +105,17 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
           setEditorState({ editorState: JSON.parse(data?.content).editorState, contentSize: JSON.parse(data?.content).contentSize })
           editor.setEditorState(editor?.parseEditorState(JSON.parse(data?.content).editorState))
         })
-      }else if(isUnpublishedRoute){
+      } else if (isUnpublishedRoute) {
         const blogData = fetchUnpublishedBlogDataBySlug(pathname.split('/')[3]);
+        blogData.then((data) => {
+          // console.log({ state : JSON.parse(data?.content)});
+          setCurrentBlogData(data);
+          setEditorState({ editorState: JSON.parse(data?.content).editorState, contentSize: JSON.parse(data?.content).contentSize })
+          editor.setEditorState(editor?.parseEditorState(JSON.parse(data?.content).editorState))
+        })
+      } else if (isDraftedRoute) {
+        const pathnameLocal = window.location.pathname + window.location.search; // Get both pathname and 
+        const blogData = fetchDraftedBlogData(pathnameLocal);
         blogData.then((data) => {
           // console.log({ state : JSON.parse(data?.content)});
           setCurrentBlogData(data);
@@ -121,13 +130,13 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
 
   useEffect(() => {
     return editor.registerUpdateListener(({ editorState }) => {
-      if(!isUpdateRoute){
+      if (!isUpdateRoute) {
         setLocalizedEditorState((prevState) => ({
           editorState: JSON.stringify(editorState.toJSON()),
           contentSize: prevState?.contentSize ?? 1,
         }));
       }
-      
+
       onChange(editorState, editor);
     });
   }, [editor, onChange, setLocalizedEditorState]);

@@ -8,7 +8,7 @@ const NavBar = () => {
     return (
         <>
             {
-                (pathname === '/manage' || pathname === '/manage/unpublished') &&
+                (pathname === '/manage' || pathname === '/manage/unpublished' || pathname === '/manage/drafts') &&
                 <nav className="container flex justify-end mx-auto py-2 px-4 rounded-md shadow">
                     <div className="flex gap-2">
                         <Button href='/manage/unpublished' as={Link} className="flex gap-2 justify-center items-center" color="secondary">

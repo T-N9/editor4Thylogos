@@ -8,6 +8,7 @@ const useLocalData = () => {
   const pathname = usePathname();
   const isUpdateRoute = pathname.includes('/update');
   const isUnpublishedRoute = pathname.includes('/unpublished');
+  const isDraftedRoute = pathname.includes('/drafts')
 
   const [localizedEditorState, setLocalizedEditorState] =
     useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
@@ -18,6 +19,7 @@ const useLocalData = () => {
     pathname,
     isUpdateRoute,
     isUnpublishedRoute,
+    isDraftedRoute,
 
     localizedFormState,
     localizedEditorState,

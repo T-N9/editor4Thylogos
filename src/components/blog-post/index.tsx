@@ -35,7 +35,7 @@ interface BlogPostProps {
     slug: string;
     image: string;
     imageCaption: string;
-    editorState: string; 
+    editorState: string;
     contentSize: number;
     tags: string[];
     createdAt: {
@@ -84,42 +84,61 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 relative leading-7 font-normal justify-center`}>
-                <div className=''>
-                    <div className='max-w-[845px] lg:min-w-[845px] lg:px-8 mx-auto flex flex-col gap-2'>
-                        <h1 style={{
-                            fontFamily: 'Walone'
-                        }} className='text-4xl leading-[3rem] lg:text-6xl font-bold text-slate-600 lg:leading-[6rem]'>{title}</h1>
-                        <div className='flex justify-between items-center flex-wrap'>
-                            <div className='flex flex-wrap gap-2'>
+                <div className="">
+                    <div className="max-w-[845px] lg:min-w-[845px] lg:px-8 mx-auto flex flex-col gap-4">
+                        <h1
+                            style={{ fontFamily: 'MiSans, Inter' }}
+                            className="text-4xl lg:text-6xl font-bold text-slate-800 dark:text-white leading-tight lg:leading-[5rem]"
+                        >
+                            {title}
+                        </h1>
+
+                        <div className="flex justify-between items-center flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2">
                                 {tags.map((tag) => (
-                                    <span key={tag} className='inline-block text-base text-gray-600 bg-gray-200 px-2 py-0.5 rounded-sm'>{tag}</span>
+                                    <span
+                                        key={tag}
+                                        className="inline-block text-base text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full"
+                                    >
+                                        {tag}
+                                    </span>
                                 ))}
                             </div>
 
-                            <div>
-                                <p className='text-gray-400 text-sm'>
-                                    {moment(new Date(createdAt.seconds * 1000)).format(
-                                        "D MMM YYYY, h:mm a"
-                                    )}
-                                </p>
-                            </div>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">
+                                {moment(new Date(createdAt.seconds * 1000)).format("D MMM YYYY, h:mm a")}
+                            </p>
                         </div>
 
-                        <div className='flex gap-2 items-center'>
+                        <div className="flex gap-2 items-center  dark:text-indigo-400">
                             <Link href={'/'}>
-                                <span className='text-sm'>Blog</span>
+                                <span className="text-sm ">Blog</span>
                             </Link>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                             </svg>
 
-                            <span className='text-xs text-blue-400'>{title}</span>
+                            <span className="text-xs text-indigo-600">{title}</span>
                         </div>
 
-                        <Image className='w-screen mt-2 lg:w-full lg:h-[500px] h-[200px] md:h-[500px] object-cover' src={image} width={600} height={500} alt={title} />
-                        <div className='image-caption text-xs text-gray-400 lg:text-sm' dangerouslySetInnerHTML={{ __html: imageCaption }} ></div>
+                        <Image
+                            className="w-full lg:h-[500px] h-[200px] md:h-[500px] object-cover mt-2"
+                            src={image}
+                            width={600}
+                            height={500}
+                            alt={title}
+                        />
+
+                        {imageCaption && (
+                            <div
+                                className="text-xs text-center image-caption text-gray-500 dark:text-gray-400 lg:text-sm"
+                                dangerouslySetInnerHTML={{ __html: imageCaption }}
+                            ></div>
+                        )}
                     </div>
+
+
                     <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
                 </div>
             </main>

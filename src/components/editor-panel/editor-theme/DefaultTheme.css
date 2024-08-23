@@ -79,6 +79,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 66px;
+  color : #4f46e5;
 }
 
 .PlaygroundEditorTheme__h2 {
@@ -86,6 +87,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 60px;
+  color : #4f46e5;
 }
 
 .PlaygroundEditorTheme__h3 {
@@ -93,6 +95,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 50px;
+  color : #4f46e5;
 }
 
 .PlaygroundEditorTheme__h4 {
@@ -100,6 +103,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 50px;
+  color : #4f46e5;
 }
 
 .PlaygroundEditorTheme__h5 {
@@ -107,6 +111,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 40px;
+  color : #4f46e5;
 }
 
 .PlaygroundEditorTheme__h6 {
@@ -114,6 +119,7 @@
   font-weight: 700;
   margin: 0;
   line-height: 30px;
+  color : #4f46e5;
 }
 
 /* Styles for tablets and smaller screens */

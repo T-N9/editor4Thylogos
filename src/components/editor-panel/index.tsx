@@ -120,8 +120,6 @@ const InnerEditorPanel = ({
     handleClickUseExistingImage,
     handleSelectImage,
     handleImageFileDrop,
-    handleDeleteBlogItem,
-    handleUnpublishBlogItem,
   } = useFromData();
 
   // console.log({ current:editorState });
@@ -161,7 +159,7 @@ const InnerEditorPanel = ({
                     <DropdownItem
                       key={item.key}
                       color={item.key === "delete" ? "danger" : "default"}
-                      className={item.key === "delete" ? "text-danger" : ""}
+                      className={`${item.key === "delete" ? "text-danger" : ""} ${item.key === "cancel" ? 'bg-gray-200 ' : ''}`}
                       onClick={item.event}
                     >
                       {item.label}

@@ -95,6 +95,7 @@ const useFromData = () => {
     localizedFormState,
     setLocalizedFormState,
     isUnpublishedRoute,
+    isUploadRoute,
     isUpdateRoute,
     isDraftedRoute,
   } = useLocalData();
@@ -391,7 +392,7 @@ const useFromData = () => {
       if (success) {
         toast.success('Article updated successfully');
         handleFetchAllBlogData();
-        if(isUnpublishedRoute){
+        if ( isUploadRoute || isUpdateRoute || isUnpublishedRoute) {
           router.push('/manage');
         }
         // You can redirect or perform other actions here if needed
@@ -434,6 +435,7 @@ const useFromData = () => {
       if (isSuccess) {
         toast.success('Article is deleted.');
         handleFetchAllBlogData();
+        router.push('/manage');
       }
     }
   };
@@ -475,7 +477,7 @@ const useFromData = () => {
       if (isSuccess) {
         toast.success('Article is unpublished.');
         handleFetchAllBlogData();
-        router.push('/manage/unpublished')
+        router.push('/manage/unpublished');
       }
     }
   };
@@ -504,6 +506,7 @@ const useFromData = () => {
       if (isSuccess) {
         toast.success('Article saved as a draft.');
         handleFetchAllBlogData();
+        router.push('/manage/drafts')
       }
     } catch (error) {}
   };
@@ -513,6 +516,16 @@ const useFromData = () => {
     const imageURL = URL.createObjectURL(file);
     setImagePreview(imageURL);
     setImageFile(file);
+  };
+
+  const handleClickCancel = () => {
+    if (isUnpublishedRoute) {
+      router.push('/manage/unpublished');
+    } else if (isDraftedRoute) {
+      router.push('/manage/drafts');
+    } else {
+      router.push('/manage');
+    }
   };
 
   const dropDownItemsForUpdate = [
@@ -526,6 +539,11 @@ const useFromData = () => {
       label: 'Delete',
       event: handleDeleteBlogItem,
     },
+    {
+      key: 'cancel',
+      label: 'Cancel',
+      event: handleClickCancel,
+    },
   ];
 
   const dropDownItemsForUpload = [
@@ -534,6 +552,11 @@ const useFromData = () => {
       label: 'Save as draft',
       event: handleDraftBlogItem,
     },
+    {
+      key: 'cancel',
+      label: 'Cancel',
+      event: handleClickCancel,
+    },
   ];
 
   const dropDownItemsForUnpublished = [
@@ -541,6 +564,11 @@ const useFromData = () => {
       key: 'delete',
       label: 'Delete',
       event: handleDeleteUnpublishedBlogItem,
+    },
+    {
+      key: 'cancel',
+      label: 'Cancel',
+      event: handleClickCancel,
     },
   ];
 
@@ -554,6 +582,11 @@ const useFromData = () => {
       key: 'delete',
       label: 'Delete',
       event: handleDeleteDraftBlogItem,
+    },
+    {
+      key: 'cancel',
+      label: 'Cancel',
+      event: handleClickCancel,
     },
   ];
 

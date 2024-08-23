@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 const useLocalData = () => {
 
   const pathname = usePathname();
+  const isUploadRoute = pathname === '/manage/upload';
   const isUpdateRoute = pathname.includes('/update');
   const isUnpublishedRoute = pathname.includes('/unpublished');
   const isDraftedRoute = pathname.includes('/drafts')
@@ -17,6 +18,7 @@ const useLocalData = () => {
 
   return {
     pathname,
+    isUploadRoute,
     isUpdateRoute,
     isUnpublishedRoute,
     isDraftedRoute,

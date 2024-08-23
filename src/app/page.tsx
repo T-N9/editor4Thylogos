@@ -1,12 +1,13 @@
-import Link from "next/link";
-import BlogPage from "./blog/page";
 
-import { Button } from "@nextui-org/react";
+import BlogCatalogue from "@/components/blog-catalogue";
 
 export default function Home() {
   return (
-    <main className="h-screen w-full ">
-      <BlogPage />
-    </main>
+    <section className='text-black'>
+      <div className='max-w-[1350px] mx-auto my-5 mb-10'>
+        <h1 className='text-2xl font-bold text-blue-500 mb-3'>TeNyain's articles</h1>
+        <BlogCatalogue />
+      </div>
+    </section>
   );
 }

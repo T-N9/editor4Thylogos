@@ -98,7 +98,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
         setEditorState({ editorState: localizedEditorState.editorState, contentSize: localizedEditorState.contentSize })
         editor.setEditorState(initialEditorState)
       } else if(isUpdateRoute) {
-        const blogData = fetchBlogDataBySlug(pathname.split('/')[2]);
+        const blogData = fetchBlogDataBySlug(pathname.split('/')[3]);
         blogData.then((data) => {
           // console.log({ state : JSON.parse(data?.content)});
           setCurrentBlogData(data);

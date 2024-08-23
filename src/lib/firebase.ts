@@ -174,6 +174,26 @@ export const fetchAllBlogData = async () :Promise<ThumbnailBlogItem[]> => {
   }
 };
 
+export const fetchAllUnpublishedBlogData = async () :Promise<ThumbnailBlogItem[]> => {
+  const blogDataCollection = collection(db, 'unpublished-blog-data');
+
+  try {
+    const querySnapshot = await getDocs(blogDataCollection);
+    const blogData = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      title : doc.data().title,
+      image: doc.data().featureImage,
+      summary: doc.data().summary,
+      tags: doc.data().tags,
+      slug: doc.data().slug,
+    }));
+    return blogData;
+  } catch (error) {
+    console.error('Error fetching blog data:', error);
+    return [];
+  }
+};
+
 export const fetchBlogDataBySlug = async (slug: string) => {
   try {
     const blogDataCollection = collection(db, 'blog-data');

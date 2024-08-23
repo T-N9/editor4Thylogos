@@ -30,6 +30,7 @@ interface EditorStateContextProps {
   currentBgColor: string;
   currentBlogData: BlogItem | null,
   fetchedBlogData: ThumbnailBlogItem[];
+  fetchedUnpublishedBlogData: ThumbnailBlogItem[];
 
   /* actions */
   setEditorState: (state: ContextEditorState) => void;
@@ -40,6 +41,7 @@ interface EditorStateContextProps {
   setCurrentBgColor: (state: string) => void;
   setCurrentBlogData: (state: BlogItem | null) => void;
   setFetchedBlogData: (state: ThumbnailBlogItem[]) => void;
+  setFetchedUnpublishedBlogData: (state: ThumbnailBlogItem[]) => void;
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(
@@ -77,6 +79,7 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
   const [currentBgColor, setCurrentBgColor] = useState<string>('');
   const [currentBlogData, setCurrentBlogData] = useState<BlogItem | null>(null);
   const [fetchedBlogData, setFetchedBlogData] = useState<ThumbnailBlogItem[]>([]);
+  const [fetchedUnpublishedBlogData, setFetchedUnpublishedBlogData] = useState<ThumbnailBlogItem[]>([]);
 
   return (
     <EditorStateContext.Provider
@@ -87,7 +90,9 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
         currentBlogData,
         setCurrentBlogData,
         fetchedBlogData,
+        fetchedUnpublishedBlogData,
         setFetchedBlogData,
+        setFetchedUnpublishedBlogData,
 
         isContentShown,
         setEditorState,

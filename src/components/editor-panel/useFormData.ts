@@ -328,7 +328,7 @@ const useFromData = () => {
     try {
       const allBlogData = await fetchAllBlogData();
       setFetchedBlogData(allBlogData);
-      router.push('/');
+      router.push('/manage');
     } catch (error) {
       console.error('Error fetching images:', error);
     }

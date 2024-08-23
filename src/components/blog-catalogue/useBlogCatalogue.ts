@@ -1,6 +1,7 @@
-import {fetchAllBlogData} from '@/lib/firebase';
+import {fetchAllBlogData, fetchAllUnpublishedBlogData} from '@/lib/firebase';
 import {useEffect} from 'react';
 import {useEditorState} from '@/context/EditorStateContext';
+import useLocalData from '../editor-panel/useLocalData';
 
 export interface ThumbnailBlogItem {
   id: string;
@@ -13,10 +14,21 @@ export interface ThumbnailBlogItem {
 [];
 
 const useBlogCatalogue = () => {
-  const {fetchedBlogData, setFetchedBlogData} = useEditorState();
+  const {
+    fetchedBlogData,
+    fetchedUnpublishedBlogData,
+    setFetchedBlogData,
+    setFetchedUnpublishedBlogData,
+  } = useEditorState();
+  const {pathname} = useLocalData();
 
   useEffect(() => {
-    fetchedBlogData.length === 0 && handleFetchAllBlogData();
+    if(pathname === '/manage' || pathname === '/'){
+      fetchedBlogData.length === 0 && handleFetchAllBlogData();
+    }else if(pathname.includes('/unpublished')){
+      fetchedUnpublishedBlogData.length === 0 && handleFetchAllUnpublishedBlogData();
+    }
+    
   }, []);
 
   const handleFetchAllBlogData = async () => {
@@ -29,8 +41,20 @@ const useBlogCatalogue = () => {
     }
   };
 
+  const handleFetchAllUnpublishedBlogData = async () => {
+    console.log('Fetching all unpublished blog data');
+    try {
+      const allBlogData = await fetchAllUnpublishedBlogData();
+      setFetchedUnpublishedBlogData(allBlogData);
+    } catch (error) {
+      console.error('Error fetching images:', error);
+    }
+  };
+
   return {
+    pathname,
     fetchedBlogData,
+    fetchedUnpublishedBlogData,
   };
 };
 

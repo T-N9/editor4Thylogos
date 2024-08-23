@@ -7,6 +7,8 @@ import {useForm} from 'react-hook-form';
 import {debounce, isEqual} from 'lodash-es';
 import {
   deleteBlogItemData,
+  deleteDraftedBlogData,
+  deleteUnpublishedBlogItemData,
   draftBlogItemData,
   fetchAllBlogData,
   fetchAllDraftedBlogData,
@@ -353,7 +355,7 @@ const useFromData = () => {
         // alert('fetching all unpublished blog data')
         const allUnpublishedBlogData = await fetchAllUnpublishedBlogData();
         setFetchedUnpublishedBlogData(allUnpublishedBlogData);
-        router.push('/manage');
+        // router.push('/manage');
       } else if (isDraftedRoute) {
         const allDraftedBlogData = await fetchAllDraftedBlogData();
         setFetchedDraftedBlogData(allDraftedBlogData);
@@ -375,7 +377,10 @@ const useFromData = () => {
         success = await publishBlogItemData(currentBlogData.id, data);
       } else if (isDraftedRoute && currentBlogData?.id) {
         // console.log('draft upload', currentBlogData?.id);
-        success = await publishDraftBlogItemData(currentBlogData.id, data);
+        success = await publishDraftBlogItemData(currentBlogData.id, {
+          ...data,
+          createdAt: serverTimestamp(),
+        });
       } else {
         success = await uploadBlogItemData({
           ...data,
@@ -386,6 +391,9 @@ const useFromData = () => {
       if (success) {
         toast.success('Article updated successfully');
         handleFetchAllBlogData();
+        if(isUnpublishedRoute){
+          router.push('/manage');
+        }
         // You can redirect or perform other actions here if needed
       } else {
         alert('Failed to submit blog item. Please try again.');
@@ -430,6 +438,31 @@ const useFromData = () => {
     }
   };
 
+  const handleDeleteUnpublishedBlogItem = async () => {
+    if (currentBlogData?.id) {
+      let isSuccess = false;
+      isSuccess = await deleteUnpublishedBlogItemData(currentBlogData.id);
+
+      if (isSuccess) {
+        toast.success('Unpublished article is deleted.');
+        handleFetchAllBlogData();
+        router.push('/manage/unpublished');
+      }
+    }
+  };
+
+  const handleDeleteDraftBlogItem = async () => {
+    if (currentBlogData?.id) {
+      let isSuccess = false;
+      isSuccess = await deleteDraftedBlogData(currentBlogData.id);
+
+      if (isSuccess) {
+        toast.success('Draft is deleted.');
+        handleFetchAllBlogData();
+      }
+    }
+  };
+
   // Unpublish a blog item
   const handleUnpublishBlogItem = async () => {
     let isSuccess = false;
@@ -440,8 +473,9 @@ const useFromData = () => {
       });
 
       if (isSuccess) {
-        handleFetchAllBlogData();
         toast.success('Article is unpublished.');
+        handleFetchAllBlogData();
+        router.push('/manage/unpublished')
       }
     }
   };
@@ -506,7 +540,7 @@ const useFromData = () => {
     {
       key: 'delete',
       label: 'Delete',
-      event: handleDeleteBlogItem,
+      event: handleDeleteUnpublishedBlogItem,
     },
   ];
 
@@ -519,7 +553,7 @@ const useFromData = () => {
     {
       key: 'delete',
       label: 'Delete',
-      event: handleDeleteBlogItem,
+      event: handleDeleteDraftBlogItem,
     },
   ];
 

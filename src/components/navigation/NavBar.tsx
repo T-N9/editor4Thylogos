@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
 import useLocalData from "../editor-panel/useLocalData";
+import LogoutButton from "./LogOutButton";
 
 const NavBar = () => {
     const { pathname } = useLocalData();
@@ -9,7 +10,10 @@ const NavBar = () => {
         <>
             {
                 (pathname === '/manage' || pathname === '/manage/unpublished' || pathname === '/manage/drafts') &&
-                <nav className="container flex justify-end mx-auto py-2 px-4 rounded-md shadow">
+                <nav className="container flex justify-between mx-auto py-2 px-4 rounded-md shadow">
+                    <div>
+
+                    </div>
                     <div className="flex gap-2">
                         <Button href='/manage/unpublished' as={Link} className="flex gap-2 justify-center items-center" color="secondary">
                             Unpublished
@@ -34,6 +38,9 @@ const NavBar = () => {
 
                         </Button>
 
+                    </div>
+                    <div>
+                        <LogoutButton />
                     </div>
                 </nav>
             }

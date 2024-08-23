@@ -12,7 +12,7 @@ export default function LogoutButton() {
     try {
       await signOut(auth);
       Cookies.remove('authToken');
-      router.push('/log-in'); // Redirect to login page after logging out
+      router.push('/log-in');
     } catch (error) {
       console.error("Error logging out:", error);
     }

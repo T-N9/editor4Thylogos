@@ -42,7 +42,7 @@ import TableOfContent from '../table-of-content';
 import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
 import useLocalData from '../useLocalData';
-import { fetchBlogDataBySlug } from '@/lib/firebase';
+import { fetchBlogDataBySlug, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,
@@ -80,7 +80,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
   // >('my-editor-state-key', null)
   const { currentBlogData, setCurrentBlogData } = useEditorState();
 
-  const { localizedEditorState, setLocalizedEditorState, isUpdateRoute, pathname  } = useLocalData();
+  const { localizedEditorState, setLocalizedEditorState, isUpdateRoute,isUnpublishedRoute, pathname  } = useLocalData();
 
   const [isFirstRender, setIsFirstRender] = useState(true)
 
@@ -90,7 +90,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
     if (isFirstRender) {
       setIsFirstRender(false)
 
-      if (localizedEditorState && !isUpdateRoute) {
+      if (localizedEditorState && !isUpdateRoute && !isUnpublishedRoute) {
 
         console.log('Set Editor State Local upload')
         // console.log({localizedEditorState});
@@ -99,6 +99,14 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
         editor.setEditorState(initialEditorState)
       } else if(isUpdateRoute) {
         const blogData = fetchBlogDataBySlug(pathname.split('/')[3]);
+        blogData.then((data) => {
+          // console.log({ state : JSON.parse(data?.content)});
+          setCurrentBlogData(data);
+          setEditorState({ editorState: JSON.parse(data?.content).editorState, contentSize: JSON.parse(data?.content).contentSize })
+          editor.setEditorState(editor?.parseEditorState(JSON.parse(data?.content).editorState))
+        })
+      }else if(isUnpublishedRoute){
+        const blogData = fetchUnpublishedBlogDataBySlug(pathname.split('/')[3]);
         blogData.then((data) => {
           // console.log({ state : JSON.parse(data?.content)});
           setCurrentBlogData(data);

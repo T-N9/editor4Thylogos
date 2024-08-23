@@ -9,8 +9,10 @@ import {
   deleteBlogItemData,
   draftBlogItemData,
   fetchAllBlogData,
+  fetchAllUnpublishedBlogData,
   fetchFeatureImages,
   fetchTags,
+  publishBlogItemData,
   unpublishedBlogItemData,
   updateBlogItemData,
   uploadBlogItemData,
@@ -19,7 +21,7 @@ import {
 } from '@/lib/firebase';
 import {serverTimestamp} from 'firebase/firestore';
 import useLocalData from './useLocalData';
-import { toast } from 'sonner'
+import {toast} from 'sonner';
 
 export interface LocalFormState {
   title: string;
@@ -67,7 +69,8 @@ const useFromData = () => {
     setEditorState,
     setIsPreviewMode,
     currentBlogData,
-    setFetchedBlogData
+    setFetchedBlogData,
+    setFetchedUnpublishedBlogData,
   } = useEditorState();
 
   const {control, handleSubmit, setValue, watch} = useForm();
@@ -82,12 +85,16 @@ const useFromData = () => {
   >([]);
   const [isUseExistingImage, setIsUseExistingImage] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const {localizedFormState, setLocalizedFormState} = useLocalData();
+  const {
+    localizedFormState,
+    setLocalizedFormState,
+    isUnpublishedRoute,
+    isUpdateRoute,
+  } = useLocalData();
   const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);
 
   const pathname = usePathname();
   const router = useRouter();
-  const isUpdateRoute = pathname.includes('/update');
 
   const watchAllFields = watch();
   const title = watch('title');
@@ -115,7 +122,10 @@ const useFromData = () => {
   }, []);
 
   useEffect(() => {
-    if (isUpdateRoute && currentBlogData) {
+    if (
+      (isUpdateRoute && currentBlogData) ||
+      (isUnpublishedRoute && currentBlogData)
+    ) {
       setFormValues(currentBlogData);
       setEditorState({
         editorState: JSON.parse(currentBlogData.content).editorState,
@@ -328,6 +338,13 @@ const useFromData = () => {
     try {
       const allBlogData = await fetchAllBlogData();
       setFetchedBlogData(allBlogData);
+
+      if (isUnpublishedRoute || isUpdateRoute) {
+        // alert('fetching all unpublished blog data')
+        const allUnpublishedBlogData = await fetchAllUnpublishedBlogData();
+        setFetchedUnpublishedBlogData(allUnpublishedBlogData);
+      }
+
       router.push('/manage');
     } catch (error) {
       console.error('Error fetching images:', error);
@@ -338,16 +355,21 @@ const useFromData = () => {
   const onSubmit = async (data: any) => {
     if (featureImage) {
       let success = false;
-  
+
       if (isUpdateRoute && currentBlogData?.id) {
         success = await updateBlogItemData(currentBlogData.id, data);
+      } else if (isUnpublishedRoute && currentBlogData?.id) {
+        success = await publishBlogItemData(currentBlogData.id, data);
       } else {
-        success = await uploadBlogItemData({ ...data, createdAt: serverTimestamp() });
+        success = await uploadBlogItemData({
+          ...data,
+          createdAt: serverTimestamp(),
+        });
       }
-  
+
       if (success) {
         toast.success('Article updated successfully');
-        handleFetchAllBlogData()
+        handleFetchAllBlogData();
         // You can redirect or perform other actions here if needed
       } else {
         alert('Failed to submit blog item. Please try again.');
@@ -358,7 +380,7 @@ const useFromData = () => {
   };
 
   // Delete a blog item
-  const handleDeleteBlogItem = async() => {
+  const handleDeleteBlogItem = async () => {
     if (currentBlogData?.id) {
       let isSuccess = false;
       isSuccess = await deleteBlogItemData(currentBlogData.id);
@@ -371,9 +393,19 @@ const useFromData = () => {
   };
 
   // Unpublish a blog item
-  const handleUnpublishBlogItem = () => {
+  const handleUnpublishBlogItem = async () => {
+    let isSuccess = false;
     if (currentBlogData?.id) {
-      unpublishedBlogItemData(currentBlogData.id, currentBlogData);
+      isSuccess = await unpublishedBlogItemData(currentBlogData.id, {
+        ...currentBlogData,
+        createdAt: new Date(),
+      });
+
+      if (isSuccess) {
+        handleFetchAllBlogData();
+        toast.success('Article is unpublished.');
+
+      }
     }
   };
 
@@ -393,6 +425,45 @@ const useFromData = () => {
     setImageFile(file);
   };
 
+  const dropDownItemsForUpdate = [
+    {
+      key: 'unpublish',
+      label: 'Unpublish',
+      event: handleUnpublishBlogItem,
+    },
+    {
+      key: 'delete',
+      label: 'Delete',
+      event: handleDeleteBlogItem,
+    },
+  ];
+
+  const dropDownItemsForUpload = [
+    {
+      key: 'draft',
+      label: 'Save as draft',
+      event: handleDraftBlogItem,
+    },
+  ];
+
+  const dropDownItemsForUnpublished = [
+    {
+      key: 'delete',
+      label: 'Delete',
+      event: handleDeleteBlogItem,
+    },
+  ];
+
+  const consideredDropDownItems = () => {
+    if (isUpdateRoute) {
+      return dropDownItemsForUpdate;
+    } else if (isUnpublishedRoute) {
+      return dropDownItemsForUnpublished;
+    } else {
+      return dropDownItemsForUpload;
+    }
+  };
+
   return {
     control,
     isPreviewMode,
@@ -407,6 +478,8 @@ const useFromData = () => {
     isBlogDataUpdated,
     featureImage,
     imageUrls,
+
+    consideredDropDownItems,
 
     setValue,
     setImagePreview,

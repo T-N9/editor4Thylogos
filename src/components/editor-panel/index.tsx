@@ -100,6 +100,8 @@ const InnerEditorPanel = ({
     featureImage,
     imageUrls,
 
+    consideredDropDownItems,
+
     setImagePreview,
     setIsPreviewMode,
     setEditorState,
@@ -123,26 +125,7 @@ const InnerEditorPanel = ({
   } = useFromData();
 
   // console.log({ current:editorState });
-  const dropDownItemsForUpdate = [
-    {
-      key: "unpublish",
-      label: "Unpublish",
-      event: handleUnpublishBlogItem
-    },
-    {
-      key: "delete",
-      label: "Delete",
-      event: handleDeleteBlogItem
-    }
-  ];
-
-  const dropDownItemsForUpload = [
-    {
-      key: "draft",
-      label: "Save as draft",
-      event: handleDraftBlogItem
-    },
-  ];
+  
 
   return (
     <ToolbarProvider editor={editor}>
@@ -173,7 +156,7 @@ const InnerEditorPanel = ({
 
                   </Button>
                 </DropdownTrigger>
-                <DropdownMenu aria-label="Dynamic Actions" items={isUpdateRoute ? dropDownItemsForUpdate : dropDownItemsForUpload}>
+                <DropdownMenu aria-label="Dynamic Actions" items={consideredDropDownItems()}>
                   {(item) => (
                     <DropdownItem
                       key={item.key}

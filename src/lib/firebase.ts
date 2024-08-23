@@ -84,14 +84,41 @@ export const deleteBlogItemData = async (id: string):Promise<boolean> => {
   }
 };
 
-export const unpublishedBlogItemData = async (id: string, blog: BlogItem) => {
+export const deleteUnpublishedBlogItemData = async (id: string):Promise<boolean> => {
+  const docRef = doc(db, 'unpublished-blog-data', id);
+
+  try {
+    await deleteDoc(docRef);
+    // alert('Document successfully deleted!');
+    return true;
+  } catch (error) {
+    return false;
+    console.error('Error deleting document: ', error);
+  }
+};
+
+export const unpublishedBlogItemData = async (id: string, blog: BlogItem):Promise<boolean> => {
   try {
     const docRef = doc(db, 'unpublished-blog-data', id);
     await deleteBlogItemData(id);
     await setDoc(docRef, blog);
-    alert('Blog data unpublish successfully!');
+    // alert('Blog data unpublish successfully!');
+    return true
   } catch (error) {
     console.error('Error storing blog data:', error);
+    return false;
+  }
+};
+
+export const publishBlogItemData = async (id: string, blog: BlogItem):Promise<boolean> => {
+  try {
+    await deleteUnpublishedBlogItemData(id);
+    await uploadBlogItemData(blog);
+    // alert('Blog data status changed to Public successfully!');
+    return true
+  } catch (error) {
+    console.error('Error storing blog data:', error);
+    return false
   }
 };
 
@@ -103,7 +130,7 @@ export const draftBlogItemData = async (blog: BlogItem) => {
       blog.title + uuid.split('-')[1],
     );
     await setDoc(docRef, blog);
-    alert('Blog data draft successfully!');
+    // alert('Blog data draft successfully!');
   } catch (error) {
     console.error('Error storing blog data:', error);
   }
@@ -197,6 +224,38 @@ export const fetchAllUnpublishedBlogData = async () :Promise<ThumbnailBlogItem[]
 export const fetchBlogDataBySlug = async (slug: string) => {
   try {
     const blogDataCollection = collection(db, 'blog-data');
+    const q = query(blogDataCollection, where('slug', '==', slug));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const doc = querySnapshot.docs[0];
+
+      // console.log({fetchedId: doc.id});
+      return {
+        id: doc.id,
+        title: doc.data().title,
+        image: doc.data().featureImage,
+        summary: doc.data().summary,
+        tags: doc.data().tags,
+        slug: doc.data().slug,
+        content: doc.data().content,
+        featureImage: doc.data().featureImage,
+        imageCaption: doc.data().imageCaption,
+        createdAt: doc.data().createdAt,
+      };
+    } else {
+      console.log('No blog post found with the provided slug.');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching blog data by slug:', error);
+    return null;
+  }
+};
+
+export const fetchUnpublishedBlogDataBySlug = async (slug: string) => {
+  try {
+    const blogDataCollection = collection(db, 'unpublished-blog-data');
     const q = query(blogDataCollection, where('slug', '==', slug));
     const querySnapshot = await getDocs(q);
 

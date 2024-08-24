@@ -85,7 +85,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 relative leading-7 font-normal justify-center`}>
                 <div className="">
-                    <div className="max-w-[845px] lg:min-w-[1350px] lg:px-8 mx-auto flex flex-col lg:flex-row gap-4">
+                    <div className="max-w-[845px] lg:min-w-[850px] lg:px-8 mx-auto flex flex-col gap-4">
                         <div className='flex-1 flex flex-col gap-4'>
                             <h1
                                 style={{ fontFamily: 'MiSans, Inter' }}
@@ -124,7 +124,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                             </div>
                         </div>
 
-                        <div className='flex-1 flex flex-col gap-4'>
+                        <div className='flex-1 hidden flex-col gap-4'>
                             <Image
                                 className="w-full lg:h-[400px] shadow-md h-[200px] md:h-[500px] object-cover mt-2"
                                 src={image}

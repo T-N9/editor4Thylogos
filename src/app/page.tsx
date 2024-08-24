@@ -11,7 +11,7 @@ export default function Home() {
           <div className="container mx-auto text-center">
             <Image src={'/images/Logo.png'} width={100} height={100} className="rounded-full border-4 mb-4 border-indigo-600 mx-auto" alt="TN Notes Logo" />
             <h1 className="text-4xl md:text-6xl font-bold mb-4 text-indigo-950">
-              Welcome to <span style={{ fontFamily : 'Indie Flower'}} className="text-indigo-600 font-bold text-7xl">TN Notes</span>
+              Welcome to <br className="block lg:hidden"/><span style={{ fontFamily : 'Indie Flower'}} className="text-indigo-600 font-bold text-5xl lg:text-7xl">TN Notes</span>
             </h1>
             <p className="text-lg md:text-xl mb-8">
               A tiny space of <a className="text-indigo-600 underline" href="https://www.tenyain.com/" target="_blank" rel="noreferrer">mine</a>  for capturing ideas and thoughts.

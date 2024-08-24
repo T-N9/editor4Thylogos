@@ -7,6 +7,7 @@ import "../style/editor-theme.css"
 import { EditorStateProvider } from "../context/EditorStateContext";
 import { NextUIProvider } from "@nextui-org/react";
 import NavBar from "@/components/navigation/NavBar";
+import Footer from "@/components/footer/Footer";
 
 export const metadata: Metadata = {
   title: "TN Lexical Editor",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <NextUIProvider>
           <EditorStateProvider>
             {children}
+            <Footer/>
           </EditorStateProvider>
         </NextUIProvider>
       </body>

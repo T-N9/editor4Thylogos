@@ -9,7 +9,7 @@ const BlogCatalogue = () => {
   const { pathname, fetchedBlogData } = useBlogCatalogue();
 
   return (
-    <div className='lg:max-w-[800px] mx-auto'>
+    <div className='lg:max-w-[800px] mx-auto min-h-screen'>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
         {fetchedBlogData?.map((blog, index) => (
           <div key={index} className="relative rounded-lg border border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">

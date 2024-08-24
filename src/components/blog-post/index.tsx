@@ -31,10 +31,10 @@ import { FigmaNode } from '../editor-panel/nodes/figma-node';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
-const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
-    ssr: false, 
-    loading: () => <p>Loading...</p>,
-});
+// const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
+//     ssr: false, 
+//     loading: () => <p className='text-center text-indigo-600'>Loading...</p>,
+// });
 
 interface BlogPostProps {
     title: string;
@@ -156,9 +156,9 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         <span className='w-2 h-2 absolute bottom-0 rounded-full bg-indigo-400'></span>
                     </div>
 
-                    <div className='-mt-5 min-h-screen'>
+                    {/* <div className='-mt-5 min-h-screen'>
                         <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
-                    </div>
+                    </div> */}
 
                     <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>
                         <span className='w-[1px] absolute -top-8 h-8 bg-indigo-400'>

@@ -38,7 +38,7 @@ function isHeadingAboveViewport(element: HTMLElement): boolean {
     return elementYPosition < MARGIN_ABOVE_EDITOR;
 }
 function isHeadingBelowTheTopOfThePage(element: HTMLElement): boolean {
-    const elementYPosition = element?.getClientRects()[0].y;
+    const elementYPosition = element?.getClientRects()[0]?.y;
     return elementYPosition >= MARGIN_ABOVE_EDITOR + HEADING_WIDTH;
 }
 

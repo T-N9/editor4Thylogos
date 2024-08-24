@@ -28,7 +28,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
   }, []);
 
   return (
-    <main className="inline-block w-full previewing">
+    <article className="inline-block w-full previewing">
       <section className="">
         <div
           className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
@@ -48,7 +48,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
         </div>
 
       </section>
-    </main>
+    </article>
   );
 };
 

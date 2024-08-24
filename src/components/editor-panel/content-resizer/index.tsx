@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use'
 import { LocalEditorState } from '../text-editor/TextEditor'
 import { initialData, useEditorState } from '@/context/EditorStateContext'
-// import useLocalData from '../useLocalData';
-import { LocalFormState } from '../useFormData';
 
 export const contentSizers = [
     { size: '625', text: 'X-small', icon: 'icon icon-cube-sm' },

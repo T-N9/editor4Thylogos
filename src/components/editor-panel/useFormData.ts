@@ -25,7 +25,6 @@ import {
   uploadImageData,
 } from '@/lib/firebase';
 import {serverTimestamp} from 'firebase/firestore';
-import useLocalData from './useLocalData';
 import {toast} from 'sonner';
 import { useLocalStorage } from 'react-use';
 import { LocalEditorState } from './text-editor/TextEditor';
@@ -99,13 +98,7 @@ const useFromData = () => {
   const isUpdateRoute = pathname.includes('/update');
   const isUnpublishedRoute = pathname.includes('/unpublished');
   const isDraftedRoute = pathname.includes('/drafts');
-
-  // const {
-  //   localizedFormState,
-  //   setLocalizedFormState,
-  // } = useLocalData();
-  const [localizedEditorState, setLocalizedEditorState] =
-  useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
+  
 const [localizedFormState, setLocalizedFormState] =
   useLocalStorage<LocalFormState | null>('my-form-state-key', null);
   const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);

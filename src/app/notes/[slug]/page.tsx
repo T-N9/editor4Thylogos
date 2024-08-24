@@ -32,6 +32,11 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 const BlogPostPage = async({ params }: { params: { slug: string } }) => {
     // const post = blogData.find((post) => post.slug === params.slug)
     const blogData = await fetchBlogDataBySlug(params.slug);
+    const createdAt = {
+        seconds: blogData?.createdAt.seconds,
+        nanoseconds: blogData?.createdAt.nanoseconds,
+        date: new Date(blogData?.createdAt.seconds * 1000).toISOString() // Convert to ISO string
+    };
     const blogContentBody = JSON.parse(blogData?.content).editorState;
     const blogContentSize = JSON.parse(blogData?.content).contentSize;
     if (!blogData) {
@@ -42,7 +47,7 @@ const BlogPostPage = async({ params }: { params: { slug: string } }) => {
             blogData &&
             <BlogPost
                 contentSize={blogContentSize}
-                createdAt={blogData.createdAt}
+                createdAt={createdAt}
                 tags={blogData.tags}
                 editorState={blogContentBody}
                 image={blogData.image}

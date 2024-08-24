@@ -41,7 +41,6 @@ import TableOfContent from '../table-of-content';
 
 import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
-import useLocalData from '../useLocalData';
 import { fetchBlogDataBySlug, fetchDraftedBlogData, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
 import { usePathname } from 'next/navigation';
 

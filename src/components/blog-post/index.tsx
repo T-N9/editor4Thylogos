@@ -80,7 +80,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
         theme: ExampleTheme,
     };
 
-    console.log({ date: createdAt.seconds });
+    // console.log({ date: createdAt.seconds });
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 relative leading-7 font-normal justify-center`}>
@@ -141,13 +141,17 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                     <div className='flex justify-center relative items-center mt-2'>
                         <span className='w-[1px] h-8 bg-indigo-400'>
 
-                            
+
                         </span>
                         <span className='w-2 h-2 absolute bottom-0 rounded-full bg-indigo-400'></span>
                     </div>
 
                     <div className='-mt-5'>
-                        <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
+                        {/* {
+                            editorState &&
+                            <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
+                        } */}
+
                     </div>
                 </div>
             </main>

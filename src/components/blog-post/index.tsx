@@ -88,7 +88,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                     <div className="max-w-[845px] lg:min-w-[845px] lg:px-8 mx-auto flex flex-col gap-4">
                         <h1
                             style={{ fontFamily: 'MiSans, Inter' }}
-                            className="text-4xl lg:text-6xl font-bold text-slate-800 dark:text-white leading-tight lg:leading-[5rem]"
+                            className="text-4xl lg:text-6xl font-bold text-indigo-950 dark:text-white leading-tight lg:leading-[5rem]"
                         >
                             {title}
                         </h1>

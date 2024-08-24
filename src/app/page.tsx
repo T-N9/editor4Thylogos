@@ -1,6 +1,7 @@
 
 import BlogCatalogue from "@/components/blog-catalogue";
 import { Button } from "@nextui-org/react";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -8,8 +9,9 @@ export default function Home() {
       <div className='max-w-[1350px] mx-auto my-5 mb-10'>
         <section className="bg-gray-100 rounded-lg dark:bg-gray-900 text-gray-800 dark:text-gray-100 py-20 px-5 md:px-10">
           <div className="container mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">
-              Welcome to <span className="text-indigo-600">TN Notes</span>
+            <Image src={'/images/Logo.png'} width={100} height={100} className="rounded-full border-4 mb-4 border-indigo-600 mx-auto" alt="TN Notes Logo" />
+            <h1 className="text-4xl md:text-6xl font-bold mb-4 text-indigo-950">
+              Welcome to <span style={{ fontFamily : 'Indie Flower'}} className="text-indigo-600 font-bold text-7xl">TN Notes</span>
             </h1>
             <p className="text-lg md:text-xl mb-8">
               A tiny space of <a className="text-indigo-600 underline" href="https://www.tenyain.com/" target="_blank" rel="noreferrer">mine</a>  for capturing ideas and thoughts.

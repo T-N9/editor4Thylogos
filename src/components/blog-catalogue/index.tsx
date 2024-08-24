@@ -93,7 +93,7 @@ const BlogCatalogue = () => {
               :
               <Link href={`/notes/${blog.slug}`}>
                 <div className='group'>
-                  <h1 className="text-2xl group-hover:underline decoration-indigo-600 underline-offset-2 md:text-3xl font-bold text-gray-900 transition-all duration-300 dark:text-white">
+                  <h1 className="text-2xl group-hover:underline text-indigo-950 decoration-indigo-600 underline-offset-2 md:text-3xl font-bold transition-all duration-300 dark:text-white">
                     {blog.title}
                   </h1>
                   <p className="my-3 text-gray-700 dark:text-gray-300 line-clamp-3">

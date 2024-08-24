@@ -252,7 +252,8 @@ import { contentSizers } from '../../content-resizer';
     key,
   }: ImagePayload): ImageNode {
 
-    const localState = JSON.parse(localStorage.getItem('my-editor-state-key') || '');
+    const localStorageKey = localStorage.getItem('my-editor-state-key');
+    const localState = localStorageKey && JSON.parse(localStorageKey) || false;
 
 
     // console.log({state : parseInt(contentSizers[localState.contentSize].size)});

@@ -147,11 +147,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                     </div>
 
                     <div className='-mt-5'>
-                        {/* {
-                            editorState &&
-                            <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
-                        } */}
-
+                        <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
                     </div>
                 </div>
             </main>

@@ -8,7 +8,6 @@ import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
 import CodeHighlightPlugin from '../plugins/CodeHighlightPlugin';
 import { scrollToTop } from '@/utils/scrollToTop';
-import PreviewToolBar from '../preview-toolbar';
 
 import TableOfContent from '../table-of-content';
 import { contentSizeClass, LocalEditorState } from '../text-editor/TextEditor';
@@ -30,13 +29,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
 
   return (
     <main className="inline-block w-full previewing">
-      {
-        !isBlogMode &&
-        <PreviewToolBar />
-      }
-
       <section className="">
-
         <div
           className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
           <RichTextPlugin

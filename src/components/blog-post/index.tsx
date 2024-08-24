@@ -17,7 +17,7 @@ import {
     TableNode,
     TableRowNode,
 } from '@lexical/table';
-import TextPreview from '../editor-panel/text-preview/TextPreview';
+// import TextPreview from '../editor-panel/text-preview/TextPreview';
 
 import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
 import Image from 'next/image';
@@ -29,6 +29,12 @@ import { TweetNode } from '../editor-panel/nodes/tweet-node/TweetNode';
 import { YouTubeNode } from '../editor-panel/nodes/youtube-node/YouTubeNode';
 import { FigmaNode } from '../editor-panel/nodes/figma-node';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
+    ssr: false, 
+    loading: () => <p>Loading...</p>,
+});
 
 interface BlogPostProps {
     title: string;
@@ -124,7 +130,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                             </div>
                         </div>
 
-                        <div className='flex-1 hidden flex-col gap-4'>
+                        {/* <div className='flex-1 hidden flex-col gap-4'>
                             <Image
                                 className="w-full lg:h-[400px] shadow-md h-[200px] md:h-[500px] object-cover mt-2"
                                 src={image}
@@ -139,7 +145,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                     dangerouslySetInnerHTML={{ __html: imageCaption }}
                                 ></div>
                             )}
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>
@@ -150,7 +156,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         <span className='w-2 h-2 absolute bottom-0 rounded-full bg-indigo-400'></span>
                     </div>
 
-                    <div className='-mt-5'>
+                    <div className='-mt-5 min-h-screen'>
                         <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
                     </div>
 

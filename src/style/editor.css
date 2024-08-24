@@ -1182,6 +1182,11 @@ i.page-break,
   margin-left: 30px;
 }
 
+
+.editor-shell ul li::marker {
+  color:#4f46e5 ;
+}
+
 .editor-shell ol li {
   list-style-type: decimal;
   margin-left: 30px;

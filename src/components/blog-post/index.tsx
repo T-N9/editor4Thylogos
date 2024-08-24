@@ -32,7 +32,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
-    ssr: false, 
+    ssr: false,
     loading: () => <p className='text-center text-indigo-600'>Loading...</p>,
 });
 
@@ -86,7 +86,52 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
         theme: ExampleTheme,
     };
 
-    // console.log({ date: createdAt.seconds });
+    type LexicalNode = {
+        children?: LexicalNode[];
+        text?: string;
+        type: string;
+    };
+
+    type LexicalEditorState = {
+        root: LexicalNode;
+    };
+
+    const calculateReadTime = (editorState: string): number => {
+        try {
+            const parsedState: LexicalEditorState = JSON.parse(editorState);
+
+            const extractText = (node: LexicalNode): string => {
+                let textContent = '';
+
+                if (node.text) {
+                    textContent += node.text;
+                }
+
+                if (node.children) {
+                    for (const child of node.children) {
+                        textContent += extractText(child);
+                    }
+                }
+
+                return textContent;
+            };
+
+            const rootNode = parsedState.root;
+            const textContent = extractText(rootNode);
+
+            // Assuming average reading speed is 200 words per minute
+            const wordsPerMinute = 200;
+            const wordCount = textContent.split(/\s+/).filter(word => word).length;
+            const readTime = Math.ceil(wordCount / wordsPerMinute);
+
+            console.log({ readTime });
+            return readTime;
+        } catch (error) {
+            console.error('Error parsing editor state:', error);
+            return 0; // Default to 0 minutes if there is an error
+        }
+    };
+
     return (
         <LexicalComposer initialConfig={initialConfig}>
             <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 relative leading-7 font-normal justify-center`}>
@@ -112,9 +157,19 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                     ))}
                                 </div>
 
-                                <p className="text-gray-500 dark:text-gray-400 text-sm">
-                                    {moment(new Date(createdAt.seconds * 1000)).format("D MMM YYYY, h:mm a")}
-                                </p>
+                                <div>
+                                    <p className="text-gray-500 dark:text-gray-400 text-sm text-right">
+                                        {moment(new Date(createdAt.seconds * 1000)).format("D MMM YYYY, h:mm a")} <br />
+                                    </p>
+                                    <div className='flex gap-2 justify-end items-center'>
+                                        <span className="relative flex h-2 w-2">
+                                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                                        </span>
+                                        
+                                        <span className='text-sm text-gray-500'>{calculateReadTime(editorState)} min read</span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="flex gap-2 items-center  dark:text-indigo-400">

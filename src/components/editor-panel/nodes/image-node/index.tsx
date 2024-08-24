@@ -24,7 +24,6 @@ import type {
   import * as React from 'react';
   import {Suspense} from 'react';
 import { contentSizers } from '../../content-resizer';
-import useLocalData from '../../useLocalData';
   
   const ImageComponent = React.lazy(() => import('./ImageComponent'));
   
@@ -253,15 +252,15 @@ import useLocalData from '../../useLocalData';
     key,
   }: ImagePayload): ImageNode {
 
-    // const localState = JSON.parse(localStorage.getItem('my-editor-state-key') || '');
-    const {localizedEditorState} = useLocalData();
+    const localState = JSON.parse(localStorage.getItem('my-editor-state-key') || '');
+
 
     // console.log({state : parseInt(contentSizers[localState.contentSize].size)});
     return $applyNodeReplacement(
       new ImageNode(
         src,
         altText,
-        maxWidth = localizedEditorState ? parseInt(contentSizers[localizedEditorState.contentSize].size)-60 : 1350,
+        maxWidth = localState ? parseInt(contentSizers[localState.contentSize].size)-60 : 1350,
         width,
         height,
         showCaption,

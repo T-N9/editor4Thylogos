@@ -247,7 +247,7 @@ const InnerEditorPanel = ({
                     </div>
                   </div>
 
-                  <div className='flex gap-2 mt-1'>
+                  <div className='flex gap-2 mt-1 flex-wrap'>
                     {tagData.map((tag) => (
                       <span
                         key={tag.id}

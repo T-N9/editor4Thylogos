@@ -5,7 +5,7 @@ import {
 } from '@/lib/firebase';
 import {useEffect} from 'react';
 import {useEditorState} from '@/context/EditorStateContext';
-import useLocalData from '../editor-panel/useLocalData';
+import { usePathname } from 'next/navigation';
 
 export interface ThumbnailBlogItem {
   id: string;
@@ -31,7 +31,7 @@ const useBlogCatalogue = () => {
     setFetchedUnpublishedBlogData,
     setFetchedDraftedBlogData,
   } = useEditorState();
-  const {pathname} = useLocalData();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (pathname === '/manage' || pathname === '/') {

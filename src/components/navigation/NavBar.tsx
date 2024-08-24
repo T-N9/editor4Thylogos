@@ -1,11 +1,11 @@
 'use client'
 import Link from "next/link";
 import { Button } from "@nextui-org/react";
-import useLocalData from "../editor-panel/useLocalData";
 import LogoutButton from "./LogOutButton";
+import { usePathname } from "next/navigation";
 
 const NavBar = () => {
-    const { pathname } = useLocalData();
+    const pathname = usePathname();
     return (
         <>
             {

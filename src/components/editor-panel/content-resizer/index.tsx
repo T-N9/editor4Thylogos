@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { useLocalStorage } from 'react-use'
 import { LocalEditorState } from '../text-editor/TextEditor'
 import { initialData, useEditorState } from '@/context/EditorStateContext'
-import useLocalData from '../useLocalData';
+// import useLocalData from '../useLocalData';
+import { LocalFormState } from '../useFormData';
 
 export const contentSizers = [
     { size: '625', text: 'X-small', icon: 'icon icon-cube-sm' },
@@ -19,7 +20,8 @@ const ContentResizer = () => {
     //     LocalEditorState | null
     // >('my-editor-state-key', null);
 
-    const { localizedEditorState, setLocalizedEditorState, isUpdateRoute } = useLocalData();
+    const [localizedEditorState, setLocalizedEditorState] =
+    useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
     const { setEditorState } = useEditorState()
 
     useEffect(() => {

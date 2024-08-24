@@ -684,6 +684,15 @@
   color: #ccc;
 }
 
+.previewing .PlaygroundEditorTheme__hr {
+  user-select: none;
+  pointer-events: none;
+}
+
+.previewing .PlaygroundEditorTheme__hr.selected {
+  outline: none !important;
+}
+
 .PlaygroundEditorTheme__hr {
   padding: 2px 2px;
   border: none;
@@ -695,7 +704,7 @@
   content: '';
   display: block;
   height: 2px;
-  background-color: #ccc;
+  background-color: rgb(167, 195, 255);
   line-height: 2px;
 }
 

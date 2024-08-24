@@ -123,7 +123,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         </div>
 
                         <Image
-                            className="w-full lg:h-[500px] h-[200px] md:h-[500px] object-cover mt-2"
+                            className="w-full lg:h-[500px] h-[200px] md:h-[500px] object-contain mt-2"
                             src={image}
                             width={600}
                             height={500}

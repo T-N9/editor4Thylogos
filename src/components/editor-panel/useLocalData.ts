@@ -1,35 +1,20 @@
-import {useLocalStorage} from 'react-use';
-import {LocalEditorState} from './text-editor/TextEditor';
-import {LocalFormState} from './useFormData';
-import { usePathname } from 'next/navigation';
+// import {useLocalStorage} from 'react-use';
+// import {LocalEditorState} from './text-editor/TextEditor';
+// import {LocalFormState} from './useFormData';
 
-const useLocalData = () => {
+// const useLocalData = () => {
+//   const [localizedEditorState, setLocalizedEditorState] =
+//     useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
+//   const [localizedFormState, setLocalizedFormState] =
+//     useLocalStorage<LocalFormState | null>('my-form-state-key', null);
 
-  const pathname = usePathname();
-  const isUploadRoute = pathname === '/manage/upload';
-  const isUpdateRoute = pathname.includes('/update');
-  const isUnpublishedRoute = pathname.includes('/unpublished');
-  const isDraftedRoute = pathname.includes('/drafts')
+//   return {
+//     localizedFormState,
+//     localizedEditorState,
 
-  const [localizedEditorState, setLocalizedEditorState] =
-    useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
-  const [localizedFormState, setLocalizedFormState] =
-    useLocalStorage<LocalFormState | null>('my-form-state-key', null);
+//     setLocalizedFormState,
+//     setLocalizedEditorState,
+//   };
+// };
 
-  return {
-    pathname,
-    isUploadRoute,
-    isUpdateRoute,
-    isUnpublishedRoute,
-    isDraftedRoute,
-
-    localizedFormState,
-    localizedEditorState,
-
-    setLocalizedFormState,
-    setLocalizedEditorState,
-
-  };
-};
-
-export default useLocalData;
+// export default useLocalData;

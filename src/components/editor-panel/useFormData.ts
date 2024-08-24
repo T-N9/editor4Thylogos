@@ -27,6 +27,8 @@ import {
 import {serverTimestamp} from 'firebase/firestore';
 import useLocalData from './useLocalData';
 import {toast} from 'sonner';
+import { useLocalStorage } from 'react-use';
+import { LocalEditorState } from './text-editor/TextEditor';
 
 export interface LocalFormState {
   title: string;
@@ -91,14 +93,21 @@ const useFromData = () => {
   >([]);
   const [isUseExistingImage, setIsUseExistingImage] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
-  const {
-    localizedFormState,
-    setLocalizedFormState,
-    isUnpublishedRoute,
-    isUploadRoute,
-    isUpdateRoute,
-    isDraftedRoute,
-  } = useLocalData();
+
+  const pathname = usePathname();
+  const isUploadRoute = pathname === '/manage/upload';
+  const isUpdateRoute = pathname.includes('/update');
+  const isUnpublishedRoute = pathname.includes('/unpublished');
+  const isDraftedRoute = pathname.includes('/drafts');
+
+  // const {
+  //   localizedFormState,
+  //   setLocalizedFormState,
+  // } = useLocalData();
+  const [localizedEditorState, setLocalizedEditorState] =
+  useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
+const [localizedFormState, setLocalizedFormState] =
+  useLocalStorage<LocalFormState | null>('my-form-state-key', null);
   const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);
 
   const router = useRouter();

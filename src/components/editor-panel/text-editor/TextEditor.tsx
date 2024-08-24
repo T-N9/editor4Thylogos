@@ -43,6 +43,7 @@ import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
 import useLocalData from '../useLocalData';
 import { fetchBlogDataBySlug, fetchDraftedBlogData, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
+import { usePathname } from 'next/navigation';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,
@@ -80,7 +81,13 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
   // >('my-editor-state-key', null)
   const { currentBlogData, setCurrentBlogData } = useEditorState();
 
-  const { localizedEditorState, setLocalizedEditorState, isUpdateRoute, isUnpublishedRoute, pathname, isDraftedRoute } = useLocalData();
+  const pathname = usePathname();
+  const isUpdateRoute = pathname.includes('/update');
+  const isUnpublishedRoute = pathname.includes('/unpublished');
+  const isDraftedRoute = pathname.includes('/drafts')
+
+  const [localizedEditorState, setLocalizedEditorState] =
+  useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
 
   const [isFirstRender, setIsFirstRender] = useState(true)
 

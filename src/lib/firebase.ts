@@ -243,6 +243,38 @@ export const fetchAllBlogData = async (): Promise<ThumbnailBlogItem[]> => {
       orderBy('createdAt', 'desc'),
     );
     const querySnapshot = await getDocs(blogDataQuery);
+
+    // Filter out documents with "pinned" tag
+    const blogData = querySnapshot.docs
+      .filter(doc => !doc.data().tags.includes('Pinned'))
+      .map(doc => ({
+        id: doc.id,
+        title: doc.data().title,
+        image: doc.data().featureImage,
+        summary: doc.data().summary,
+        tags: doc.data().tags,
+        slug: doc.data().slug,
+        createdAt: doc.data().createdAt,
+      }));
+
+    return blogData;
+  } catch (error) {
+    console.error('Error fetching blog data:', error);
+    return [];
+  }
+};
+
+export const fetchAllPinnedBlogData = async (): Promise<ThumbnailBlogItem[]> => {
+  const blogDataCollection = collection(db, 'blog-data');
+
+  try {
+    // Query for documents that contain "Pined" in the "tags" array
+    const pinedQuery = query(
+      blogDataCollection,
+      where('tags', 'array-contains', 'Pinned')
+    );
+    const querySnapshot = await getDocs(pinedQuery);
+    
     const blogData = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       title: doc.data().title,
@@ -252,9 +284,10 @@ export const fetchAllBlogData = async (): Promise<ThumbnailBlogItem[]> => {
       slug: doc.data().slug,
       createdAt: doc.data().createdAt,
     }));
+
     return blogData;
   } catch (error) {
-    console.error('Error fetching blog data:', error);
+    console.error('Error fetching pined blog data:', error);
     return [];
   }
 };

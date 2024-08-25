@@ -31,6 +31,7 @@ interface EditorStateContextProps {
   fetchedBlogData: ThumbnailBlogItem[];
   fetchedUnpublishedBlogData: ThumbnailBlogItem[];
   fetchedDraftedBlogData: ThumbnailBlogItem[];
+  fetchedPinnedBlogData: ThumbnailBlogItem[];
 
   /* actions */
   setEditorState: (state: ContextEditorState) => void;
@@ -43,6 +44,7 @@ interface EditorStateContextProps {
   setFetchedBlogData: (state: ThumbnailBlogItem[]) => void;
   setFetchedUnpublishedBlogData: (state: ThumbnailBlogItem[]) => void;
   setFetchedDraftedBlogData: (state: ThumbnailBlogItem[]) => void;
+  setFetchedPinnedBlogData: (state: ThumbnailBlogItem[]) => void;
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(
@@ -80,6 +82,7 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
   const [currentBgColor, setCurrentBgColor] = useState<string>('');
   const [currentBlogData, setCurrentBlogData] = useState<BlogItem | null>(null);
   const [fetchedBlogData, setFetchedBlogData] = useState<ThumbnailBlogItem[]>([]);
+  const [fetchedPinnedBlogData, setFetchedPinnedBlogData] = useState<ThumbnailBlogItem[]>([]);
   const [fetchedUnpublishedBlogData, setFetchedUnpublishedBlogData] = useState<ThumbnailBlogItem[]>([]);
   const [fetchedDraftedBlogData, setFetchedDraftedBlogData] = useState<ThumbnailBlogItem[]>([]);
 
@@ -94,9 +97,11 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
         fetchedBlogData,
         fetchedUnpublishedBlogData,
         fetchedDraftedBlogData,
+        fetchedPinnedBlogData,
         setFetchedBlogData,
         setFetchedUnpublishedBlogData,
         setFetchedDraftedBlogData,
+        setFetchedPinnedBlogData,
 
         isContentShown,
         setEditorState,

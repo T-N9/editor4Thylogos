@@ -150,9 +150,11 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                     {tags.map((tag) => (
                                         <span
                                             key={tag}
-                                            className="inline-block text-base text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full"
+                                            className={`${tag.toLowerCase() === "pined" && 'relative'} inline-block text-base text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full`}
                                         >
                                             {tag}
+
+                                            {tag.toLowerCase() === "pined" && <span className='absolute -top-3 text-lg'>📌</span>} 
                                         </span>
                                     ))}
                                 </div>

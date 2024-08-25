@@ -96,7 +96,7 @@ const BlogCatalogue = () => {
                   <Link className='relative ' href={`/notes/${blog.slug}`}>
                     <span className='text-3xl absolute -right-2 -top-7'>📌</span>
                     <div className='group '>
-                      <h1 style={{fontFamily : 'MiSans, Inter'}} className="text-2xl group-hover:underline text-indigo-950 decoration-indigo-600 underline-offset-2 md:text-3xl font-bold transition-all duration-300 dark:text-white">
+                      <h1 style={{fontFamily : 'MiSans, Inter'}} className="text-2xl group-hover:underline text-indigo-950 decoration-indigo-600 line-clamp-2 underline-offset-2 md:text-3xl font-bold transition-all duration-300 dark:text-white">
                         {blog.title}
                       </h1>
                       <p className="my-3 text-gray-700 dark:text-gray-300 line-clamp-3">
@@ -213,7 +213,7 @@ const BlogCatalogue = () => {
                 :
                 <Link href={`/notes/${blog.slug}`}>
                   <div className='group'>
-                    <h1 style={{fontFamily : 'MiSans, Inter'}} className="text-2xl group-hover:underline text-indigo-950 decoration-indigo-600 underline-offset-2 md:text-3xl font-bold transition-all duration-300 dark:text-white">
+                    <h1 style={{fontFamily : 'MiSans, Inter'}} className="text-2xl group-hover:underline text-indigo-950 decoration-indigo-600 underline-offset-2 md:text-3xl font-bold transition-all duration-300 line-clamp-2 dark:text-white">
                       {blog.title}
                     </h1>
                     <p style={{fontFamily : 'Walone, Inter'}} className="my-3 text-gray-700 dark:text-gray-300 line-clamp-3">

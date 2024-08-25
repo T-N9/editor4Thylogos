@@ -145,12 +145,12 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                 {title}
                             </h1>
 
-                            <div className="flex justify-between items-center flex-wrap gap-2">
+                            <div className="lg:flex justify-between items-center flex-wrap gap-2">
                                 <div className="flex flex-wrap gap-2">
                                     {tags.map((tag) => (
                                         <span
                                             key={tag}
-                                            className={`${tag.toLowerCase() === "pinned" && 'relative'} inline-block text-base text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full`}
+                                            className={`${tag.toLowerCase() === "pinned" && 'relative'} inline-block text-xs lg:text-base text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full`}
                                         >
                                             {tag}
 
@@ -159,7 +159,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                     ))}
                                 </div>
 
-                                <div>
+                                <div className='mt-4 self-start flex gap-4'>
                                     <p className="text-gray-500 dark:text-gray-400 text-sm text-right">
                                         {moment(new Date(createdAt.seconds * 1000)).format("D MMM YYYY, h:mm a")} <br />
                                     </p>

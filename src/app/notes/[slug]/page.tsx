@@ -2,10 +2,8 @@ import { Metadata } from "next"
 
 import BlogPost from "@/components/blog-post"
 import { fetchBlogDataBySlug } from "@/lib/firebase"
-// import { blogData } from "@/data/blog-post"
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    // const post = blogData.find((post) => post.slug === params.slug)
     try {
         const blogData = await fetchBlogDataBySlug(params.slug);
         if (blogData) {
@@ -30,7 +28,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 const BlogPostPage = async({ params }: { params: { slug: string } }) => {
-    // const post = blogData.find((post) => post.slug === params.slug)
     const blogData = await fetchBlogDataBySlug(params.slug);
     const createdAt = {
         seconds: blogData?.createdAt.seconds,

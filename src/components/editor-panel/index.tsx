@@ -128,7 +128,7 @@ const InnerEditorPanel = ({
   return (
     <ToolbarProvider editor={editor}>
       <main
-        className={`editor-shell mx-auto mt-8 flex max-w-[1300px] justify-center rounded-sm py-8 lg:w-[1300px] 2xl:w-[1440px] 2xl:max-w-[1440px] ${isPreviewMode ? 'previewing inline-block' : 'flex'} relative flex-col justify-center gap-2 font-normal leading-7 text-gray-800`}>
+        className={`editor-shell mx-auto mt-8 flex max-w-[1300px] justify-center rounded-sm py-8 lg:w-[1300px] 2xl:w-[1440px] 2xl:max-w-[1440px] ${isPreviewMode ? 'previewing inline-block' : 'flex'} relative flex-col justify-center gap-2 font-normal leading-7 text-gray-800 dark:text-white`}>
 
         {/* <ImageUpload />
         <ImageGallery/> */}

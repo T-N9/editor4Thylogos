@@ -14,7 +14,7 @@ const BlogCatalogue = () => {
         <div className='lg:max-w-[800px] mx-auto'>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
             {fetchedPinnedBlogData?.map((blog, index) => (
-              <div key={index} className="relative rounded-lg bg-white border border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+              <div key={index} className="relative rounded-lg dark:bg-slate-900 bg-white border border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
                 {pathname.includes('/manage') && (
                   <>
                     <Button
@@ -132,7 +132,7 @@ const BlogCatalogue = () => {
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
           {fetchedBlogData?.map((blog, index) => (
-            <div key={index} className="relative rounded-lg border bg-white border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+            <div key={index} className="relative rounded-lg dark:bg-gray-800 border bg-white border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
               {pathname.includes('/manage') && (
                 <>
                   <Button

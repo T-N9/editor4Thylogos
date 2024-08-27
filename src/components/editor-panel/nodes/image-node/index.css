@@ -82,4 +82,8 @@
   .image-caption li {
     margin-bottom: 0.5em; /* List item margin */
   }
+
+  .dark .image-caption {
+    color: white;
+  }
   

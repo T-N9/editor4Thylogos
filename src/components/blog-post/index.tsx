@@ -140,7 +140,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         <div className='flex-1 flex flex-col gap-4'>
                             <h1
                                 style={{ fontFamily: 'MiSans, Inter' }}
-                                className="text-4xl lg:text-6xl font-bold text-indigo-950 dark:text-white leading-tight lg:leading-[5rem]"
+                                className="text-4xl lg:text-6xl font-bold text-indigo-950 dark:text-gray-200 leading-tight lg:leading-[5rem]"
                             >
                                 {title}
                             </h1>
@@ -174,7 +174,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                 </div>
                             </div>
 
-                            <div className="flex gap-2 items-center  dark:text-indigo-400">
+                            <div className="flex gap-2 items-center  dark:text-gray-400">
                                 <Link href={'/'}>
                                     <span className="text-sm ">Blog</span>
                                 </Link>

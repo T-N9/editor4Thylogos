@@ -35,7 +35,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
           <RichTextPlugin
             contentEditable={
               <div className="editor-scroller">
-                <div className="editor">
+                <div className="editor filtered-content">
                   <ContentEditable readOnly className="contentEditable" />
                 </div>
               </div>

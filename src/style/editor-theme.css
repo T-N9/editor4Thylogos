@@ -55,10 +55,10 @@ div[readonly] .PlaygroundEditorTheme__layoutItem {
   text-decoration: underline;
 }
 
-.serena .main-content{
+.serena .filtered-content{
   filter: sepia(1);
 }
 
-.monochrome .main-content{
+.monochrome .filtered-content{
   filter: grayscale(1);
 }

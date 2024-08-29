@@ -242,6 +242,11 @@
   font-size: 94%;
 }
 
+.dark .PlaygroundEditorTheme__textCode {
+  background-color: #2e2e2e;
+  color: white;
+}
+
 .PlaygroundEditorTheme__hashtag {
   background-color: rgba(88, 144, 255, 0.15);
   border-bottom: 1px solid rgba(88, 144, 255, 0.3);

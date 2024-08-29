@@ -146,8 +146,10 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
             <LexicalComposer initialConfig={initialConfig}>
                 <main className={`flex editor-shell mx-auto pt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 dark:text-white relative leading-7 font-normal justify-center`}>
                     <div className="">
-                        <div className="filtered-content max-w-[845px] lg:min-w-[850px] lg:px-8 mx-auto flex flex-col gap-4">
-                            <div className='flex-1 flex flex-col gap-4'>
+                        <div className="relative filtered-content max-w-[845px] lg:min-w-[850px] lg:px-8 mx-auto flex flex-col gap-4">
+                            <div className="absolute bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+
+                            <div className='flex-1 flex flex-col gap-4 relative z-10'>
                                 <h1
                                     style={{ fontFamily: 'MiSans, Inter' }}
                                     className="text-4xl lg:text-6xl font-bold text-indigo-950 dark:text-gray-200 leading-tight lg:leading-[5rem]"
@@ -197,22 +199,6 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                 </div>
                             </div>
 
-                            {/* <div className='flex-1 hidden flex-col gap-4'>
-                                <Image
-                                    className="w-full lg:h-[400px] shadow-md h-[200px] md:h-[500px] object-cover mt-2"
-                                    src={image}
-                                    width={600}
-                                    height={400}
-                                    alt={title}
-                                />
-    
-                                {imageCaption && (
-                                    <div
-                                        className="text-xs text-right image-caption -mt-2 text-gray-500 dark:text-gray-400 lg:text-sm"
-                                        dangerouslySetInnerHTML={{ __html: imageCaption }}
-                                    ></div>
-                                )}
-                            </div> */}
                         </div>
 
                         <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>

@@ -21,6 +21,10 @@ div[readonly] .PlaygroundEditorTheme__layoutItem {
   border: none !important;
 }
 
+div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
+  border: none !important;
+}
+
 .blog-panel .PlaygroundEditorTheme__layoutItem {
 
   border: none !important;

@@ -94,7 +94,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
           </div>
         </div>
       ) : (
-        <Link href={`/notes/${blog.slug}`}>
+        <Link href={`/notes/${blog.slug}`} prefetch>
           <div className="group">
             {isPinned && <span className="text-3xl absolute -right-2 -top-7">📌</span>}
             <h1

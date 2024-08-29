@@ -2,36 +2,11 @@
 import React from 'react';
 
 /* Nodes */
-import { AutoLinkNode ,LinkNode } from '@lexical/link'
-import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { ListNode, ListItemNode } from '@lexical/list';
-import { ImageNode } from '../editor-panel/nodes/image-node';
-import { CodeHighlightNode, CodeNode } from "@lexical/code";
-import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
-import { LayoutContainerNode } from '../editor-panel/nodes/layout-node/LayoutContainerNode';
-import { LayoutItemNode } from '../editor-panel/nodes/layout-node/LayoutItemNode';
 import { v4 as uuidv4 } from 'uuid';
 import { Parser } from 'htmlparser2';
 import { DomHandler, Element, Node } from 'domhandler';
 import { render } from 'dom-serializer';
 import { useEditorState } from '@/context/EditorStateContext';
-import TextPreview from '../editor-panel/text-preview/TextPreview';
-import { LexicalComposer } from '@lexical/react/LexicalComposer';
-import {
-    TableCellNode,
-    TableNode,
-    TableRowNode,
-  } from '@lexical/table';
-
-import ExampleTheme from '../editor-panel/editor-theme/DefaultTheme';
-import PreviewToolBar from '../editor-panel/preview-toolbar';
-import { BgQuoteNode } from '../editor-panel/nodes/bgQuote-node';
-import { CollapsibleTitleNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleTitleNode';
-import { CollapsibleContainerNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContainerNode';
-import { CollapsibleContentNode } from '../editor-panel/plugins/CollapsiblePlugin/CollapsibleContentNode';
-import { YouTubeNode } from '../editor-panel/nodes/youtube-node/YouTubeNode';
-import { TweetNode } from '../editor-panel/nodes/tweet-node/TweetNode';
-import { FigmaNode } from '../editor-panel/nodes/figma-node';
 
 interface HeadingInfo {
     content: string;
@@ -75,53 +50,20 @@ const addUniqueIdsToHeadings = (htmlString: string): { html: string, headings: H
 
 const BlogPost = () => {
 
-    const { editorState, setIsPreviewMode } = useEditorState();
-
-    const initialConfig = {
-        namespace: 'My Lexical Board',
-        nodes: [
-            LinkNode,
-            HeadingNode,
-            ListNode,
-            ListItemNode,
-            QuoteNode,
-            CodeNode,
-            CodeHighlightNode,
-            HorizontalRuleNode,
-            ImageNode,
-            LayoutContainerNode,
-            LayoutItemNode,
-            BgQuoteNode,
-            CollapsibleContentNode,
-            CollapsibleContainerNode,
-            CollapsibleTitleNode,
-            TweetNode,
-            YouTubeNode,
-            AutoLinkNode,
-            FigmaNode,
-            TableNode,
-            TableRowNode,
-            TableCellNode,
-        ],
-        onError(error: Error) {
-            console.error(error);
-            throw error;
-        },
-        editorState: editorState.editorState,
-        editable: false,
-        theme: ExampleTheme,
-    };
-
+    const { htmlData } = useEditorState();
 
     return (
-        <LexicalComposer initialConfig={initialConfig}>
-            <main className={`flex editor-shell mx-auto mt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-800 relative leading-7 font-normal justify-center`}>
-                <TextPreview editorState={editorState} isBlogMode={true} />
-            </main>
 
-            <PreviewToolBar />
+        <main className={`flex editor-shell mx-auto pt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 dark:text-white relative leading-7 font-normal justify-center`}>
+            <article className="inline-block w-full previewing">
+                <div aria-readonly>
+                    <div dangerouslySetInnerHTML={{ __html: htmlData }}>
+                    
+                    </div>
+                </div>
+            </article>
+        </main>
 
-        </LexicalComposer>
     )
 }
 

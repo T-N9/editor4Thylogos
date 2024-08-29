@@ -27,6 +27,8 @@ const ThemeSwitcher = () => {
                 <Image src={'/images/Logo.png'} width={50} height={50} alt="TN Notes Logo" />
             </Button>
 
+            <Link href={'/preview'}>Preview</Link>
+
             <Dropdown className='dark:text-white'>
                 <DropdownTrigger>
                     <Button
@@ -36,6 +38,8 @@ const ThemeSwitcher = () => {
                         {theme}
                     </Button>
                 </DropdownTrigger>
+
+
                 <DropdownMenu
                     aria-label="Single selection example"
                     variant="flat"

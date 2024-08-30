@@ -10,6 +10,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+        primary : '#4f46e5'
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -18,6 +21,6 @@ const config: Config = {
     },
   },
   darkMode: "class",
-  plugins: [nextui()],
+  plugins: [ require("@tailwindcss/typography"),nextui()],
 };
 export default config;

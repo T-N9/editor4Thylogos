@@ -1,0 +1,132 @@
+---
+title: "CSS-in-JS and React Server Components"
+publishDate: "1/29/2024"
+---
+
+With [React’s evolving ecosystem](https://thenewstack.io/did-signals-just-land-in-react/), particularly with [Next.js shifting](https://thenewstack.io/vercels-next-js-14-introduces-partial-pre-rendering/) toward a “server-first” approach, applications using CSS-in-JS solutions like [Emotion](https://emotion.sh/docs/introduction) and [styled-components](https://styled-components.com/) are facing significant challenges. These CSS-in-JS libraries are inherently incompatible with the new React paradigm.
+
+While one could argue these libraries could be updated to align with the new server-first direction, it’s important to remember that they’re maintained by unpaid open source contributors. Expecting them to completely overhaul their libraries to accommodate changes in React is a daunting and potentially unrealistic task.
+
+Let’s look at why some CSS-in-JS solutions are unable to work in the new server-first world, then I’ll introduce you to one alternative, [Linaria](https://github.com/callstack/linaria), which uses an almost identical API as styled-components.
+
+
+
+## The RSC Paradigm
+
+This is going to turn into a long-winded explanation, but it’s important to understand how React used to work (pre-React Server Components) and how it works now ([post-RSC](https://thenewstack.io/javascript-in-2023-signals-reacts-rsc-and-full-stack-js/)).
+
+
+
+### Pre-RSC: Both Server and Client
+
+So let’s start at the beginning. Pre-RSC, React rendered a “component” on both the server and the client. [React has always rendered the static parts of the HTML page on the server](https://thenewstack.io/how-to-build-a-server-side-react-app-using-vite-and-express/) and sent that to the client to be “hydrated.” The hydration phase is client-side JavaScript that’s responsible for dealing with refs or attaching event handlers, which typically allow for interactivity.
+
+If it feels a bit dumb to do this work twice — once on the server, then replay it again on the client — that’s because it kinda is. I’ve discussed this before by comparing [React’s hydration with Qwik’s resumable approach](https://thenewstack.io/javascript-on-demand-how-qwik-differs-from-react-hydration/), which for me makes much more sense.
+
+
+
+### Post-RSC: Server Only
+
+However, in a post-RSC world, all React components by default are server-only. React renders the static parts of the HTML page, but doesn’t hydrate them on the client. This reduces/eliminates any client-side JavaScript. This is an interesting approach because in a post-RSC world, we’re able to make server-side requests from [any component, at any level in the tree](https://thenewstack.io/react-server-components-in-a-nutshell/), not just at the route level, which is how Next.js previously worked.
+
+
+
+## React’s New Use Client Directive
+
+In a post-RSC world you can still enable client-side JavaScript and React specific methods such as `useState`, `useEffect`, etc., but you have to be explicit and add the `use client` directive to the top of the file so React will behave in the same way it always has.
+
+
+
+## Why Doesn’t CSS-in-JS Work With RSC?
+
+To add a little more context, it’s important to understand how, for want of a better word, legacy CSS-in-JS libraries work before you can understand why they don’t work in a post-RSC world.
+
+Libraries like Emotion and styled-components do a lot of the heavy lifting at runtime, on the client using client-side JavaScript, which we’ve established no longer exists in RSCs, or “server-only” components.
+
+You’ve probably seen this in effect. If you inspect any app or site that uses e.g. styled-components, you’ll have noticed the weird-looking class names.
+
+```javascript
+<html>
+  <body>
+    <a class="sc-4c0ad8fd-0 hcJJXU">
+      styled link
+    </a>
+  </body>
+</html>
+```
+
+This is because with styled-components, you, the developer, don’t write CSS classes, you write components — and styled-components (the library) deals with extracting the styles, converting them to CSS that the browser can understand and generating a random but unique class name, then applying it to a DOM element to link the two together.
+
+TRENDING STORIES
+
+1. [Angular’s Efforts To Be Easier and Developer Friendly](https://thenewstack.io/angulars-efforts-to-be-easier-and-developer-friendly/)
+2. [Frontend Strategies: Frameworks or Pure JavaScript?](https://thenewstack.io/frontend-strategies-frameworks-or-pure-javascript/)
+3. [Inside ECMAScript: JavaScript Standard Gets an Extra Stage](https://thenewstack.io/inside-ecmascript-javascript-standard-gets-an-extra-stage/)
+4. [5 JavaScript Security Best Practices for 2024](https://thenewstack.io/5-javascript-security-best-practices-for-2024/)
+5. [Pivoting From React to Native DOM APIs: A Real World Example](https://thenewstack.io/pivoting-from-react-to-native-dom-apis-a-real-world-example/)
+
+For example, here’s how you might define a HTML anchor element using styled-components for use in a React component.
+
+```javascript
+// src/components/some-component/index.js
+
+
+import styled from 'styled-components';
+
+
+const SomeComponent = () => {
+  return (
+    <ButtonLink>
+      styled link
+    </ButtonLink>
+  );
+}
+
+
+const ButtonLink = styled.a`
+  background: transparent;
+  border-radius: 3px;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+  display: inline-block;
+  margin: 0.5rem 1rem;
+  padding: 0.5rem 0;
+  transition: all 200ms ease-in-out;
+  width: 11rem;
+`;
+
+
+export default SomeComponent
+```
+
+When styled-components runs, it’ll create the class name (as seen above), add it to the DOM element, and convert the CSS values as defined when the `styled.a` was created into CSS the browser can understand, such as.:
+
+```css
+.hcJJXU {
+    background: transparent;
+    border-radius: 3px;
+    border: 1px solid var(--accent-color);
+    color: var(--accent-color);
+    display: inline-block;
+    margin: 0.5rem 1rem;
+    padding: 0.5rem 0px;
+    transition: all 200ms ease-in-out 0s;
+    width: 11rem;
+}
+```
+
+But as mentioned, this all happens at runtime, on the client, using client-side JavaScript.
+
+Sadly then, because RSCs are designed to be rendered on the server and then sent as HTML to the client, they have specific characteristics and limitations — particularly regarding client-side JavaScript that prevents libraries like styled-components from working.
+
+## All Is Not Lost
+
+There are a number of newer solutions to this problem that shift the heavy lifting from the client to the build. We already do a lot of heavy lifting here, converting TypeScript to “browser Js,” so doing CSS-in-JS stuff at this point seems like a great solution for the post-RSC world.
+
+However, you may wonder: Won’t that mean developers the world over would need to rewrite all their `styled.` declarations using some new fancy API? Because that would be a nightmare!
+
+Thankfully, the creators of [Linaria](https://github.com/callstack/linaria), which has actually been around since [2017](https://github.com/callstack/linaria/commit/a972cfdf997569bc12dd4627f889cf47f5aa38d2), have opted to use a very similar API to that of styled-components. [Pigment CSS](https://mui.com/blog/introducing-pigment-css/) from the [MUI](https://mui.com/) team has followed a similar pattern too, which is great news.
+
+### How Do RSC Compatible CSS-in-JS Libraries Work?
+
+In the case of Linaria, it leverages [CSS modules](https://github.com/css-modules/css-modules). If I use the `styled.a` example again:

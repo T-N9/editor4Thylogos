@@ -15,9 +15,9 @@ export default async function BlogPage({
   return (
     <>
       <ScrollIndicator />
-      <main className="prose mx-4 filtered-content">
+      <main className="prose mx-4 lg:mx-auto filtered-content">
         <div className="mt-5">
-          <h1 className="text-primary">{blog.frontmatter.title}</h1>
+          <h1 className="text-primary text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
           
 
           <div className="flex justify-between items-center">
@@ -25,7 +25,7 @@ export default async function BlogPage({
               <Link className="text-primary no-underline" href="/marks">Marks</Link> / {blog.slug}
             </div>
 
-            <p>{blog.frontmatter.publishDate}</p>
+            <p className="m-0">{blog.frontmatter.publishDate}</p>
           </div>
         </div>
         <hr />

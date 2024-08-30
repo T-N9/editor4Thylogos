@@ -8,11 +8,11 @@ export default async function BlogsPage() {
       {blogs.map((blog, i) => (
         <article
           key={i}
-          className=" gap-4 p-6 mb-6 bg-white"
+          className=" gap-4 p-6 "
         >
            <Link
             href={`/marks/${blog.slug}`}
-            className="table float-right text-sm text-indigo-600 hover:text-indigo-800"
+            className="table text-sm text-indigo-600 hover:text-indigo-800"
             style={{ color: '#4f46e5' }}
           >
             <h1 className="col-span-3 text-3xl font-bold">

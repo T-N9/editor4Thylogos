@@ -1,0 +1,24 @@
+---
+title: "Factory Pattern"
+publishDate: "8/31/2024"
+---
+
+# Factory Pattern
+
+With the factory pattern we can use **factory functions** in order to create new objects. A function is a factory function when it returns a new object without the use of the `new` keyword!
+
+Say that we need many users for our application. We can create new users with a `firstName`, `lastName`, and `email` property. The factory function adds a `fullName` property to the newly created object as well, which returns the `firstName` and the `lastName`.
+
+```
+const createUser = ({ firstName, lastName, email }) => ({
+  firstName,
+  lastName,
+  email,
+  fullName() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+});
+```
+
+Perfect! We can now easily create multiple users by invoking the `createUser` function.
+

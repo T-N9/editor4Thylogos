@@ -15,7 +15,7 @@ export default async function BlogPage({
   return (
     <>
       <ScrollIndicator />
-      <main className="prose mx-auto table filtered-content">
+      <main className="prose mx-4 filtered-content">
         <div className="mt-5">
           <h1 className="text-primary">{blog.frontmatter.title}</h1>
           

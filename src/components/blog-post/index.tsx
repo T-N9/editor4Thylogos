@@ -142,7 +142,6 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
 
     return (
         <>
-
             <LexicalComposer initialConfig={initialConfig}>
                 <main className={`flex editor-shell mx-auto pt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 dark:text-white relative leading-7 font-normal justify-center`}>
                     <div className="">

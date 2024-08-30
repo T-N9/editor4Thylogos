@@ -2,6 +2,7 @@ import { Metadata } from "next"
 
 import BlogPost from "@/components/blog-post"
 import { fetchBlogDataBySlug } from "@/lib/firebase"
+import ScrollIndicator from "@/components/ui/ScrollIndicator";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     try {
@@ -12,13 +13,13 @@ export async function generateMetadata({ params }: { params: { slug: string } })
                 description: blogData.summary,
                 openGraph: {
                     title: blogData.title,
-                    description:blogData.summary,
+                    description: blogData.summary,
                     images: blogData.featureImage,
                 },
             }
         }
-    }catch (err) {
-        console.log({err});
+    } catch (err) {
+        console.log({ err });
     }
 
     return {
@@ -27,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     }
 }
 
-const BlogPostPage = async({ params }: { params: { slug: string } }) => {
+const BlogPostPage = async ({ params }: { params: { slug: string } }) => {
     const blogData = await fetchBlogDataBySlug(params.slug);
     const createdAt = {
         seconds: blogData?.createdAt.seconds,
@@ -40,20 +41,22 @@ const BlogPostPage = async({ params }: { params: { slug: string } }) => {
         return <div>Blog post not found.</div>
     }
     return (
-        <>{
-            blogData &&
-            <BlogPost
-                contentSize={blogContentSize}
-                createdAt={createdAt}
-                tags={blogData.tags}
-                editorState={blogContentBody}
-                image={blogData.image}
-                imageCaption={blogData.imageCaption}
-                slug={blogData.slug}
-                title={blogData.title}
-            />
+        <>
+            <ScrollIndicator />
+            {
+                blogData &&
+                <BlogPost
+                    contentSize={blogContentSize}
+                    createdAt={createdAt}
+                    tags={blogData.tags}
+                    editorState={blogContentBody}
+                    image={blogData.image}
+                    imageCaption={blogData.imageCaption}
+                    slug={blogData.slug}
+                    title={blogData.title}
+                />
 
-        }
+            }
         </>
     )
 }

@@ -1,16 +1,20 @@
 ---
-title: "Factory Pattern"
-publishDate: "8/31/2024"
+title: 'Factory Pattern'
+publishDate: '8/31/2024'
 ---
 
 # Factory Pattern
+
+| Name     | Age |
+| -------- | --- |
+| Te Nyain | 24  |
 
 With the factory pattern we can use **factory functions** in order to create new objects. A function is a factory function when it returns a new object without the use of the `new` keyword!
 
 Say that we need many users for our application. We can create new users with a `firstName`, `lastName`, and `email` property. The factory function adds a `fullName` property to the newly created object as well, which returns the `firstName` and the `lastName`.
 
-```
-const createUser = ({ firstName, lastName, email }) => ({
+```javascript
+const createUser = ({firstName, lastName, email}) => ({
   firstName,
   lastName,
   email,
@@ -20,5 +24,65 @@ const createUser = ({ firstName, lastName, email }) => ({
 });
 ```
 
-Perfect! We can now easily create multiple users by invoking the `createUser` function.
+…and our module `example.js` contains:
 
+```javascript
+import rehypeStarryNight from 'rehype-starry-night';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import {read} from 'to-vfile';
+import {unified} from 'unified';
+
+const file = await read('example.md');
+
+await unified()
+  .use(remarkParse)
+  .use(remarkRehype)
+  .use(rehypeStarryNight)
+  .use(rehypeStringify)
+  .process(file);
+
+console.log(String(file));
+```
+
+# Neptune
+
+```rs
+fn main() {
+    println!("Hello, Neptune!");
+}
+```
+
+```html
+<head>
+  <title>{blog.frontmatter.title}</title>
+</head>
+<ScrollIndicator />
+<main className="prose mx-4 lg:mx-auto filtered-content pt-5 lg:pt-10">
+  <div className="mt-5">
+    <h1 className="dark:text-gray-200 text-slate-800 text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
+
+
+          <div className="flex justify-between items-center">
+            <div>
+              <Link className="text-primary no-underline" href="/marks">Marks</Link> / <span className="text-gray-400">{blog.slug}</span>
+            </div>
+
+            <p className="m-0 text-gray-400">{blog.frontmatter.publishDate}</p>
+          </div>
+        </div>
+        <hr />
+        <article className="mdx-wrapper" style={{ fontFamily: 'Inter' }}>
+          {blog.content}
+        </article>
+      </main>
+      ```
+
+~~~js
+console.log(1)
+~~~
+
+
+
+Perfect! We can now easily create multiple users by invoking the `createUser` function.

@@ -1,7 +1,8 @@
 import ScrollIndicator from "@/components/ui/ScrollIndicator"
 import { getBlogBySlug, getAllBlogSlug } from "../fetchers"
 import Link from "next/link"
-import Head from "next/head"
+import './starry.css'
+
 
 export async function generateStaticParams() {
   return getAllBlogSlug()

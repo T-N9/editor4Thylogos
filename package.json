@@ -48,6 +48,7 @@
     "react-hook-form": "^7.52.1",
     "react-tweet": "^3.2.1",
     "react-use": "^17.5.0",
+    "rehype-starry-night": "^2.1.0",
     "remark": "^15.0.1",
     "remark-gfm": "^4.0.0",
     "sonner": "^1.5.0",

@@ -1,7 +1,9 @@
 import fs from "fs"
 import path from "path"
 import { compileMDX } from "next-mdx-remote/rsc"
+import rehypeStarryNight from 'rehype-starry-night'
 import { title } from "process"
+import remarkGfm from "remark-gfm"
 
 const contentDir = path.join(process.cwd(), "src/app/marks/_mdx-content")
 
@@ -15,7 +17,13 @@ export async function getBlogBySlug(slug: string) {
     publishDate: string
   }>({
     source: fileContent,
-    options: { parseFrontmatter: true },
+    options: {
+      parseFrontmatter: true,
+      mdxOptions: {
+        remarkPlugins: [remarkGfm],
+        rehypePlugins : [rehypeStarryNight]
+      },
+    },
   })
   return {
     frontmatter,

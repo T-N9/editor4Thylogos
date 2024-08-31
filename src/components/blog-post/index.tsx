@@ -132,7 +132,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
             const wordCount = textContent.split(/\s+/).filter(word => word).length;
             const readTime = Math.ceil(wordCount / wordsPerMinute);
 
-            console.log({ readTime });
+            // console.log({ readTime });
             return readTime;
         } catch (error) {
             console.error('Error parsing editor state:', error);

@@ -349,7 +349,7 @@ const [localizedFormState, setLocalizedFormState] =
   };
 
   const handleFetchAllBlogData = async () => {
-    console.log('Fetching all blog data');
+    // console.log('Fetching all blog data');
     try {
       const allBlogData = await fetchAllBlogData();
       setFetchedBlogData(allBlogData);

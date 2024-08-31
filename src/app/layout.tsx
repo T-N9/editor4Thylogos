@@ -27,6 +27,7 @@ export default function RootLayout({
           <NextUIProvider>
             <EditorStateProvider>
               <ThemeSwitcher/>
+              <div className="mb-14"></div>
               {children}
               <Footer />
             </EditorStateProvider>

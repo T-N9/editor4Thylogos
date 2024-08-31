@@ -49,7 +49,7 @@ const useBlogCatalogue = () => {
   }, []);
 
   const handleFetchAllBlogData = async () => {
-    console.log('Fetching all blog data');
+    // console.log('Fetching all blog data');
     try {
       const allBlogData = await fetchAllBlogData();
       setFetchedBlogData(allBlogData);
@@ -59,7 +59,7 @@ const useBlogCatalogue = () => {
   };
 
   const handleFetchAllPinnedBlogData = async () => {
-    console.log('Fetching all blog data');
+    // console.log('Fetching all blog data');
     try {
       const allPinnedBlogData = await fetchAllPinnedBlogData();
       setFetchedPinnedBlogData(allPinnedBlogData);
@@ -69,7 +69,7 @@ const useBlogCatalogue = () => {
   };
 
   const handleFetchAllUnpublishedBlogData = async () => {
-    console.log('Fetching all unpublished blog data');
+    // console.log('Fetching all unpublished blog data');
     try {
       const allBlogData = await fetchAllUnpublishedBlogData();
       setFetchedUnpublishedBlogData(allBlogData);
@@ -79,7 +79,7 @@ const useBlogCatalogue = () => {
   };
 
   const handleFetchAllDraftedBlogData = async () => {
-    console.log('Fetching all drafted blog data');
+    // console.log('Fetching all drafted blog data');
     try {
       const allBlogData = await fetchAllDraftedBlogData();
       setFetchedDraftedBlogData(allBlogData);

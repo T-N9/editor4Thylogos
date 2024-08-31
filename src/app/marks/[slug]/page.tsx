@@ -19,17 +19,17 @@ export default async function BlogPage({
         <title>{blog.frontmatter.title}</title>
       </head>
       <ScrollIndicator />
-      <main className="prose mx-4 lg:mx-auto filtered-content">
+      <main className="prose mx-4 lg:mx-auto filtered-content pt-5 lg:pt-10">
         <div className="mt-5">
-          <h1 className="text-primary text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
+          <h1 className="dark:text-gray-200 text-slate-800 text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
 
 
           <div className="flex justify-between items-center">
             <div>
-              <Link className="text-primary no-underline" href="/marks">Marks</Link> / {blog.slug}
+              <Link className="text-primary no-underline" href="/marks">Marks</Link> / <span className="text-gray-400">{blog.slug}</span>
             </div>
 
-            <p className="m-0">{blog.frontmatter.publishDate}</p>
+            <p className="m-0 text-gray-400">{blog.frontmatter.publishDate}</p>
           </div>
         </div>
         <hr />

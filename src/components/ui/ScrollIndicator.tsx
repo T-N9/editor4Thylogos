@@ -16,10 +16,10 @@ const ScrollIndicator = () => {
     }, []);
 
     return (
-        <div className="h-2 w-full z-50 fixed top-0 left-0 right-0">
-            <span className="inline-block absolute top-0 h-2" style={{
+        <div className="h-1 w-full z-50 fixed top-[56px] left-0 right-0">
+            <span className="inline-block absolute top-0 h-1" style={{
                 width: progressWidth+'%',
-                backgroundColor : '#4f46e595',
+                backgroundColor : '#908aff',
             }}>
                 
             </span>

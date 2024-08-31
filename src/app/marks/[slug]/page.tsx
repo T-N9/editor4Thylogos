@@ -1,6 +1,7 @@
 import ScrollIndicator from "@/components/ui/ScrollIndicator"
 import { getBlogBySlug, getAllBlogSlug } from "../fetchers"
 import Link from "next/link"
+import Head from "next/head"
 
 export async function generateStaticParams() {
   return getAllBlogSlug()
@@ -14,11 +15,14 @@ export default async function BlogPage({
   const blog = await getBlogBySlug(params.slug)
   return (
     <>
+      <head>
+        <title>{blog.frontmatter.title}</title>
+      </head>
       <ScrollIndicator />
       <main className="prose mx-4 lg:mx-auto filtered-content">
         <div className="mt-5">
           <h1 className="text-primary text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
-          
+
 
           <div className="flex justify-between items-center">
             <div>

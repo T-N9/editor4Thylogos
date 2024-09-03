@@ -3,6 +3,8 @@ import path from "path"
 import { compileMDX } from "next-mdx-remote/rsc"
 import rehypeStarryNight from 'rehype-starry-night'
 import { title } from "process"
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
 import remarkGfm from "remark-gfm"
 
 const contentDir = path.join(process.cwd(), "src/app/marks/_mdx-content")
@@ -21,7 +23,7 @@ export async function getBlogBySlug(slug: string) {
       parseFrontmatter: true,
       mdxOptions: {
         remarkPlugins: [remarkGfm],
-        rehypePlugins : [rehypeStarryNight]
+        rehypePlugins : [rehypeStarryNight, rehypeAutolinkHeadings, rehypeSlug]
       },
     },
   })

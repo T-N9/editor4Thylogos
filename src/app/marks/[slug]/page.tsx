@@ -22,7 +22,9 @@ export default async function BlogPage({
       <ScrollIndicator />
       <main className="prose mx-4 lg:mx-auto filtered-content pt-5 lg:pt-10">
         <div className="mt-5">
-          <h1 className="dark:text-gray-200 text-slate-800 text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
+          <h1 style={{
+            fontFamily : 'Walone'
+          }} className="dark:text-gray-200 font-bold text-slate-800 text-3xl lg:!text-7xl mb-2">{blog.frontmatter.title}</h1>
 
 
           <div className="flex justify-between items-center">
@@ -34,7 +36,7 @@ export default async function BlogPage({
           </div>
         </div>
         <hr />
-        <article className="mdx-wrapper" style={{ fontFamily: 'Inter' }}>
+        <article className="mdx-wrapper" style={{ fontFamily: 'MiSans,Inter' }}>
           {blog.content}
         </article>
       </main>

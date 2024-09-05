@@ -23,7 +23,7 @@ export default async function BlogPage({
       </head>
       <ScrollIndicator />
       <section className="flex lg:gap-5 relative">
-        <aside className=" hidden fixed lg:block w-[300px] top-[56px] border-r-1 left-0 px-4 py-2 h-screen bg-white">
+        <aside className=" hidden fixed lg:block w-[300px] top-[56px] border-r-1 dark:border-gray-800 left-0 px-4 py-2 h-screen bg-white dark:bg-slate-900">
           {blogs.map((blog, i) => (
             <BlogLink
               key={i}
@@ -34,15 +34,13 @@ export default async function BlogPage({
           ))}
         </aside>
         <main className="prose w-full lg:!w-[650px] px-4 lg:p-0 mx-auto filtered-content pt-5 lg:pt-2">
-          <div className="mt-5">
+          <div className="mt-5 bg-indigo-50 dark:bg-indigo-950 shadow rounded-md p-4">
             <h1 style={{
               fontFamily: 'Inter,Walone'
             }} className="dark:text-gray-200 font-bold text-slate-800 text-3xl lg:!text-2xl mb-2">{blog.frontmatter.title}</h1>
-
-
             <div className="flex justify-between items-center">
               <div>
-                <Link className="text-primary no-underline" href="/marks">Marks</Link> / <span className="text-gray-400">{blog.slug}</span>
+                <Link className="text-primary no-underline" href="/marks">Marks</Link> <span className="text-gray-400">/ {blog.slug}</span>
               </div>
 
               <p className="m-0 text-gray-400">{blog.frontmatter.publishDate}</p>

@@ -12,11 +12,11 @@ interface BlogLinkProps {
 const BlogLink: React.FC<BlogLinkProps> = ({ slug, title, publishDate }) => {
     const pathname = usePathname().split('/')[2];
 
-    console.log({pathname});
+    // console.log({pathname});
     return (
         <Link
             href={`/marks/${slug}`}
-            className={`table ${slug === pathname && 'bg-indigo-50'} duration-300 transition-all hover:bg-gray-100 rounded w-full text-sm text-indigo-600 hover:text-indigo-800`}
+            className={`table ${slug === pathname && 'bg-indigo-50 dark:bg-indigo-950'} duration-300 transition-all hover:bg-gray-100 dark:hover:bg-gray-800 rounded w-full text-sm text-indigo-600 hover:text-indigo-800`}
             style={{ color: '#4f46e5' }}
             prefetch
         >

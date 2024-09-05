@@ -11,7 +11,7 @@ interface BlogCardProps {
   isPinned?: boolean;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
+export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
   const isManageMode = pathname.includes('/manage');
 
   return (
@@ -102,7 +102,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
               className="text-2xl  leading-10 group-hover:underline text-indigo-950 decoration-indigo-600 line-clamp-2 underline-offset-2 md:text-3xl font-bold transition-all duration-300 dark:text-white">
               {blog.title}
             </h1>
-            <p style={{ fontFamily : 'Walone'}} className="my-3 text-gray-700 dark:text-gray-300 line-clamp-3">
+            <p style={{ fontFamily: 'Walone' }} className="my-3 text-gray-700 dark:text-gray-300 line-clamp-3">
               {blog.summary}...
             </p>
 
@@ -133,8 +133,8 @@ const BlogCatalogue = () => {
 
   return (
     <div>
-      <div className="px-2 py-4 mb-5 bg-indigo-400 relative rounded-md">
-      <div className="absolute bottom-0 rounded-md left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
+      {/* <div className="px-2 py-4 mb-5 bg-indigo-400 relative rounded-md">
+        <div className="absolute bottom-0 rounded-md left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
         <div className="lg:max-w-[800px] mx-auto">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
             {fetchedPinnedBlogData?.map((blog, index) => (
@@ -142,10 +142,10 @@ const BlogCatalogue = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="lg:max-w-[1350px] mx-auto min-h-screen">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {fetchedBlogData?.map((blog, index) => (
+          {fetchedBlogData.slice(2, fetchedBlogData.length)?.map((blog, index) => (
             <BlogCard key={index} blog={blog} pathname={pathname} />
           ))}
         </div>

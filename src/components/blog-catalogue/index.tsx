@@ -14,8 +14,10 @@ interface BlogCardProps {
 export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
   const isManageMode = pathname.includes('/manage');
 
+  console.log({name: blog.title , length: blog?.summary?.length});
+
   return (
-    <div className="relative rounded-lg dark:bg-gray-800 bg-white border border-gray-300 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
+    <div className="note-card pb-5">
       {isManageMode && (
         <>
           <Button
@@ -94,19 +96,19 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
           </div>
         </div>
       ) : (
-        <Link href={`/notes/${blog.slug}`} prefetch>
-          <div className="group">
-            {isPinned && <span className="text-3xl absolute -right-2 -top-7">📌</span>}
-            <h1
+        <Link className='inline-flex h-full w-full' href={`/notes/${blog.slug}`} prefetch>
+          <div className="group flex flex-col justify-between w-full">
+            {isPinned && <span className="text-3xl absolute -right-2 -top-5 z-20">📌</span>}
+            <div
               style={{ fontFamily: 'MiSans, Inter' }}
-              className="text-2xl  leading-10 group-hover:underline text-indigo-950 decoration-indigo-600 line-clamp-2 underline-offset-2 md:text-3xl font-bold transition-all duration-300 dark:text-white">
-              {blog.title}
-            </h1>
-            <p style={{ fontFamily: 'Walone' }} className="my-3 text-gray-700 dark:text-gray-300 line-clamp-3">
+              className="text-2xl w-full p-5 note-card-header  leading-10 group-hover:underline text-indigo-700 decoration-indigo-600  underline-offset-2 md:text-xl font-bold transition-all duration-300 dark:text-white">
+              <h1 className='line-clamp-2'>{blog.title}</h1>
+            </div>
+            <p style={{ fontFamily: 'Walone' }} className={`my-3 ${!isPinned && 'max-w-[350px] lg:max-w-[440px]'}  p-5 py-0 text-gray-700 dark:text-gray-300 line-clamp-3`}>
               {blog.summary}...
             </p>
 
-            <div className="flex justify-between items-center mt-4">
+            <div className="flex justify-between items-center mt-4 px-5">
               <div className="flex flex-wrap">
                 {blog.tags.map((tag: string, index: number) => (
                   <span

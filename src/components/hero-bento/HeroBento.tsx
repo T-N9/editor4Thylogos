@@ -9,7 +9,8 @@ const HeroBento = () => {
     return (
         <section>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
-                <div className="bg-gray-100 relative rounded-lg dark:bg-indigo-950 text-gray-800 dark:text-gray-100 py-5 lg:py-10 px-5 md:px-10">
+                <div className="bg-gray-100 card-shadow relative rounded-lg dark:bg-indigo-950 text-gray-800 dark:text-gray-100 py-5 lg:py-10 px-5 md:px-10">
+                    
                     <div className="absolute bottom-0 rounded-lg left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
                     <div className="container mx-auto text-center">
                         <HeroLogo />

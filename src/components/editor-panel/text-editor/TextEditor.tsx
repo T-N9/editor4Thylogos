@@ -43,6 +43,7 @@ import { useSettings } from '@/context/SettingsContext';
 import dynamic from 'next/dynamic';
 import { fetchBlogDataBySlug, fetchDraftedBlogData, fetchUnpublishedBlogDataBySlug } from '@/lib/firebase';
 import { usePathname } from 'next/navigation';
+import { useGeneralState } from '@/context/GeneralStateContext';
 
 const TableCellResizer = dynamic(() => import('../plugins/TablePlugin/TableCellResizer'), {
   loading: () => <p>Loading Table Cell Resizer</p>,
@@ -75,10 +76,7 @@ export interface LocalEditorState {
 
 const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditorState }) => {
   const [editor] = useLexicalComposerContext();
-  // const [localizedEditorState, setLocalizedEditorState] = useLocalStorage<
-  //   LocalEditorState | null
-  // >('my-editor-state-key', null)
-  const { currentBlogData, setCurrentBlogData } = useEditorState();
+  const { setCurrentBlogData } = useGeneralState();
 
   const pathname = usePathname();
   const isUpdateRoute = pathname.includes('/update');

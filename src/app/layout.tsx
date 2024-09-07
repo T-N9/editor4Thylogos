@@ -24,14 +24,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="text-black bg-white dark:bg-slate-900">
         <Providers>
-          <NextUIProvider>
-            <EditorStateProvider>
-              <ThemeSwitcher/>
-              <div className="mb-14"></div>
-              {children}
-              <Footer />
-            </EditorStateProvider>
-          </NextUIProvider>
+          <ThemeSwitcher />
+          <div className="mb-14"></div>
+          {children}
+          <Footer />
         </Providers>
       </body>
     </html>

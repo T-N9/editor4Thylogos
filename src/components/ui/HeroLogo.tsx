@@ -2,15 +2,15 @@ import React from 'react'
 
 const HeroLogo = () => {
     return (
-        <div className="mx-auto table mb-5">
+        <div className="">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="200"
-                height="200"
+                width="30"
+                height="30"
                 fill="none"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="2"
+                strokeWidth="4"
                 viewBox="0 0 87 121"
             >
                 <path

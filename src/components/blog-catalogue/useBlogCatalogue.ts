@@ -4,9 +4,9 @@ import {
   fetchAllPinnedBlogData,
   fetchAllUnpublishedBlogData,
 } from '@/lib/firebase';
-import {useEffect} from 'react';
-import {useEditorState} from '@/context/EditorStateContext';
 import { usePathname } from 'next/navigation';
+import { useGeneralState } from '@/context/GeneralStateContext';
+import { useEffect } from 'react';
 
 export interface ThumbnailBlogItem {
   id: string;
@@ -33,7 +33,9 @@ const useBlogCatalogue = () => {
     setFetchedUnpublishedBlogData,
     setFetchedDraftedBlogData,
     setFetchedPinnedBlogData
-  } = useEditorState();
+  } = useGeneralState();
+
+
   const pathname = usePathname();
 
   useEffect(() => {

@@ -98,7 +98,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
       ) : (
         <Link className='inline-flex h-full w-full' href={`/notes/${blog.slug}`} prefetch>
           <div className="group flex flex-col justify-between w-full">
-            {isPinned && <span className="text-3xl absolute -right-2 -top-5 z-20">📌</span>}
+            {isPinned && <span className="text-3xl absolute -right-2 -top-0 z-20">📌</span>}
             <div
               style={{ fontFamily: 'MiSans, Inter' }}
               className="text-2xl w-full p-5 note-card-header  leading-10 group-hover:underline text-indigo-700 decoration-indigo-600  underline-offset-2 md:text-xl font-bold transition-all duration-300 dark:text-white">

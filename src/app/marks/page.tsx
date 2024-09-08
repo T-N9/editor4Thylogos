@@ -15,7 +15,7 @@ export default async function BlogsPage() {
             className="table text-sm text-indigo-600 hover:text-indigo-800"
             style={{ color: '#4f46e5' }}
           >
-            <h1 style={{ fontFamily: 'MiSans,Inter' }} className="col-span-3 text-3xl font-bold">
+            <h1 style={{ fontFamily: 'MiSans,Inter' }} className="col-span-3 text-xl lg:text-3xl font-bold">
               {blog.frontmatter.title}
             </h1>
           </Link>

@@ -38,7 +38,9 @@ const HeroBento = () => {
                         </div>
                     </div>
                     <div className="w-full relative">
-                        <LatestLogo className='absolute -top-4 z-20 left-0 lg:-left-4' />
+                        {
+                            fetchedBlogData.length > 1 && <LatestLogo className='absolute -top-4 z-20 left-0 lg:-left-0'/>
+                        }
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2">
                             {fetchedBlogData.slice(0, 2)?.map((blog, index) => (
                                 <BlogCard key={index} blog={blog} pathname={pathname} />

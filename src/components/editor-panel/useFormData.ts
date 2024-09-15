@@ -26,8 +26,9 @@ import {
 } from '@/lib/firebase';
 import {serverTimestamp} from 'firebase/firestore';
 import {toast} from 'sonner';
-import { useLocalStorage } from 'react-use';
-import { LocalEditorState } from './text-editor/TextEditor';
+import {useLocalStorage} from 'react-use';
+import {LocalEditorState} from './text-editor/TextEditor';
+import {useGeneralState} from '@/context/GeneralStateContext';
 
 export interface LocalFormState {
   title: string;
@@ -74,11 +75,14 @@ const useFromData = () => {
     isPreviewMode,
     setEditorState,
     setIsPreviewMode,
+  } = useEditorState();
+
+  const {
     currentBlogData,
     setFetchedBlogData,
     setFetchedUnpublishedBlogData,
     setFetchedDraftedBlogData,
-  } = useEditorState();
+  } = useGeneralState();
 
   const {control, handleSubmit, setValue, watch} = useForm();
 
@@ -98,9 +102,9 @@ const useFromData = () => {
   const isUpdateRoute = pathname.includes('/update');
   const isUnpublishedRoute = pathname.includes('/unpublished');
   const isDraftedRoute = pathname.includes('/drafts');
-  
-const [localizedFormState, setLocalizedFormState] =
-  useLocalStorage<LocalFormState | null>('my-form-state-key', null);
+
+  const [localizedFormState, setLocalizedFormState] =
+    useLocalStorage<LocalFormState | null>('my-form-state-key', null);
   const [isBlogDataUpdated, setIsBlogDataUpdated] = useState(false);
 
   const router = useRouter();
@@ -136,12 +140,14 @@ const [localizedFormState, setLocalizedFormState] =
   }, []);
 
   useEffect(() => {
+    console.log({currentBlogData});
     if (
       (isUpdateRoute && currentBlogData) ||
       (isUnpublishedRoute && currentBlogData) ||
       (isDraftedRoute && currentBlogData)
     ) {
       setFormValues(currentBlogData);
+
       setEditorState({
         editorState: JSON.parse(currentBlogData.content).editorState,
         contentSize: JSON.parse(currentBlogData.content).contentSize,
@@ -394,7 +400,7 @@ const [localizedFormState, setLocalizedFormState] =
       if (success) {
         toast.success('Article updated successfully');
         handleFetchAllBlogData();
-        if ( isUploadRoute || isUpdateRoute || isUnpublishedRoute) {
+        if (isUploadRoute || isUpdateRoute || isUnpublishedRoute) {
           router.push('/manage');
         }
         // You can redirect or perform other actions here if needed
@@ -508,7 +514,7 @@ const [localizedFormState, setLocalizedFormState] =
       if (isSuccess) {
         toast.success('Article saved as a draft.');
         handleFetchAllBlogData();
-        router.push('/manage/drafts')
+        router.push('/manage/drafts');
       }
     } catch (error) {}
   };

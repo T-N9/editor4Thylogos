@@ -14,8 +14,6 @@ interface BlogCardProps {
 export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
   const isManageMode = pathname.includes('/manage');
 
-  console.log({name: blog.title , length: blog?.summary?.length});
-
   return (
     <div className="note-card pb-5">
       {isManageMode && (
@@ -72,7 +70,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
       )}
 
       {isManageMode ? (
-        <div>
+        <div className='p-4'>
           <h1 className="text-2xl md:text-3xl font-semibold text-gray-800 dark:text-gray-100">
             {blog.title}
           </h1>
@@ -133,23 +131,32 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
 const BlogCatalogue = () => {
   const { pathname, fetchedBlogData, fetchedPinnedBlogData } = useBlogCatalogue();
 
+  const isManageMode = pathname.includes('/manage');
+
   return (
     <div>
-      {/* <div className="px-2 py-4 mb-5 bg-indigo-400 relative rounded-md">
-        <div className="absolute bottom-0 rounded-md left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>
-        <div className="lg:max-w-[800px] mx-auto">
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
-            {fetchedPinnedBlogData?.map((blog, index) => (
-              <BlogCard key={index} blog={blog} pathname={pathname} isPinned={true} />
-            ))}
+      {
+        isManageMode &&
+        <div className=" mb-4">
+          <div className="lg:max-w-[800px] mx-auto">
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
+              {fetchedPinnedBlogData?.map((blog, index) => (
+                <BlogCard key={index} blog={blog} pathname={pathname} isPinned={true} />
+              ))}
+            </div>
           </div>
         </div>
-      </div> */}
+      }
+
       <div className="lg:max-w-[1350px] mx-auto min-h-screen">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {fetchedBlogData.slice(2, fetchedBlogData.length)?.map((blog, index) => (
+          {isManageMode ? fetchedBlogData?.map((blog, index) => (
             <BlogCard key={index} blog={blog} pathname={pathname} />
-          ))}
+          )) :
+            fetchedBlogData.slice(2, fetchedBlogData.length)?.map((blog, index) => (
+              <BlogCard key={index} blog={blog} pathname={pathname} />
+            ))}
+
         </div>
       </div>
     </div>

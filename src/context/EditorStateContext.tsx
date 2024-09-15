@@ -27,11 +27,6 @@ interface EditorStateContextProps {
   isContentShown: boolean;
   currentFontColor: string;
   currentBgColor: string;
-  currentBlogData: BlogItem | null,
-  fetchedBlogData: ThumbnailBlogItem[];
-  fetchedUnpublishedBlogData: ThumbnailBlogItem[];
-  fetchedDraftedBlogData: ThumbnailBlogItem[];
-  fetchedPinnedBlogData: ThumbnailBlogItem[];
 
   /* actions */
   setEditorState: (state: ContextEditorState) => void;
@@ -40,11 +35,8 @@ interface EditorStateContextProps {
   setIsContentShown: (state: boolean) => void;
   setCurrentFontColor: (state: string) => void;
   setCurrentBgColor: (state: string) => void;
-  setCurrentBlogData: (state: BlogItem | null) => void;
-  setFetchedBlogData: (state: ThumbnailBlogItem[]) => void;
-  setFetchedUnpublishedBlogData: (state: ThumbnailBlogItem[]) => void;
-  setFetchedDraftedBlogData: (state: ThumbnailBlogItem[]) => void;
-  setFetchedPinnedBlogData: (state: ThumbnailBlogItem[]) => void;
+
+
 }
 
 const EditorStateContext = createContext<EditorStateContextProps | undefined>(
@@ -80,11 +72,6 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
   const [isContentShown, setIsContentShown] = useState<boolean>(false);
   const [currentFontColor, setCurrentFontColor] = useState<string>('');
   const [currentBgColor, setCurrentBgColor] = useState<string>('');
-  const [currentBlogData, setCurrentBlogData] = useState<BlogItem | null>(null);
-  const [fetchedBlogData, setFetchedBlogData] = useState<ThumbnailBlogItem[]>([]);
-  const [fetchedPinnedBlogData, setFetchedPinnedBlogData] = useState<ThumbnailBlogItem[]>([]);
-  const [fetchedUnpublishedBlogData, setFetchedUnpublishedBlogData] = useState<ThumbnailBlogItem[]>([]);
-  const [fetchedDraftedBlogData, setFetchedDraftedBlogData] = useState<ThumbnailBlogItem[]>([]);
 
   return (
     <EditorStateContext.Provider
@@ -92,16 +79,7 @@ export const EditorStateProvider: React.FC<EditorStateProviderProps> = ({
         editorState,
         isPreviewMode,
         htmlData,
-        currentBlogData,
-        setCurrentBlogData,
-        fetchedBlogData,
-        fetchedUnpublishedBlogData,
-        fetchedDraftedBlogData,
-        fetchedPinnedBlogData,
-        setFetchedBlogData,
-        setFetchedUnpublishedBlogData,
-        setFetchedDraftedBlogData,
-        setFetchedPinnedBlogData,
+
 
         isContentShown,
         setEditorState,

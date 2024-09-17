@@ -17,6 +17,7 @@ export async function getBlogBySlug(slug: string) {
     title: string
     author: string
     publishDate: string
+    isJapanese: string
   }>({
     source: fileContent,
     options: {

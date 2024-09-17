@@ -3,6 +3,7 @@ import { getBlogBySlug, getAllBlogSlug, getBlogs } from "../fetchers"
 import Link from "next/link"
 import './starry.css'
 import BlogLink from "@/components/ui/BlogLink"
+import MarkdownContent from "@/components/markdown-content"
 
 
 export async function generateStaticParams() {
@@ -16,6 +17,8 @@ export default async function BlogPage({
 }) {
   const blog = await getBlogBySlug(params.slug)
   const blogs = await getBlogs();
+
+  console.log({is:blog.frontmatter.isJapanese})
   return (
     <>
       <head>
@@ -47,9 +50,7 @@ export default async function BlogPage({
             </div>
           </div>
           <hr />
-          <article className="mdx-wrapper" style={{ fontFamily: 'MiSans,Inter' }}>
-            {blog.content}
-          </article>
+          <MarkdownContent content={blog.content} isJapanese={blog.frontmatter.isJapanese === 'true'}/>
         </main>
       </section>
     </>

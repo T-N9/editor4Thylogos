@@ -155,6 +155,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
   color: #4f46e5;
   padding: 0.2rem 0.4rem;
   border-radius: 0.3rem;
+  font-size: 14px;
 }
 
 .mdx-wrapper pre {
@@ -162,6 +163,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
   padding: 1rem;
   border-radius: 0.5rem;
   overflow-x: auto;
+  line-height: 20px;
 }
 
 .mdx-wrapper pre code {
@@ -194,3 +196,15 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
   font-weight: bold;
 }
 
+.mdx-wrapper {
+  font-size: 20px;
+}
+
+.mdx-wrapper rt{
+  font-size: 10px;
+}
+
+.mdx-wrapper.show-f rt{
+  opacity: 0;
+  /* display: none; */
+}

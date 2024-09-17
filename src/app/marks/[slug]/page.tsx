@@ -18,7 +18,7 @@ export default async function BlogPage({
   const blog = await getBlogBySlug(params.slug)
   const blogs = await getBlogs();
 
-  console.log({is:blog.frontmatter.isJapanese})
+  // console.log({is:blog.frontmatter.isJapanese})
   return (
     <>
       <head>

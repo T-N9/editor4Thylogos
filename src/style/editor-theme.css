@@ -208,3 +208,25 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
   opacity: 0;
   /* display: none; */
 }
+
+.mdx-wrapper ruby {
+  position: relative;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-color: rgb(237, 237, 237);
+}
+
+.mdx-wrapper rt {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+  opacity: 1;
+  transition: opacity 0.3s ease; /* Add a smooth transition */
+}
+
+.mdx-wrapper ruby:hover rt {
+  opacity: 1;
+}
+

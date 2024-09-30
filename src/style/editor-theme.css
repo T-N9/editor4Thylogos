@@ -230,3 +230,8 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
   opacity: 1;
 }
 
+.transition-view  {
+  view-transition-name: title;
+  width: fit-content;
+}
+

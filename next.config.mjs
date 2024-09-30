@@ -2,6 +2,9 @@
 import createMDX from '@next/mdx'
 
 const nextConfig = {
+  experimental: {
+    scrollRestoration: true, // unrelated but a good optimization
+  },
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
   images: {
     remotePatterns: [

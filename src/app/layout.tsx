@@ -4,8 +4,7 @@ import "../style/editor.css"
 
 import "../style/editor-theme.css"
 
-import { EditorStateProvider } from "../context/EditorStateContext";
-import { NextUIProvider } from "@nextui-org/react";
+import { ViewTransitions } from 'next-view-transitions'
 import Footer from "@/components/footer/Footer";
 import { Providers } from "./providers";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
@@ -21,15 +20,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="text-black bg-white dark:bg-slate-900">
-        <Providers>
-          <ThemeSwitcher />
-          <div className="mb-14"></div>
-          {children}
-          <Footer />
-        </Providers>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" suppressHydrationWarning>
+        <body className="text-black bg-white dark:bg-slate-900">
+          <Providers>
+            <ThemeSwitcher />
+            <div className="mb-14"></div>
+            {children}
+            <Footer />
+          </Providers>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

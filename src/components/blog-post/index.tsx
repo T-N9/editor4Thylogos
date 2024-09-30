@@ -30,6 +30,7 @@ import { YouTubeNode } from '../editor-panel/nodes/youtube-node/YouTubeNode';
 import { FigmaNode } from '../editor-panel/nodes/figma-node';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useTransitionRouter } from 'next-view-transitions';
 
 const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
     ssr: false,
@@ -59,6 +60,7 @@ interface BlogPostProps {
 }
 const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorState, contentSize }: BlogPostProps) => {
 
+    const router = useTransitionRouter();
     const initialConfig = {
         namespace: 'My Lexical Board',
         nodes: [
@@ -150,8 +152,8 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
 
                             <div className='flex-1 flex flex-col gap-4 relative z-10'>
                                 <h1
-                                    style={{ fontFamily: 'MiSans, Inter' }}
                                     className="text-4xl lg:text-6xl font-bold text-indigo-950 dark:text-gray-200 leading-tight lg:leading-[5rem]"
+                                    style={{ fontFamily: 'MiSans, Inter', viewTransitionName: `title-${slug}` }}
                                 >
                                     {title}
                                 </h1>
@@ -186,9 +188,13 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                 </div>
 
                                 <div className="flex gap-2 items-center  dark:text-gray-400">
-                                    <Link href={'/'}>
+                                    <a href='/'
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            router.back()
+                                        }}>
                                         <span className="text-sm ">Blog</span>
-                                    </Link>
+                                    </a>
 
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />

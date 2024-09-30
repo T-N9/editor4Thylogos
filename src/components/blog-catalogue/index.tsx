@@ -1,9 +1,12 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useBlogCatalogue from './useBlogCatalogue';
 import Link from 'next/link';
 import { Button } from '@nextui-org/react';
 import moment from 'moment';
+import { fadeInOut, slideInOut } from '@/animation';
+import { useTransitionRouter } from 'next-view-transitions';
+import { useRouter } from 'next/navigation';
 
 interface BlogCardProps {
   blog: any;
@@ -13,6 +16,13 @@ interface BlogCardProps {
 
 export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) => {
   const isManageMode = pathname.includes('/manage');
+  const router = useTransitionRouter()
+  const nextRouter = useRouter()
+
+  useEffect(() => {
+    nextRouter.prefetch(`/notes/${blog.slug}`);
+    // console.log('Prefetching' + `/notes/${blog.slug}`)
+  }, [router, blog.slug]);
 
   return (
     <div className="note-card pb-5">
@@ -94,13 +104,19 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
           </div>
         </div>
       ) : (
-        <Link className='inline-flex h-full w-full' href={`/notes/${blog.slug}`} prefetch>
+        <a onClick={(e) => {
+          e.preventDefault()
+          router.push(`/notes/${blog.slug}`, {
+            onTransitionReady: fadeInOut,
+          })
+        }} className='inline-flex h-full w-full' href={`/notes/${blog.slug}`}>
+
           <div className="group flex flex-col justify-between w-full">
             {isPinned && <span className="text-3xl absolute -right-2 -top-0 z-20">📌</span>}
             <div
               style={{ fontFamily: 'MiSans, Inter' }}
               className="text-2xl w-full p-5 note-card-header  leading-10 group-hover:underline text-indigo-700 decoration-indigo-600  underline-offset-2 md:text-xl font-bold transition-all duration-300 dark:text-white">
-              <h1 className='line-clamp-2'>{blog.title}</h1>
+              <h1 style={{ viewTransitionName: `title-${blog.slug}` }} className='line-clamp-2'>{blog.title}</h1>
             </div>
             <p style={{ fontFamily: 'Walone' }} className={`my-3 ${!isPinned && 'max-w-[350px] lg:max-w-[440px]'}  p-5 py-0 text-gray-700 dark:text-gray-300 line-clamp-3`}>
               {blog.summary}...
@@ -121,7 +137,8 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
               </div>
             </div>
           </div>
-        </Link>
+
+        </a>
       )}
     </div>
   );

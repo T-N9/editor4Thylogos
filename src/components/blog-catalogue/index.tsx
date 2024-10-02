@@ -22,7 +22,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
   useEffect(() => {
     nextRouter.prefetch(`/notes/${blog.slug}`);
     // console.log('Prefetching' + `/notes/${blog.slug}`)
-  }, [router, blog.slug]);
+  }, [nextRouter, blog.slug]);
 
   return (
     <div className="note-card pb-5">

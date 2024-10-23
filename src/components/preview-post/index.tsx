@@ -45,6 +45,7 @@ export const addUniqueIdsToHeadings = (htmlString: string): { html: string, head
     const parser = new Parser(handler, { lowerCaseTags: true });
     parser.write(htmlString);
     parser.end();
+    console.log({headings})
 
     return { html: render(handler.dom), headings };
 };

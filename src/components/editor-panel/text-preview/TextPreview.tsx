@@ -38,6 +38,23 @@ const TextPreview: React.FC<TextPreviewProps> = ({
       <section className="">
         <div
           className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
+          {headingData.headings.length > 0 && <div className='bg-gray-100 rounded-lg dark:bg-gray-800 p-5 mt-10'>
+            <h1 className='font-bold text-indigo-300'>In this article</h1>
+            <ul className=" flex flex-col gap-2">
+              {headingData.headings.map((item, index) => {
+                const Tag = item.tag as keyof JSX.IntrinsicElements; // Dynamic tag rendering
+
+                return (
+                  <li className={``}
+                    key={index}>
+                    <a href={`#${item.link}`}>
+                      <Tag>{item.content}</Tag>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>}
           {/* <RichTextPlugin
             contentEditable={
               <div className="editor-scroller !hidden">
@@ -75,7 +92,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
                     const Tag = item.tag as keyof JSX.IntrinsicElements; // Dynamic tag rendering
 
                     return (
-                      <li className={`normal-heading-wrapper`}
+                      <li className={`normal-heading-wrapper line-clamp-1`}
                         key={index}>
                         <a href={`#${item.link}`}>
                           <Tag>{item.content}</Tag>

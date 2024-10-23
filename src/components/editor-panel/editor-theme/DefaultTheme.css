@@ -710,14 +710,14 @@
   outline: none !important;
 }
 
-.PlaygroundEditorTheme__hr {
+.PlaygroundEditorTheme__hr,hr {
   padding: 2px 2px;
   border: none;
   margin: 1em 0;
   cursor: pointer;
 }
 
-.PlaygroundEditorTheme__hr:after {
+.PlaygroundEditorTheme__hr:after,hr:after {
   content: '';
   display: block;
   height: 2px;

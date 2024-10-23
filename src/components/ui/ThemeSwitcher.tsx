@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '@nextui-org/react';
 import Link from 'next/link';
-import MyCoolshape from './MyCoolshape';
+import { Logo } from './Logo';
 
 const ThemeSwitcher = () => {
     const [mounted, setMounted] = useState(false);
@@ -21,7 +21,7 @@ const ThemeSwitcher = () => {
     return (
         <div className="fixed top-0 left-0 z-50 px-2 right-0 lg:px-5 py-2 flex justify-between bg-white dark:bg-slate-800 shadow lg:rounded-md">
             <Link href='/'>
-                <MyCoolshape size={40}/>
+                <Logo width={40} height={40}/>
             </Link>
 
             <div className='flex gap-4 items-center'>

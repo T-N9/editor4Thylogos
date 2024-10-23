@@ -1,11 +1,8 @@
 'use client'
-import dynamic from 'next/dynamic';
 import { BlogCard } from '../blog-catalogue';
 import useBlogCatalogue from '../blog-catalogue/useBlogCatalogue';
-import HeroLogo from '../ui/HeroLogo'
 import LatestLogo from '../ui/LatestLogo';
-
-import MyCoolshape from '../ui/MyCoolshape';
+import { Logo } from '../ui/Logo';
 
 
 const HeroBento = () => {
@@ -17,7 +14,7 @@ const HeroBento = () => {
                     <div className="container mx-auto text-center">
                         {/* <HeroLogo /> */}
                         <div className='flex justify-center items-center mb-5'>
-                            <MyCoolshape size ={200} />
+                            <Logo width ={200} height={200} />
                         </div>
                         <h1 className="text-4xl md:text-6xl font-bold mb-4 text-indigo-950 dark:text-slate-200">
                             Welcome to <br className="block" /><span style={{ fontFamily: 'Indie Flower' }} className="text-indigo-600 font-bold text-5xl lg:text-7xl">TN Notes</span>

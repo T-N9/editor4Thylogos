@@ -31,6 +31,8 @@ import { FigmaNode } from '../editor-panel/nodes/figma-node';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useTransitionRouter } from 'next-view-transitions';
+import { CustomHeadingNode } from '../editor-panel/nodes/heading-node/CustomHeadingNode';
+
 
 const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
     ssr: false,
@@ -57,8 +59,9 @@ interface BlogPostProps {
         seconds: number;
         nanoseconds: number;
     };
+    htmlData: string;
 }
-const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorState, contentSize }: BlogPostProps) => {
+const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorState, contentSize, htmlData }: BlogPostProps) => {
 
     const router = useTransitionRouter();
     const initialConfig = {
@@ -66,6 +69,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
         nodes: [
             LinkNode,
             HeadingNode,
+            CustomHeadingNode,
             ListNode,
             ListItemNode,
             QuoteNode,
@@ -215,7 +219,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         </div>
 
                         <div className='-mt-5 min-h-screen'>
-                            <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} />
+                            <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} htmlData={htmlData}/>
                         </div>
 
                         <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>

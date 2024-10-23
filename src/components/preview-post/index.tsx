@@ -7,6 +7,7 @@ import { Parser } from 'htmlparser2';
 import { DomHandler, Element, Node } from 'domhandler';
 import { render } from 'dom-serializer';
 import { useEditorState } from '@/context/EditorStateContext';
+import { contentSizeClass } from '../editor-panel/text-editor/TextEditor';
 
 interface HeadingInfo {
     content: string;
@@ -14,7 +15,7 @@ interface HeadingInfo {
     link: string;
 }
 
-const addUniqueIdsToHeadings = (htmlString: string): { html: string, headings: HeadingInfo[] } => {
+export const addUniqueIdsToHeadings = (htmlString: string): { html: string, headings: HeadingInfo[] } => {
     const headings: HeadingInfo[] = [];
 
     const handler = new DomHandler((error: Error | null, dom: Node[]) => {
@@ -27,10 +28,10 @@ const addUniqueIdsToHeadings = (htmlString: string): { html: string, headings: H
                 const uuid = uuidv4();
                 if (node instanceof Element && /^h[1-6]$/.test(node.tagName)) {
                     const content = node.children.map(child => (child as any).children[0]?.data || '').join('');
-                    node.attribs.id = `${content.split(' ').join('-').toLowerCase()}-${uuid.split('-')[1]}`;
+                    node.attribs.id = `${content.split(' ').join('-').toLowerCase()}`;
 
                     // console.log({ content })
-                    headings.push({ content, tag: node.tagName, link: `${content.split(' ').join('-').toLowerCase()}-${uuid.split('-')[1]}` });
+                    headings.push({ content, tag: node.tagName, link: `${content.split(' ').join('-').toLowerCase()}` });
                 }
                 if ('children' in node && Array.isArray(node.children)) {
                     traverseAndAddIds(node.children);
@@ -50,13 +51,13 @@ const addUniqueIdsToHeadings = (htmlString: string): { html: string, headings: H
 
 const BlogPost = () => {
 
-    const { htmlData } = useEditorState();
+    const { htmlData, editorState } = useEditorState();
 
     return (
 
-        <main className={`flex editor-shell mx-auto pt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 dark:text-white relative leading-7 font-normal justify-center`}>
+        <main className={`flex  pt-8 rounded-sm flex-col gap-2 text-gray-700 dark:text-white relative leading-7 font-normal justify-center`}>
             <article className="inline-block w-full previewing">
-                <div aria-readonly>
+                <div className={`editor-container mx-auto {${contentSizeClass[editorState.contentSize]}`} aria-readonly>
                     <div dangerouslySetInnerHTML={{ __html: htmlData }}>
                     
                     </div>

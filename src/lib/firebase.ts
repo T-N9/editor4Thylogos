@@ -28,6 +28,7 @@ export interface BlogItem {
   summary: string;
   content: string;
   createdAt: Date;
+  htmlData : string;
 }
 
 export const uploadImage = async (file: File): Promise<string> => {
@@ -367,6 +368,7 @@ export const fetchBlogDataBySlug = async (slug: string) => {
         featureImage: doc.data().featureImage,
         imageCaption: doc.data().imageCaption,
         createdAt: doc.data().createdAt,
+        htmlData : doc.data().htmlData
       };
     } else {
       console.log('No blog post found with the provided slug.');

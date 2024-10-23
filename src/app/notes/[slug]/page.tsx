@@ -54,6 +54,7 @@ const BlogPostPage = async ({ params }: { params: { slug: string } }) => {
                     imageCaption={blogData.imageCaption}
                     slug={blogData.slug}
                     title={blogData.title}
+                    htmlData={blogData.htmlData}
                 />
 
             }

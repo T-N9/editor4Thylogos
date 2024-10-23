@@ -30,6 +30,8 @@ import { FigmaNode } from './nodes/figma-node';
 
 import { FileUploader } from "react-drag-drop-files";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button } from "@nextui-org/react";
+import { CustomHeadingNode } from './nodes/heading-node/CustomHeadingNode';
+
 
 const EditorPanel = () => {
   const {
@@ -41,6 +43,14 @@ const EditorPanel = () => {
     nodes: [
       LinkNode,
       HeadingNode,
+      CustomHeadingNode,
+      {
+        replace: HeadingNode,
+        with: (node: HeadingNode) => {
+          return new CustomHeadingNode(node.getTag());
+        },
+        withKlass: CustomHeadingNode,
+      },
       ListNode,
       ListItemNode,
       QuoteNode,

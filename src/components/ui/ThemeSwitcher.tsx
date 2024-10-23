@@ -29,6 +29,7 @@ const ThemeSwitcher = () => {
                 {/* <Image src={'/images/Logo.png'} width={50} height={50} alt="TN Notes Logo" /> */}
                 <MyCoolshape size={40}/>
             </Link>
+            <Link href={'/preview'}>Preview</Link>
 
             <div className='flex gap-4 items-center'>
                 <div className=' text-primary flex justify-center items-center'>

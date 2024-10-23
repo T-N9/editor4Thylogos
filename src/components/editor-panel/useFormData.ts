@@ -75,6 +75,7 @@ const useFromData = () => {
     isPreviewMode,
     setEditorState,
     setIsPreviewMode,
+    htmlData
   } = useEditorState();
 
   const {
@@ -381,18 +382,20 @@ const useFromData = () => {
       let success = false;
 
       if (isUpdateRoute && currentBlogData?.id) {
-        success = await updateBlogItemData(currentBlogData.id, data);
+        success = await updateBlogItemData(currentBlogData.id, {...data, htmlData : htmlData});
       } else if (isUnpublishedRoute && currentBlogData?.id) {
-        success = await publishBlogItemData(currentBlogData.id, data);
+        success = await publishBlogItemData(currentBlogData.id, {...data, htmlData : htmlData});
       } else if (isDraftedRoute && currentBlogData?.id) {
         // console.log('draft upload', currentBlogData?.id);
         success = await publishDraftBlogItemData(currentBlogData.id, {
           ...data,
+          htmlData : htmlData,
           createdAt: serverTimestamp(),
         });
       } else {
         success = await uploadBlogItemData({
           ...data,
+          htmlData : htmlData,
           createdAt: serverTimestamp(),
         });
       }
@@ -420,6 +423,7 @@ const useFromData = () => {
         success = await updateDraftedBlogItemData(currentBlogData.id, {
           ...watchedFormData,
           content: JSON.stringify(contextEditorState),
+          htmlData : htmlData,
           createdAt: new Date(),
         });
       }
@@ -508,6 +512,7 @@ const useFromData = () => {
           : '',
 
         content: JSON.stringify(contextEditorState),
+        htmlData : htmlData,
         createdAt: new Date(),
       });
 

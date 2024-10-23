@@ -7,6 +7,8 @@ import {
   $isTextNode,
   CAN_REDO_COMMAND,
   CAN_UNDO_COMMAND,
+  DOMExportOutput,
+  EditorConfig,
   ElementFormatType,
   LexicalEditor,
   NodeKey,
@@ -15,11 +17,7 @@ import {
   UNDO_COMMAND,
 } from 'lexical';
 import useModal from '@/hooks/useModal';
-import {
-  $createCodeNode,
-  $isCodeNode,
-  CODE_LANGUAGE_MAP,
-} from '@lexical/code';
+import {$createCodeNode, $isCodeNode, CODE_LANGUAGE_MAP} from '@lexical/code';
 import {
   $findMatchingParent,
   $getNearestBlockElementAncestorOrThrow,
@@ -48,7 +46,9 @@ import {
   $createQuoteNode,
   $isHeadingNode,
   $isQuoteNode,
+  HeadingNode,
   HeadingTagType,
+  SerializedHeadingNode,
 } from '@lexical/rich-text';
 import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
 import {$isDecoratorBlockNode} from '@lexical/react/LexicalDecoratorBlockNode';
@@ -67,8 +67,10 @@ import DropdownColorPicker from '../../../ui/DropdownColorPicker';
 
 import {scrollToTop} from '@/utils/scrollToTop';
 import InsertLayoutDialog from '../LayoutPlugin/InsertLayoutDialog';
-import { useToolbarContext } from '@/context/ToolbarStateContext';
-import { $createBgQuoteNode } from '../../nodes/bgQuote-node';
+import {useToolbarContext} from '@/context/ToolbarStateContext';
+import {$createBgQuoteNode} from '../../nodes/bgQuote-node';
+import theme from '../../editor-theme/DefaultTheme';
+import { $createCustomHeadingNode } from '../../nodes/heading-node/CustomHeadingNode';
 
 const LowPriority = 1;
 
@@ -85,7 +87,7 @@ export const blockTypeToBlockName = {
   number: 'Numbered List',
   paragraph: 'Normal',
   quote: 'Quote',
-  'bg-quote' : 'Bg Quote',
+  'bg-quote': 'Bg Quote',
 };
 
 export const rootTypeToRootName = {
@@ -94,43 +96,43 @@ export const rootTypeToRootName = {
 };
 
 export const ELEMENT_FORMAT_OPTIONS: {
-    [key in Exclude<ElementFormatType, ''>]: {
-      icon: string;
-      iconRTL: string;
-      name: string;
-    };
-  } = {
-    center: {
-      icon: 'center-align',
-      iconRTL: 'center-align',
-      name: 'Center Align',
-    },
-    end: {
-      icon: 'right-align',
-      iconRTL: 'left-align',
-      name: 'End Align',
-    },
-    justify: {
-      icon: 'justify-align',
-      iconRTL: 'justify-align',
-      name: 'Justify Align',
-    },
-    left: {
-      icon: 'left-align',
-      iconRTL: 'left-align',
-      name: 'Left Align',
-    },
-    right: {
-      icon: 'right-align',
-      iconRTL: 'right-align',
-      name: 'Right Align',
-    },
-    start: {
-      icon: 'left-align',
-      iconRTL: 'right-align',
-      name: 'Start Align',
-    },
+  [key in Exclude<ElementFormatType, ''>]: {
+    icon: string;
+    iconRTL: string;
+    name: string;
   };
+} = {
+  center: {
+    icon: 'center-align',
+    iconRTL: 'center-align',
+    name: 'Center Align',
+  },
+  end: {
+    icon: 'right-align',
+    iconRTL: 'left-align',
+    name: 'End Align',
+  },
+  justify: {
+    icon: 'justify-align',
+    iconRTL: 'justify-align',
+    name: 'Justify Align',
+  },
+  left: {
+    icon: 'left-align',
+    iconRTL: 'left-align',
+    name: 'Left Align',
+  },
+  right: {
+    icon: 'right-align',
+    iconRTL: 'right-align',
+    name: 'Right Align',
+  },
+  start: {
+    icon: 'left-align',
+    iconRTL: 'right-align',
+    name: 'Start Align',
+  },
+};
 
 const useToolbar = (editor: LexicalEditor) => {
   const {
@@ -183,7 +185,7 @@ const useToolbar = (editor: LexicalEditor) => {
     setIsImageCaption,
     modal,
     showModal,
-  }=useToolbarContext();
+  } = useToolbarContext();
 
   const rootTypeToRootName = {
     root: 'Root',
@@ -299,7 +301,27 @@ const useToolbar = (editor: LexicalEditor) => {
         $getSelectionStyleValueForProperty(selection, 'font-size', '18px'),
       );
     }
-  }, [activeEditor, editor, setBgColor, setFontSize, setIsBold, setIsItalic, setSelectedElementKey, setIsLink, setBlockType, setIsSubscript, setIsSuperscript, setFontColor,setCodeLanguage, setElementFormat, setIsImageCaption, setIsRTL, setIsStrikethrough, setIsUnderline, setFontFamily]);
+  }, [
+    activeEditor,
+    editor,
+    setBgColor,
+    setFontSize,
+    setIsBold,
+    setIsItalic,
+    setSelectedElementKey,
+    setIsLink,
+    setBlockType,
+    setIsSubscript,
+    setIsSuperscript,
+    setFontColor,
+    setCodeLanguage,
+    setElementFormat,
+    setIsImageCaption,
+    setIsRTL,
+    setIsStrikethrough,
+    setIsUnderline,
+    setFontFamily,
+  ]);
 
   useEffect(() => {
     return mergeRegister(
@@ -347,7 +369,7 @@ const useToolbar = (editor: LexicalEditor) => {
     if (blockType !== headingSize) {
       editor.update(() => {
         const selection = $getSelection();
-        $setBlocksType(selection, () => $createHeadingNode(headingSize));
+        $setBlocksType(selection, () => $createCustomHeadingNode(headingSize));
       });
     }
   };

@@ -87,6 +87,7 @@ const MyOnChangePlugin: React.FC<MyOnChangePluginProps> = ({ onChange, setEditor
   useLocalStorage<LocalEditorState | null>('my-editor-state-key', null);
 
   const [isFirstRender, setIsFirstRender] = useState(true)
+  const{ htmlData} = useEditorState();
 
 
 

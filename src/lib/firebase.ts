@@ -28,7 +28,7 @@ export interface BlogItem {
   summary: string;
   content: string;
   createdAt: Date;
-  htmlData : string;
+  htmlData ?: string;
 }
 
 export const uploadImage = async (file: File): Promise<string> => {

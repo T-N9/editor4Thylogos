@@ -8,6 +8,7 @@ import { ViewTransitions } from 'next-view-transitions'
 import Footer from "@/components/footer/Footer";
 import { Providers } from "./providers";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: "TN Notes | Capturing ideas and thoughts.",
@@ -22,6 +23,24 @@ export default function RootLayout({
   return (
     <ViewTransitions>
       <html lang="en" suppressHydrationWarning>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-Y5KMRHWRQ7"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-analytics"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-Y5KMRHWRQ7');
+              `,
+          }}
+        />
+      </head>
         <body className="text-black bg-white dark:bg-slate-900">
           <Providers>
             <ThemeSwitcher />

@@ -32,6 +32,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useTransitionRouter } from 'next-view-transitions';
 import { CustomHeadingNode } from '../editor-panel/nodes/heading-node/CustomHeadingNode';
+import AdsComponent from '../ads-component';
 
 
 const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
@@ -215,7 +216,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                         </div>
 
                         <div className='-mt-5 min-h-screen'>
-                            <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} htmlData={htmlData}/>
+                            <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} htmlData={htmlData} />
                         </div>
 
                         <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>
@@ -228,6 +229,11 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                     </div>
                 </main>
             </LexicalComposer>
+            <AdsComponent
+                isDisplay={false}
+                layoutKey="-f9+5v+4m-d8+7b"
+                slotId={"1053749028"}
+            />
         </>
     )
 }

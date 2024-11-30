@@ -2246,3 +2246,8 @@ button.item .icon {
   width: 100%;
   will-change: var(--framer-will-change-override, transform);
 }
+
+.google-auto-placed {
+  margin : 2rem 0;
+  border: 1px dashed rgb(60, 132, 244);
+}

@@ -2247,7 +2247,20 @@ button.item .icon {
   will-change: var(--framer-will-change-override, transform);
 }
 
-.google-auto-placed {
-  margin : 2rem 0;
+.google-auto-placed, .autors-widget {
+  margin: 2rem 0;
   border: 1px dashed rgb(60, 132, 244);
+  position: relative;
+  padding-top: 1.5rem;
+}
+
+.google-auto-placed::before, .autors-widget::before {
+  content: "Advertisement";
+  position: absolute;
+  top: -1.5rem;
+  left: 0;
+  font-size: 0.875rem;
+  color: rgb(60, 132, 244);
+  background-color: white;
+  padding: 0 0.5rem;
 }

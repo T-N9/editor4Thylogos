@@ -150,7 +150,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
     return (
         <>
             <LexicalComposer initialConfig={initialConfig}>
-                <main className={`flex editor-shell mx-auto pt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 dark:text-gray-400 relative leading-7 font-normal justify-center`}>
+                <main className={`flex editor-shell mx-auto pt-8 rounded-sm 2xl:max-w-[1440px] max-w-[1300px] 2xl:w-[1440px] lg:w-[1300px] flex-col gap-2 text-gray-700 dark:text-gray-300 relative leading-7 font-normal justify-center`}>
                     <div className="">
                         <div className="relative filtered-content max-w-[845px] lg:min-w-[850px] lg:px-8 mx-auto flex flex-col gap-4">
                             <div className="absolute bg-center bottom-0 left-0 right-0 top-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)]"></div>

@@ -6,7 +6,7 @@ import HeroBento from "@/components/hero-bento/HeroBento";
 
 export default function Home() {
   return (
-    <section className='text-black filtered-content'>
+    <section className='text-black filtered-content px-2.5'>
       <div className='max-w-[1350px] mx-auto py-5 mb-10'>
         <HeroBento/>
         <section id="explore" className="py-5">

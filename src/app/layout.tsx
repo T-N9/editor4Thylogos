@@ -60,7 +60,7 @@ export default function RootLayout({
             }}
           />
       </head>
-        <body className="text-black bg-white dark:bg-slate-900">
+        <body className="text-black bg-white dark:bg-[#121214]">
           <Providers>
             <ThemeSwitcher />
             <div className="mb-14"></div>

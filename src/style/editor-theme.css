@@ -92,6 +92,19 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
   margin-bottom: 0.75rem;
 }
 
+.dark  .mdx-wrapper h1,
+ .dark .mdx-wrapper h2,
+ .dark  .mdx-wrapper h3,
+ .dark  .mdx-wrapper h4,
+ .dark  .mdx-wrapper h5,
+.dark .mdx-wrapper h6 {
+  color: #7268ff;
+}
+
+
+
+
+
 .mdx-wrapper h1 {
   font-size: 2.25rem;
 }

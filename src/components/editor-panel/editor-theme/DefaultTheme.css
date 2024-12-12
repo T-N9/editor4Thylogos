@@ -729,3 +729,12 @@
   outline: 2px solid rgb(60, 132, 244);
   user-select: none;
 }
+
+.dark .PlaygroundEditorTheme__h1,
+.dark .PlaygroundEditorTheme__h2 ,
+.dark .PlaygroundEditorTheme__h3 ,
+.dark .PlaygroundEditorTheme__h4,
+.dark .PlaygroundEditorTheme__h5,
+.dark .PlaygroundEditorTheme__h6 {
+  color :#7268ff ;
+}

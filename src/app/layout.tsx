@@ -25,7 +25,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google Adsense Meta Tag */}
-        <meta name="google-adsense-account" content="ca-pub-2340030299315656" />
+        {/* <meta name="google-adsense-account" content="ca-pub-2340030299315656" /> */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-Y5KMRHWRQ7"
           strategy="afterInteractive"
@@ -44,7 +44,7 @@ export default function RootLayout({
         />
 
          {/* Google Adsense Script */}
-         <Script
+         {/* <Script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2340030299315656"
             crossOrigin="anonymous"
@@ -58,7 +58,7 @@ export default function RootLayout({
                 (adsbygoogle = window.adsbygoogle || []).push({});
               `,
             }}
-          />
+          /> */}
       </head>
         <body className="text-black bg-white dark:bg-[#121214]">
           <Providers>

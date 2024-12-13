@@ -32,7 +32,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useTransitionRouter } from 'next-view-transitions';
 import { CustomHeadingNode } from '../editor-panel/nodes/heading-node/CustomHeadingNode';
-import AdsComponent from '../ads-component';
+// import AdsComponent from '../ads-component';
 
 
 const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
@@ -229,11 +229,11 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                     </div>
                 </main>
             </LexicalComposer>
-            <AdsComponent
+            {/* <AdsComponent
                 isDisplay={false}
                 layoutKey="-f9+5v+4m-d8+7b"
                 slotId={"1053749028"}
-            />
+            /> */}
         </>
     )
 }

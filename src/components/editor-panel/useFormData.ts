@@ -141,7 +141,7 @@ const useFromData = () => {
   }, []);
 
   useEffect(() => {
-    console.log({currentBlogData});
+    // console.log({currentBlogData});
     if (
       (isUpdateRoute && currentBlogData) ||
       (isUnpublishedRoute && currentBlogData) ||

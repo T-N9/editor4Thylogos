@@ -2222,7 +2222,7 @@ button.item .icon {
 }
 
 .dark .note-card-header {
-  background: linear-gradient(181deg, #1c1778 0%, #05006b 99.99999999999503%);
+  background: linear-gradient(181deg, var(--primary-800) 0%, var(--primary-900) 99.99999999999503%);
 }
 
 .note-card-header{
@@ -2262,4 +2262,12 @@ button.item .icon {
   color: rgb(60, 132, 244);
   background-color: white;
   padding: 0 0.5rem;
+}
+
+span[style*="color: rgb(79, 70, 229)"] {
+  color: var(--primary-600) !important;
+}
+
+strong[style*="color: rgb(79, 70, 229)"] {
+  color: var(--primary-600) !important;
 }

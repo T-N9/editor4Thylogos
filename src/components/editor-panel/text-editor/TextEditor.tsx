@@ -168,7 +168,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
   const {editorState : localState ,htmlData, setHtmlData } = useEditorState();
 
   useEffect(() => {
-    console.log({htmlData});
+    // console.log({htmlData});
   }, [localState])
 
   useEffect(() => {
@@ -194,7 +194,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ editorState, setEditorState, se
     // console.log({ editorData: JSON.stringify(editorStateJSON) });
     editor.update(() => {
       const raw = $generateHtmlFromNodes(editor, null)
-      console.log({ rawHtml: raw })
+      // console.log({ rawHtml: raw })
       setHtmlData(raw)
     })
   };

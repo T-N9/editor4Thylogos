@@ -19,25 +19,25 @@ const ThemeSwitcher = () => {
     }
 
     return (
-        <div className="fixed top-0 left-0 z-50 px-2 right-0 lg:px-5 py-2  bg-white dark:bg-slate-800 shadow">
+        <div className="fixed top-0 left-0 z-50 px-2 right-0 lg:px-5 py-2  bg-white dark:bg-slate-700 shadow">
             <div className="max-w-[1350px] flex justify-between mx-auto">
                 <Link href='/'>
                     <Logo width={40} height={40}/>
                 </Link>
 
                 <div className='flex gap-4 items-center'>
-                    <div className=' text-primary-600 flex justify-center items-center'>
+                    {/* <div className=' text-primary-600 flex justify-center items-center'>
                         <Link className='flex gap-2 justify-center items-center' href={'/marks'}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                             </svg>
                             <span>Marks</span>
                         </Link>
-                    </div>
+                    </div> */}
                     <Dropdown className='dark:text-white'>
                         <DropdownTrigger>
                             <Button
-                              variant="bordered"
+                              variant="faded"
                               className="capitalize"
                             >
                                 {theme}

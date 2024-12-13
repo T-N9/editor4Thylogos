@@ -29,7 +29,7 @@ interface ColorPickerProps {
 }
 
 const basicColors = [
-  'var(--primary-600)',
+  '#010101',
   '#ff383e',
   '#f5a623',
   '#f8e71c',
@@ -148,6 +148,8 @@ export default function ColorPicker({
     },
     [editor],
   );
+
+  console.log({inputColor})
   return (
     <div
       className="color-picker-wrapper"

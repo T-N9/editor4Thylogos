@@ -104,12 +104,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
           </div>
         </div>
       ) : (
-        <a onClick={(e) => {
-          e.preventDefault()
-          router.push(`/notes/${blog.slug}`, {
-            onTransitionReady: fadeInOut,
-          })
-        }} className='inline-flex h-full w-full' href={`/notes/${blog.slug}`}>
+        <Link prefetch className='inline-flex h-full w-full' href={`/notes/${blog.slug}`}>
 
           <div className="group flex flex-col justify-between w-full">
             {isPinned && <span className="text-3xl absolute -right-2 -top-0 z-20">📌</span>}
@@ -138,7 +133,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
             </div>
           </div>
 
-        </a>
+        </Link>
       )}
     </div>
   );

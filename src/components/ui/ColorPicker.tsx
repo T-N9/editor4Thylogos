@@ -29,7 +29,7 @@ interface ColorPickerProps {
 }
 
 const basicColors = [
-  '#4f46e5',
+  'var(--primary-600)',
   '#ff383e',
   '#f5a623',
   '#f8e71c',

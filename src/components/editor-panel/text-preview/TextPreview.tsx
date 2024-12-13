@@ -39,7 +39,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
         <div
           className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
           {headingData.headings.length > 0 && <div className='bg-gray-100 rounded-lg dark:bg-gray-800 p-5 mt-10'>
-            <h1 className='font-bold text-indigo-300'>In this article</h1>
+            <h1 className='font-bold text-primary-300'>In this article</h1>
             <ul className=" flex flex-col gap-2">
               {headingData.headings.map((item, index) => {
                 const Tag = item.tag as keyof JSX.IntrinsicElements; // Dynamic tag rendering
@@ -75,18 +75,18 @@ const TextPreview: React.FC<TextPreviewProps> = ({
               <button type='button' className='inline-block py-2 px-2 rounded-md rounded-tr-none rounded-br-none bg-gray-100 shadow' onClick={() => setIsContentShown(!isContentShown)}>
                 {
                   !isContentShown ?
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#4f46e5" className="size-4 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="var(--primary-600)" className="size-4 text-primary-600">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />
                     </svg>
 
                     :
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#4f46e5" className="size-4 text-indigo-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="var(--primary-600)" className="size-4 text-primary-600">
                       <path strokeLinecap="round" strokeLinejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
                     </svg>
                 }
               </button>
-              <div className="table-of-contents shadow border-r-4 border-indigo-600">
-                <h1 className='font-bold text-indigo-300'>In this article</h1>
+              <div className="table-of-contents shadow border-r-4 border-primary-600">
+                <h1 className='font-bold text-primary-300'>In this article</h1>
                 <ul className="headings flex flex-col gap-2">
                   {headingData.headings.map((item, index) => {
                     const Tag = item.tag as keyof JSX.IntrinsicElements; // Dynamic tag rendering

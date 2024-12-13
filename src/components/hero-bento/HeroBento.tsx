@@ -10,17 +10,17 @@ const HeroBento = () => {
     return (
         <section>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
-                <div className="bg-gray-100 card-shadow relative rounded-lg dark:bg-indigo-950 text-gray-800 dark:text-gray-100 py-5 lg:py-10 px-5 md:px-10">
+                <div className="bg-gray-100 card-shadow relative rounded-lg dark:bg-slate-800 text-gray-800 dark:text-gray-100 py-5 lg:py-10 px-5 md:px-10">
                     <div className="container mx-auto text-center">
                         {/* <HeroLogo /> */}
                         <div className='flex justify-center items-center mb-5'>
                             <Logo width ={200} height={200} />
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-indigo-950 dark:text-slate-200">
-                            Welcome to <br className="block" /><span style={{ fontFamily: 'Indie Flower' }} className="text-indigo-600 font-bold text-5xl lg:text-7xl">TN Notes</span>
+                        <h1 className="text-4xl md:text-6xl font-bold mb-4 text-primary-950 dark:text-slate-200">
+                            Welcome to <br className="block" /><span style={{ fontFamily: 'Indie Flower' }} className="text-primary-600 font-bold text-5xl lg:text-7xl">TN Notes</span>
                         </h1>
                         <p className="text-lg md:text-xl mb-8">
-                            A tiny space of <a className="text-indigo-600 underline cursor-pointer" href="https://www.tenyain.com/" target="_blank" rel="noreferrer">mine</a>  for capturing ideas and thoughts.
+                            A tiny space of <a className="text-primary-600 underline cursor-pointer" href="https://www.tenyain.com/" target="_blank" rel="noreferrer">mine</a>  for capturing ideas and thoughts.
                         </p>
                     </div>
                 </div>

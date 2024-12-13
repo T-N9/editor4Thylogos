@@ -37,7 +37,7 @@ import { CustomHeadingNode } from '../editor-panel/nodes/heading-node/CustomHead
 
 const TextPreview = dynamic(() => import('../editor-panel/text-preview/TextPreview'), {
     ssr: false,
-    loading: () => <div className='text-center text-indigo-600 min-h-screen flex justify-center'>
+    loading: () => <div className='text-center text-primary-600 min-h-screen flex justify-center'>
 
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 animate-spinner-ease-spin -rotate-[45deg] mt-40">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
@@ -157,7 +157,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
 
                             <div className='flex-1 flex flex-col gap-4 relative z-10'>
                                 <h1
-                                    className="text-4xl lg:text-6xl font-bold text-indigo-950 dark:text-gray-200 leading-tight lg:leading-[5rem]"
+                                    className="text-4xl lg:text-6xl font-bold text-primary-950 dark:text-gray-200 leading-tight lg:leading-[5rem]"
                                     style={{ fontFamily: 'MiSans, Inter', viewTransitionName: `title-${slug}` }}
                                 >
                                     {title}
@@ -168,7 +168,7 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                         {tags.map((tag) => (
                                             <span
                                                 key={tag}
-                                                className={`${tag.toLowerCase() === "pinned" && 'relative'} inline-block text-xs lg:text-base text-indigo-600 bg-indigo-100 px-3 py-1 rounded-full`}
+                                                className={`${tag.toLowerCase() === "pinned" && 'relative'} inline-block text-xs lg:text-base text-primary-600 bg-primary-100 dark:bg-slate-700 px-3 py-1 rounded-full`}
                                             >
                                                 {tag}
 
@@ -183,8 +183,8 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                         </p>
                                         <div className='flex gap-2 justify-end items-center'>
                                             <span className="relative flex h-2 w-2">
-                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
                                             </span>
 
                                             <span className='text-sm text-gray-500'>{calculateReadTime(editorState)} min read</span>
@@ -201,30 +201,30 @@ const BlogPost = ({ title, slug, image, imageCaption, tags, createdAt, editorSta
                                         <path strokeLinecap="round" strokeLinejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                                     </svg>
 
-                                    <span className="text-xs text-indigo-600">{title}</span>
+                                    <span className="text-primary-600 line-clamp-1">{title}</span>
                                 </div>
                             </div>
 
                         </div>
 
-                        <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>
-                            <span className='w-[1px] h-8 bg-indigo-400'>
+                        <div className='flex justify-center relative items-center mt-2 border-t-2 border-gray-200 dark:border-gray-700'>
+                            <span className='w-[1px] h-8 bg-gray-200 dark:bg-gray-700'>
 
 
                             </span>
-                            <span className='w-2 h-2 absolute bottom-0 rounded-full bg-indigo-400'></span>
+                            <span className='w-2 h-2 absolute bottom-0 rounded-full bg-gray-200 dark:bg-gray-700'></span>
                         </div>
 
                         <div className='-mt-5 min-h-screen'>
                             <TextPreview editorState={{ editorState: editorState, contentSize: contentSize }} isBlogMode={true} htmlData={htmlData} />
                         </div>
 
-                        <div className='flex justify-center relative items-center mt-2 border-t-2 border-indigo-400'>
-                            <span className='w-[1px] absolute -top-8 h-8 bg-indigo-400'>
+                        <div className='flex justify-center relative items-center mt-2 border-t-2 border-gray-200 dark:border-gray-700'>
+                            <span className='w-[1px] absolute -top-8 h-8 bg-gray-200 dark:bg-gray-700'>
 
 
                             </span>
-                            <span className='w-2 h-2 absolute -top-8 rounded-full bg-indigo-400'></span>
+                            <span className='w-2 h-2 absolute -top-8 rounded-full bg-gray-200 dark:bg-gray-700'></span>
                         </div>
                     </div>
                 </main>

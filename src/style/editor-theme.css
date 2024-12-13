@@ -49,9 +49,15 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
 
 .bg-quote-wrapper {
   padding: 10px 30px;
-  border-left : 5px solid #4f46e5;
-  background-color: #8c86ff14;
+  border-left : 5px solid var(--primary-600);
+  background-color: #fff;
   border-radius: 0 10px 10px 0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.dark .bg-quote-wrapper {
+  background-color: #333;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 8px 0px;
 }
 
 .image-caption a {
@@ -86,7 +92,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
 .mdx-wrapper h4,
 .mdx-wrapper h5,
 .mdx-wrapper h6 {
-  color: #4f46e5;
+  color: var(--primary-600);
   font-weight: 700;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
@@ -98,7 +104,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
  .dark  .mdx-wrapper h4,
  .dark  .mdx-wrapper h5,
 .dark .mdx-wrapper h6 {
-  color: #7268ff;
+  color: #2fe0ac;
 }
 
 
@@ -134,7 +140,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
 }
 
 .mdx-wrapper a {
-  color: #4f46e5;
+  color: var(--primary-600);
   text-decoration: underline;
   font-weight: 500;
 }
@@ -155,7 +161,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
 }
 
 .mdx-wrapper blockquote {
-  border-left: 4px solid #4f46e5;
+  border-left: 4px solid var(--primary-600);
   padding-left: 1rem;
   color: #555;
   margin: 1.5rem 0;
@@ -165,7 +171,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
 
 .mdx-wrapper code {
   background-color: #f3f3ff;
-  color: #4f46e5;
+  color: var(--primary-600);
   padding: 0.2rem 0.4rem;
   border-radius: 0.3rem;
   font-size: 14px;
@@ -205,7 +211,7 @@ div[aria-readonly="true"] .PlaygroundEditorTheme__layoutItem {
 
 .mdx-wrapper th {
   background-color: #f3f3ff;
-  color: #4f46e5;
+  color: var(--primary-600);
   font-weight: bold;
 }
 

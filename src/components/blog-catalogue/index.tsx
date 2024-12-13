@@ -34,7 +34,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
             type="button"
             isIconOnly
             size="sm"
-            className="absolute right-16 top-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-2 transition-colors duration-300">
+            className="absolute right-16 top-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full p-2 transition-colors duration-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -61,7 +61,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
             type="button"
             isIconOnly
             size="sm"
-            className="absolute right-3 top-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-2 transition-colors duration-300">
+            className="absolute right-3 top-3 bg-primary-600 hover:bg-primary-700 text-white rounded-full p-2 transition-colors duration-300">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -93,7 +93,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
               {blog.tags.map((tag: string, index: number) => (
                 <span
                   key={index}
-                  className="text-sm bg-gray-200 text-indigo-600 rounded-full px-3 py-1 mr-2 mb-2">
+                  className="text-sm bg-gray-200 text-primary-600 rounded-full px-3 py-1 mr-2 mb-2">
                   {tag}
                 </span>
               ))}
@@ -115,7 +115,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
             {isPinned && <span className="text-3xl absolute -right-2 -top-0 z-20">📌</span>}
             <div
               style={{ fontFamily: 'MiSans, Inter' }}
-              className="text-2xl w-full p-5 note-card-header  leading-10 group-hover:underline text-indigo-700 decoration-indigo-600  underline-offset-2 md:text-xl font-bold transition-all duration-300 dark:text-white">
+              className="text-2xl w-full p-5 note-card-header  leading-10 group-hover:underline text-primary-700 decoration-primary-600  underline-offset-2 md:text-xl font-bold transition-all duration-300 dark:text-white">
               <h1 style={{ viewTransitionName: `title-${blog.slug}` }} className='line-clamp-2'>{blog.title}</h1>
             </div>
             <p style={{ fontFamily: 'Walone' }} className={`my-3 ${!isPinned && 'max-w-[350px] lg:max-w-[440px]'}  p-5 py-0 text-gray-700 dark:text-gray-300 line-clamp-3`}>
@@ -127,7 +127,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
                 {blog.tags.map((tag: string, index: number) => (
                   <span
                     key={index}
-                    className="text-xs md:text-sm bg-indigo-50 text-indigo-600 rounded-full px-2 py-1 mr-2 mb-2">
+                    className="text-xs md:text-sm bg-primary-50 dark:bg-slate-700 text-primary-600 rounded-full px-2 py-1 mr-2 mb-2">
                     {tag}
                   </span>
                 ))}

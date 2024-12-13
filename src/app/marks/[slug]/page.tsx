@@ -37,7 +37,7 @@ export default async function BlogPage({
           ))}
         </aside>
         <main className="prose w-full lg:!w-[650px] px-4 lg:p-0 mx-auto filtered-content pt-5 lg:pt-2">
-          <div className="mt-5 bg-indigo-50 dark:bg-indigo-950 shadow rounded-md p-4">
+          <div className="mt-5 bg-primary-50 dark:bg-primary-950 shadow rounded-md p-4">
             <h1 style={{
               fontFamily: 'Inter,Walone'
             }} className="dark:text-gray-200 font-bold text-slate-800 text-3xl lg:!text-2xl mb-2">{blog.frontmatter.title}</h1>

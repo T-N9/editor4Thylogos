@@ -12,8 +12,8 @@ export default async function BlogsPage() {
         >
            <Link
             href={`/marks/${blog.slug}`}
-            className="table text-sm text-indigo-600 hover:text-indigo-800"
-            style={{ color: '#4f46e5' }}
+            className="table text-sm text-primary-600 hover:text-primary-800"
+            style={{ color: 'var(--primary-600)' }}
           >
             <h1 style={{ fontFamily: 'MiSans,Inter' }} className="col-span-3 text-xl lg:text-3xl font-bold">
               {blog.frontmatter.title}

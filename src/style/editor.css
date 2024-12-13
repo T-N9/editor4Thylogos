@@ -1183,7 +1183,7 @@ i.page-break,
 
 
 .editor-shell ul li::marker {
-  color: #4f46e5;
+  color: var(--primary-600);
 }
 
 .editor-shell ol li {

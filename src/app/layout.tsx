@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "../style/editor.css"
 
@@ -14,7 +14,31 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "TN Notes | Capturing ideas and thoughts.",
   description: "Welcome to TN Notes! A tiny space of mine for capturing ideas and thoughts.",
+  openGraph: {
+    type: "website",
+    locale: "en-US",
+    url: "https://www.notes.tenyain.com/",
+    title: "TN Notes | Capturing ideas and thoughts.",
+    description: "Welcome to TN Notes! A tiny space of mine for capturing ideas and thoughts.",
+    images: [{ url: "/meta.png" }]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "TN Notes | Capturing ideas and thoughts.",
+    description: "Welcome to TN Notes! A tiny space of mine for capturing ideas and thoughts.",
+    images: [{ url: "/meta.png" }]
+  },
 };
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#4f46e5' },
+    { media: '(prefers-color-scheme: dark)', color: '#2fe0ac' },
+  ],
+  width :"device-width",
+  initialScale : 1,
+  maximumScale: 5,
+}
 
 export default function RootLayout({
   children,

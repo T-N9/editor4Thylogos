@@ -1,6 +1,6 @@
 'use client';
 import React, { useEffect } from 'react';
-import useBlogCatalogue from './useBlogCatalogue';
+import useBlogCatalogue, { ThumbnailBlogItem } from './useBlogCatalogue';
 import Link from 'next/link';
 import { Button } from '@nextui-org/react';
 import moment from 'moment';
@@ -140,8 +140,8 @@ export const BlogCard: React.FC<BlogCardProps> = ({ blog, pathname, isPinned }) 
 };
 
 
-const BlogCatalogue = () => {
-  const { pathname, fetchedBlogData, fetchedPinnedBlogData } = useBlogCatalogue();
+const BlogCatalogue = ({pinnedData, blogData} : {pinnedData : ThumbnailBlogItem[], blogData : ThumbnailBlogItem[]}) => {
+  const { pathname } = useBlogCatalogue();
 
   const isManageMode = pathname.includes('/manage');
 
@@ -152,7 +152,7 @@ const BlogCatalogue = () => {
         <div className=" mb-4">
           <div className="lg:max-w-[800px] mx-auto">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
-              {fetchedPinnedBlogData?.map((blog, index) => (
+              {pinnedData?.map((blog, index) => (
                 <BlogCard key={index} blog={blog} pathname={pathname} isPinned={true} />
               ))}
             </div>
@@ -162,10 +162,10 @@ const BlogCatalogue = () => {
 
       <div className="lg:max-w-[1350px] mx-auto min-h-screen">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isManageMode ? fetchedBlogData?.map((blog, index) => (
+          {isManageMode ? pinnedData?.map((blog, index) => (
             <BlogCard key={index} blog={blog} pathname={pathname} />
           )) :
-            fetchedBlogData.slice(2, fetchedBlogData.length)?.map((blog, index) => (
+            blogData.slice(2, blogData.length)?.map((blog, index) => (
               <BlogCard key={index} blog={blog} pathname={pathname} />
             ))}
 

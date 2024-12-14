@@ -1,16 +1,24 @@
 
 import BlogCatalogue from "@/components/blog-catalogue";
 import HeroBento from "@/components/hero-bento/HeroBento";
-// import HeroLogo from "@/components/ui/HeroLogo";
-// import { Button } from "@nextui-org/react";
+import { fetchAllBlogData, fetchAllPinnedBlogData } from "@/lib/firebase";
 
-export default function Home() {
+export default async function Home() {
+
+  const serverData = await fetchAllBlogData();
+  const serverPinnedData = await fetchAllPinnedBlogData();
+  if(!serverData) {
+    return(
+      <div className="flex justify-center items-center h-screen w-full text-primary-600">Loading notes...</div>
+    )
+  }
+
   return (
     <section className='text-black filtered-content px-2.5'>
       <div className='max-w-[1350px] mx-auto py-5 mb-10'>
-        <HeroBento/>
+        <HeroBento pinnedData={serverPinnedData} blogData={serverData}/>
         <section id="explore" className="py-5">
-          <BlogCatalogue />
+          <BlogCatalogue pinnedData={serverPinnedData} blogData={serverData}/>
         </section>
       </div>
     </section>

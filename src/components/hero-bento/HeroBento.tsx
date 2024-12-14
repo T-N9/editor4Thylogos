@@ -1,12 +1,12 @@
 'use client'
 import { BlogCard } from '../blog-catalogue';
-import useBlogCatalogue from '../blog-catalogue/useBlogCatalogue';
+import useBlogCatalogue, { ThumbnailBlogItem } from '../blog-catalogue/useBlogCatalogue';
 import LatestLogo from '../ui/LatestLogo';
 import { Logo } from '../ui/Logo';
 
 
-const HeroBento = () => {
-    const { pathname, fetchedBlogData, fetchedPinnedBlogData } = useBlogCatalogue();
+const HeroBento = ({pinnedData, blogData} : {pinnedData : ThumbnailBlogItem[], blogData : ThumbnailBlogItem[]}) => {
+    const { pathname } = useBlogCatalogue();
     return (
         <section>
             <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
@@ -28,7 +28,7 @@ const HeroBento = () => {
                     <div className="">
                         <div className="lg:max-w-[800px] mx-auto">
                             <div className="grid grid-cols-1 gap-4 lg:grid-cols-1">
-                                {fetchedPinnedBlogData?.map((blog, index) => (
+                                {pinnedData?.map((blog, index) => (
                                     <BlogCard key={index} blog={blog} pathname={pathname} isPinned={true} />
                                 ))}
                             </div>
@@ -36,10 +36,10 @@ const HeroBento = () => {
                     </div>
                     <div className="w-full relative">
                         {
-                            fetchedBlogData.length > 1 && <LatestLogo className='absolute -top-4 z-20 left-0 lg:-left-0'/>
+                            blogData.length > 1 && <LatestLogo className='absolute -top-4 z-20 left-0 lg:-left-0'/>
                         }
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-2">
-                            {fetchedBlogData.slice(0, 2)?.map((blog, index) => (
+                            {blogData.slice(0, 2)?.map((blog, index) => (
                                 <BlogCard key={index} blog={blog} pathname={pathname} />
                             ))}
                         </div>

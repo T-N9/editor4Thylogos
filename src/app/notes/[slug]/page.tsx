@@ -3,6 +3,7 @@ import { Metadata } from "next"
 import BlogPost from "@/components/blog-post"
 import { fetchBlogDataBySlug } from "@/lib/firebase"
 import ScrollIndicator from "@/components/ui/ScrollIndicator";
+import NewsletterSection from "@/components/newsletter-form/NewsletterSection";
 
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
     try {
@@ -58,6 +59,7 @@ const BlogPostPage = async ({ params }: { params: { slug: string } }) => {
                 />
 
             }
+            <NewsletterSection/>
         </>
     )
 }

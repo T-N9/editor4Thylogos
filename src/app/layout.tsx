@@ -9,6 +9,7 @@ import Footer from "@/components/footer/Footer";
 import { Providers } from "./providers";
 import ThemeSwitcher from "@/components/ui/ThemeSwitcher";
 import Script from 'next/script';
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "TN Notes | Capturing ideas and thoughts.",
@@ -66,6 +67,7 @@ export default function RootLayout({
             <div className="mb-14"></div>
             {children}
             <Footer />
+            <Toaster richColors closeButton position="top-center"/>
           </Providers>
         </body>
       </html>

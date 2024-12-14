@@ -85,14 +85,14 @@ const TextPreview: React.FC<TextPreviewProps> = ({
                     </svg>
                 }
               </button>
-              <div className="table-of-contents shadow border-r-4 border-primary-600">
+              <div className="table-of-contents shadow border-r-4 border-primary-600 dark:bg-slate-950">
                 <h1 className='font-bold text-primary-300'>In this article</h1>
                 <ul className="headings flex flex-col gap-2">
                   {headingData.headings.map((item, index) => {
                     const Tag = item.tag as keyof JSX.IntrinsicElements; // Dynamic tag rendering
 
                     return (
-                      <li className={`normal-heading-wrapper line-clamp-1`}
+                      <li className={`normal-heading-wrapper line-clamp-1 dark:text-gray-100`}
                         key={index}>
                         <a href={`#${item.link}`}>
                           <Tag>{item.content}</Tag>

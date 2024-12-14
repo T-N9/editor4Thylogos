@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en-US",
-    url: "https://www.notes.tenyain.com/",
+    url: "https://notes.tenyain.com/",
     title: "TN Notes | Capturing ideas and thoughts.",
     description: "Welcome to TN Notes! A tiny space of mine for capturing ideas and thoughts.",
     images: [{ url: "/meta.png" }]

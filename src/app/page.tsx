@@ -1,7 +1,8 @@
-
 import BlogCatalogue from "@/components/blog-catalogue";
 import HeroBento from "@/components/hero-bento/HeroBento";
 import { fetchAllBlogData, fetchAllPinnedBlogData } from "@/lib/firebase";
+
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export default async function Home() {
 

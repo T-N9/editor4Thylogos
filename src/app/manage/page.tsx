@@ -2,6 +2,8 @@ import React from 'react'
 import BlogCatalogue from '@/components/blog-catalogue'
 import { fetchAllBlogData, fetchAllPinnedBlogData } from '@/lib/firebase';
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 const ManagementPage = async() => {
 
     const serverData = await fetchAllBlogData();

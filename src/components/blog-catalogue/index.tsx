@@ -162,7 +162,7 @@ const BlogCatalogue = ({pinnedData, blogData} : {pinnedData : ThumbnailBlogItem[
 
       <div className="lg:max-w-[1350px] mx-auto min-h-screen">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {isManageMode ? pinnedData?.map((blog, index) => (
+          {isManageMode ? blogData?.map((blog, index) => (
             <BlogCard key={index} blog={blog} pathname={pathname} />
           )) :
             blogData.slice(2, blogData.length)?.map((blog, index) => (

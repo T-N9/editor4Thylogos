@@ -1789,7 +1789,7 @@ button.action-button:disabled {
   vertical-align: middle;
   overflow: auto hidden;
   position: sticky;
-  top: 2rem;
+  top: 4rem;
   z-index: 2;
   min-width: 195px;
   border-radius: 15px;

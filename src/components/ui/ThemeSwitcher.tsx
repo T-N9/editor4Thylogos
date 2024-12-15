@@ -19,7 +19,7 @@ const ThemeSwitcher = () => {
     }
 
     return (
-        <div className="fixed top-0 left-0 z-50 px-2 right-0 lg:px-5 py-2  bg-white dark:bg-slate-700 shadow">
+        <div className="fixed top-0 left-0 z-50 px-2 right-0 lg:px-5 py-2  bg-white dark:bg-slate-800 shadow">
             <div className="max-w-[1350px] flex justify-between mx-auto">
                 <Link href='/'>
                     <Logo width={40} height={40}/>

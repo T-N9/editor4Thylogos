@@ -85,7 +85,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
                     </svg>
                 }
               </button>
-              <div className="table-of-contents shadow border-r-4 border-primary-600 dark:bg-slate-950">
+              <div className="table-of-contents shadow border-r-4 border-primary-600 dark:bg-[#5b6774]">
                 <h1 className='font-bold text-primary-300'>In this article</h1>
                 <ul className="headings flex flex-col gap-2">
                   {headingData.headings.map((item, index) => {

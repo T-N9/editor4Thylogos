@@ -1,6 +1,7 @@
 'use client';
 import { Button } from '@nextui-org/react';
 import useNewsletterForm from './useNewsletterForm';
+import Link from 'next/link';
 
 const NewsletterForm = () => {
     const { handleSubmit, errors, isLoading, register, onSubmit } = useNewsletterForm();
@@ -30,14 +31,20 @@ const NewsletterForm = () => {
                             </span>
                         )}
                     </div>
-                    <Button
-                        type="submit"
-                        className="w-fit bg-primary-600 text-white dark:text-secondary"
-                        size="lg"
-                        disabled={isLoading}
-                    >
-                        {isLoading ? "Subscribing..." : "Subscribe Now"}
-                    </Button>
+                   <div className='flex gap-4 items-center'>
+                     <Button
+                         type="submit"
+                         className="w-fit bg-primary-600 text-white dark:text-secondary"
+                         size="lg"
+                         disabled={isLoading}
+                     >
+                         {isLoading ? "Subscribing..." : "Subscribe Now"}
+                     </Button>
+                    
+                     <div>
+                         or <Link href={'/api/rss'} className='font-bold text-yellow-500'>Feed to your RSS</Link> 
+                     </div>
+                   </div>
                 </form>
             </div>
         </>

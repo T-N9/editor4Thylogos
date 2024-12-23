@@ -22,7 +22,7 @@ const ThemeSwitcher = () => {
         <div className="fixed top-0 left-0 z-50 px-2 right-0 lg:px-5 py-2  bg-white dark:bg-slate-800 shadow">
             <div className="max-w-[1350px] flex justify-between mx-auto">
                 <Link href='/'>
-                    <Logo width={40} height={40}/>
+                    <Logo width={40} height={40} />
                 </Link>
 
                 <div className='flex gap-4 items-center'>
@@ -34,11 +34,16 @@ const ThemeSwitcher = () => {
                             <span>Marks</span>
                         </Link>
                     </div> */}
+                    <div className=' text-primary-600 flex justify-center items-center'>
+                        <Link className='flex gap-2 justify-center items-center' href={'/api/rss'}>
+                            <svg width={24} height={24} role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>RSS</title><path fill='#FFA500' d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z" /></svg>
+                        </Link>
+                    </div>
                     <Dropdown className='dark:text-white'>
                         <DropdownTrigger>
                             <Button
-                              variant="faded"
-                              className="capitalize"
+                                variant="faded"
+                                className="capitalize"
                             >
                                 {theme}
                             </Button>
@@ -46,12 +51,12 @@ const ThemeSwitcher = () => {
 
 
                         <DropdownMenu
-                          aria-label="Single selection example"
-                          variant="flat"
-                          disallowEmptySelection
-                          selectionMode="single"
-                          selectedKeys={theme}
-                          // onSelectionChange={setTheme}
+                            aria-label="Single selection example"
+                            variant="flat"
+                            disallowEmptySelection
+                            selectionMode="single"
+                            selectedKeys={theme}
+                        // onSelectionChange={setTheme}
                         >
                             <DropdownItem onClick={() => setTheme('light')} key="text">Light</DropdownItem>
                             <DropdownItem onClick={() => setTheme('dark')} key="dark">Dark</DropdownItem>

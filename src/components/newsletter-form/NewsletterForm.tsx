@@ -41,8 +41,8 @@ const NewsletterForm = () => {
                          {isLoading ? "Subscribing..." : "Subscribe Now"}
                      </Button>
                     
-                     <div>
-                         or <Link href={'/api/rss'} className='font-bold text-yellow-500'>Feed to your RSS</Link> 
+                     <div className='dark:text-white'>
+                         or <Link href={'/api/rss'} className='font-bold text-[#FFA500]'>Feed to your RSS</Link> 
                      </div>
                    </div>
                 </form>

@@ -1169,7 +1169,7 @@ i.page-break,
 }
 
 .editor-shell ul {
-  list-style-type: disc;
+  list-style-type: disc !important;
 }
 
 .editor-shell ol {
@@ -1177,8 +1177,12 @@ i.page-break,
 }
 
 .editor-shell ul li {
-  list-style-type: disc;
+  list-style-type: disc !important;
   margin-left: 30px;
+}
+
+.table-of-contents ul li {
+  margin: 0!important;
 }
 
 

@@ -38,7 +38,7 @@ const TextPreview: React.FC<TextPreviewProps> = ({
       <section className="">
         <div
           className={`editor-container mx-auto ${contentSizeClass[editorState.contentSize]}`}>
-          {headingData.headings.length > 0 && <div className='bg-gray-100 rounded-lg max-w-[500px] mx-auto dark:bg-gray-800 p-5 mt-10'>
+          {headingData.headings.length > 0 && <div className='bg-light rounded-lg max-w-[500px] mx-auto dark:bg-gray-800 p-5 mt-10'>
             <h1 className='font-bold text-primary-600 opacity-50'>In this article</h1>
             <ul className=" flex flex-col gap-2">
               {headingData.headings.map((item, index) => {
@@ -85,9 +85,9 @@ const TextPreview: React.FC<TextPreviewProps> = ({
                     </svg>
                 }
               </button>
-              <div className="table-of-contents shadow border-r-4 border-primary-600 dark:bg-[#5b6774]">
-                <h1 className='font-bold text-primary-300'>In this article</h1>
-                <ul className="headings flex flex-col gap-2">
+              <div className="table-of-contents shadow border-r-4 border-primary-600 bg-light dark:bg-gray-800">
+                <h1 className='font-bold text-primary-600 opacity-50'>In this article</h1>
+                <ul className="headings flex flex-col gap-1">
                   {headingData.headings.map((item, index) => {
                     const Tag = item.tag as keyof JSX.IntrinsicElements; // Dynamic tag rendering
 

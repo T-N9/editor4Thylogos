@@ -14,7 +14,7 @@ const NewsletterForm = () => {
                     <div className="mb-4">
                         <label
                             htmlFor="email"
-                            className="block mb-2 text-lg text-primary-900 dark:text-white"
+                            className="block mb-2 text-left text-lg text-primary-900 dark:text-white"
                         >
                             Join me on my journey and get my latest articles delivered straight to your inbox.
                         </label>

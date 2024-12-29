@@ -14,6 +14,11 @@
   margin-bottom: 8px;
 }
 
+.dark .Collapsible__container {
+  border: 1px solid #5d5d5d;
+  background: #262626;
+}
+
 .Collapsible__title {
   cursor: pointer;
   padding: 5px 5px 5px 30px;
@@ -47,8 +52,13 @@
 }
 
 .Collapsible__content {
-  padding: 0 5px 5px 30px !important;
+  padding: 10px 5px 5px 30px !important;
   background-color: #f8f8f8;
+  border-radius: 10px ;
+}
+
+.dark .Collapsible__content {
+  background: #2a2a2a;
 }
 
 .Collapsible__collapsed .Collapsible__content {

@@ -15,7 +15,7 @@ const NavBar = () => {
 
                     </div>
                     <div className="flex gap-2">
-                        <Button href='/manage/unpublished' as={Link} className="flex gap-2 justify-center items-center" color="secondary">
+                        <Button href='/manage/unpublished' as={Link} className="flex gap-2 justify-center items-center dark:bg-gray-300 dark:text-black" color="secondary">
                             Unpublished
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
@@ -30,7 +30,7 @@ const NavBar = () => {
                         </Button>
 
 
-                        <Button href='/manage/upload' as={Link} className="flex gap-2 justify-center items-center" color="primary">
+                        <Button href='/manage/upload' as={Link} className="flex gap-2 justify-center items-center bg-primary-600" color="primary">
                             New Post
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />

@@ -14,14 +14,14 @@ const NewsletterForm = () => {
                     <div className="mb-4">
                         <label
                             htmlFor="email"
-                            className="block mb-2 text-left text-lg text-primary-900 dark:text-white"
+                            className="block mb-2 text-left text-lg text-secondary dark:text-white"
                         >
                             Join me on my journey and get my latest articles delivered straight to your inbox.
                         </label>
                         <input
                             type="email"
                             id="email"
-                            className={`bg-gray-50 border text-primary-600 ${errors.email ? '!border-red-500' : 'border-gray-300'}  text-lg lg:text-2xl rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-secondary placeholder-gray-300 dark:placeholder-gray-500 dark:focus:ring-accent-500 dark:focus:border-accent-500`}
+                            className={`bg-gray-50 border text-primary-600 ${errors.email ? '!border-red-500' : 'border-gray-300'}  text-lg lg:text-2xl rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-secondary placeholder-gray-300 dark:placeholder-gray-500 dark:focus:ring-accent-500 dark:focus:border-accent-500 outline-primary-600`}
                             placeholder="Enter your email"
                             {...register("email")}
                         />

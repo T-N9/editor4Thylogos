@@ -41,7 +41,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-screen bg-gray-100 dark:bg-secondary">
       <div className="w-full max-w-sm p-6 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-4">
@@ -51,7 +51,7 @@ export default function Login() {
               id="email"
               type="email"
               {...register("email", { required: "Email is required" })}
-              className={`w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 ${
+              className={`w-full bg-gray-100 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 ${
                 errors.email ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
               }`}
             />
@@ -64,7 +64,7 @@ export default function Login() {
               id="password"
               type="password"
               {...register("password", { required: "Password is required" })}
-              className={`w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 ${
+              className={`w-full bg-gray-100 px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 ${
                 errors.password ? "border-red-500 focus:ring-red-500" : "border-gray-300 focus:ring-blue-500"
               }`}
             />

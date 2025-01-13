@@ -29,6 +29,7 @@ const FONT_FAMILY_OPTIONS: {
     { info: [`Yati`, 'Yati'], lang: LanguageOptions.MM },
     { info: [`MiSans, Roboto`, 'MiSans'], lang: LanguageOptions.MM },
     { info: [`Walone`, 'Walone'], lang: LanguageOptions.MM },
+    { info: [`Soria`, 'Soria'], type: BlockTypeOptions.DISPLAY },
     { info: [`Strong`, 'Strong'], lang: LanguageOptions.MM, type: BlockTypeOptions.DISPLAY },
     { info: [`Spring Rev`, 'Spring Rev'], lang: LanguageOptions.MM, type: BlockTypeOptions.DISPLAY },
     { info: [`U Moe`, 'U Moe'], lang: LanguageOptions.MM, type: BlockTypeOptions.WRITING },
